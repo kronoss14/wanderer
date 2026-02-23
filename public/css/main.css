@@ -85,7 +85,7 @@ h1, h2, h3, h4, h5, h6 {
   color: var(--text-primary);
 }
 .logo:hover { color: var(--text-primary); }
-.logo-img { height: 40px; width: auto; }
+.logo-img { height: 40px; width: 40px; border-radius: 50%; object-fit: cover; }
 .logo-text { display: flex; flex-direction: column; line-height: 1.1; }
 .logo-name {
   font-family: var(--font-heading);
