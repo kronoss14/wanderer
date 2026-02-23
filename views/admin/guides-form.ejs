@@ -1,0 +1,36 @@
+<div class="admin-header">
+  <h1><%= editing ? 'Edit Guide' : 'New Guide' %></h1>
+</div>
+
+<form class="admin-form" method="POST" action="<%= editing ? '/admin/guides/edit/' + guide.id : '/admin/guides' %>">
+  <div class="form-group">
+    <label for="name">Name</label>
+    <input type="text" id="name" name="name" value="<%= guide.name || '' %>" required>
+  </div>
+
+  <div class="form-group">
+    <label for="role">Role</label>
+    <input type="text" id="role" name="role" value="<%= guide.role || '' %>" required>
+  </div>
+
+  <div class="form-group">
+    <label for="bio">Bio</label>
+    <textarea id="bio" name="bio" rows="5"><%= guide.bio || '' %></textarea>
+  </div>
+
+  <div class="form-group">
+    <label for="specialties">Specialties</label>
+    <div class="hint">One per line</div>
+    <textarea id="specialties" name="specialties" rows="3"><%= (guide.specialties || []).join('\n') %></textarea>
+  </div>
+
+  <div class="form-group">
+    <label for="image">Image URL</label>
+    <input type="url" id="image" name="image" value="<%= guide.image || '' %>">
+  </div>
+
+  <div class="form-actions">
+    <button type="submit" class="btn btn-primary"><%= editing ? 'Update Guide' : 'Create Guide' %></button>
+    <a href="/admin/guides" class="btn btn-secondary">Cancel</a>
+  </div>
+</form>

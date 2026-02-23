@@ -10,6 +10,7 @@ import contactRouter from './routes/contact.js';
 import bookingRouter from './routes/booking.js';
 import galleryRouter from './routes/gallery.js';
 import reviewsRouter from './routes/reviews.js';
+import adminRouter from './routes/admin.js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const app = express();
@@ -48,6 +49,7 @@ app.use('/contact', contactRouter);
 app.use('/booking', bookingRouter);
 app.use('/gallery', galleryRouter);
 app.use('/reviews', reviewsRouter);
+app.use('/admin', adminRouter);
 
 // 404
 app.use((req, res) => {

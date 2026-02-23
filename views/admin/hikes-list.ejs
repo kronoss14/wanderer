@@ -1,0 +1,39 @@
+<div class="admin-header">
+  <h1>Hikes</h1>
+  <a href="/admin/hikes/new" class="btn btn-primary">+ New Hike</a>
+</div>
+
+<div class="admin-table-wrap">
+  <table class="admin-table">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Difficulty</th>
+        <th>Price</th>
+        <th>Featured</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% hikes.forEach(h => { %>
+        <tr>
+          <td><%= h.name %></td>
+          <td><%= h.type %></td>
+          <td><%= h.difficulty %></td>
+          <td>$<%= h.price %></td>
+          <td><%= h.featured ? 'Yes' : 'No' %></td>
+          <td class="actions">
+            <a href="/admin/hikes/edit/<%= h.id %>" class="btn btn-secondary btn-sm">Edit</a>
+            <form method="POST" action="/admin/hikes/delete/<%= h.id %>" onsubmit="return confirm('Delete this hike?')">
+              <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+            </form>
+          </td>
+        </tr>
+      <% }) %>
+      <% if (!hikes.length) { %>
+        <tr><td colspan="6" style="text-align:center;color:var(--admin-text-muted)">No hikes yet</td></tr>
+      <% } %>
+    </tbody>
+  </table>
+</div>

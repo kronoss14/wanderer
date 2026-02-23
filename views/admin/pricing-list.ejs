@@ -1,0 +1,39 @@
+<div class="admin-header">
+  <h1>Pricing</h1>
+  <a href="/admin/pricing/new" class="btn btn-primary">+ New Tier</a>
+</div>
+
+<div class="admin-table-wrap">
+  <table class="admin-table">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Tier</th>
+        <th>Price</th>
+        <th>Highlighted</th>
+        <th>Features</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% pricing.forEach(p => { %>
+        <tr>
+          <td><%= p.id %></td>
+          <td><%= p.tier %></td>
+          <td><%= p.priceLabel %></td>
+          <td><%= p.highlighted ? 'Yes' : 'No' %></td>
+          <td><%= (p.features || []).length %> items</td>
+          <td class="actions">
+            <a href="/admin/pricing/edit/<%= p.id %>" class="btn btn-secondary btn-sm">Edit</a>
+            <form method="POST" action="/admin/pricing/delete/<%= p.id %>" onsubmit="return confirm('Delete this tier?')">
+              <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+            </form>
+          </td>
+        </tr>
+      <% }) %>
+      <% if (!pricing.length) { %>
+        <tr><td colspan="6" style="text-align:center;color:var(--admin-text-muted)">No pricing tiers yet</td></tr>
+      <% } %>
+    </tbody>
+  </table>
+</div>

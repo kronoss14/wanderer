@@ -1,0 +1,33 @@
+<div class="admin-header">
+  <h1>Dashboard</h1>
+</div>
+
+<div class="stats-grid">
+  <div class="stat-card">
+    <div class="stat-value"><%= counts.hikes %></div>
+    <div class="stat-label">Hikes</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-value"><%= counts.guides %></div>
+    <div class="stat-label">Guides</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-value"><%= counts.pricing %></div>
+    <div class="stat-label">Pricing Tiers</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-value"><%= counts.gallery %></div>
+    <div class="stat-label">Gallery Items</div>
+  </div>
+</div>
+
+<div class="admin-header">
+  <h2 style="font-size:1.1rem">Quick Actions</h2>
+</div>
+
+<div style="display:flex;gap:0.75rem;flex-wrap:wrap">
+  <a href="/admin/hikes/new" class="btn btn-primary">+ New Hike</a>
+  <a href="/admin/guides/new" class="btn btn-primary">+ New Guide</a>
+  <a href="/admin/pricing/new" class="btn btn-primary">+ New Pricing Tier</a>
+  <a href="/admin/gallery/new" class="btn btn-primary">+ New Gallery Item</a>
+</div>

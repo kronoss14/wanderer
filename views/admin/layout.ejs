@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= title %> — Wanderer Admin</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/admin.css">
+</head>
+<body class="admin-body">
+  <aside class="admin-sidebar">
+    <div class="brand">Wanderer Admin</div>
+    <nav>
+      <a href="/admin" class="<%= currentPath === '/admin' ? 'active' : '' %>">Dashboard</a>
+      <a href="/admin/hikes" class="<%= currentPath.startsWith('/admin/hikes') ? 'active' : '' %>">Hikes</a>
+      <a href="/admin/guides" class="<%= currentPath.startsWith('/admin/guides') ? 'active' : '' %>">Guides</a>
+      <a href="/admin/pricing" class="<%= currentPath.startsWith('/admin/pricing') ? 'active' : '' %>">Pricing</a>
+      <a href="/admin/gallery" class="<%= currentPath.startsWith('/admin/gallery') ? 'active' : '' %>">Gallery</a>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="/" target="_blank">View Site</a> &middot;
+      <a href="/admin/logout">Logout</a>
+    </div>
+  </aside>
+  <main class="admin-main">
+    <% if (typeof flash !== 'undefined' && flash) { %>
+      <div class="flash flash-<%= flash.type %>"><%= flash.message %></div>
+    <% } %>
+    <%- body %>
+  </main>
+</body>
+</html>

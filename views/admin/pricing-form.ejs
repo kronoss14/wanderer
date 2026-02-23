@@ -1,0 +1,54 @@
+<div class="admin-header">
+  <h1><%= editing ? 'Edit Pricing Tier' : 'New Pricing Tier' %></h1>
+</div>
+
+<form class="admin-form" method="POST" action="<%= editing ? '/admin/pricing/edit/' + tier.id : '/admin/pricing' %>">
+  <div class="form-group">
+    <label for="tier">Tier Name</label>
+    <input type="text" id="tier" name="tier" value="<%= tier.tier || '' %>" required>
+  </div>
+
+  <div class="form-group">
+    <label for="price">Price (number, leave empty for custom)</label>
+    <input type="number" id="price" name="price" value="<%= tier.price != null ? tier.price : '' %>">
+  </div>
+
+  <div class="form-group">
+    <label for="priceLabel">Price Label</label>
+    <div class="hint">e.g. "From $45" or "Custom"</div>
+    <input type="text" id="priceLabel" name="priceLabel" value="<%= tier.priceLabel || '' %>" required>
+  </div>
+
+  <div class="form-group">
+    <label for="unit">Unit</label>
+    <input type="text" id="unit" name="unit" value="<%= tier.unit || '' %>">
+  </div>
+
+  <div class="form-group">
+    <label for="description">Description</label>
+    <textarea id="description" name="description" rows="3"><%= tier.description || '' %></textarea>
+  </div>
+
+  <div class="form-group">
+    <label for="features">Features</label>
+    <div class="hint">One per line</div>
+    <textarea id="features" name="features" rows="5"><%= (tier.features || []).join('\n') %></textarea>
+  </div>
+
+  <div class="form-group">
+    <label class="checkbox-label">
+      <input type="checkbox" name="highlighted" value="true" <%= tier.highlighted ? 'checked' : '' %>>
+      Highlighted (primary tier)
+    </label>
+  </div>
+
+  <div class="form-group">
+    <label for="cta">CTA Text</label>
+    <input type="text" id="cta" name="cta" value="<%= tier.cta || '' %>">
+  </div>
+
+  <div class="form-actions">
+    <button type="submit" class="btn btn-primary"><%= editing ? 'Update Tier' : 'Create Tier' %></button>
+    <a href="/admin/pricing" class="btn btn-secondary">Cancel</a>
+  </div>
+</form>
