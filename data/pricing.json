@@ -1,58 +1,58 @@
 [
   {
     "id": 1,
-    "tier": "Day Explorer",
+    "tier": "ერთდღიანი მოგზაური",
     "price": 45,
     "priceLabel": "From $45",
-    "unit": "per person",
-    "description": "Perfect for those with limited time who want to experience Georgia's highlights in a single day.",
+    "unit": "თითო ადამიანზე",
+    "description": "იდეალურია მათთვის, ვისაც შეზღუდული დრო აქვს და საქართველოს მთავარ ღირსშესანიშნაობებს ერთ დღეში სურს აღმოაჩინოს.",
     "features": [
-      "Professional English-speaking guide",
-      "Transport from Tbilisi included",
-      "Lunch and refreshments",
-      "All entrance fees covered",
-      "Small groups (4-16 people)",
-      "Free cancellation 48h before"
+      "პროფესიონალი ინგლისურენოვანი გიდი",
+      "ტრანსპორტი თბილისიდან",
+      "სადილი და გამაგრილებლები",
+      "ყველა შესასვლელის ბილეთი",
+      "მცირე ჯგუფები (4-16 ადამიანი)",
+      "უფასო გაუქმება 48 საათით ადრე"
     ],
     "highlighted": false,
-    "cta": "Browse Day Hikes"
+    "cta": "ერთდღიანი ლაშქრობები"
   },
   {
     "id": 2,
-    "tier": "Multi-Day Trek",
+    "tier": "მრავალდღიანი ლაშქრობა",
     "price": 450,
     "priceLabel": "From $450",
-    "unit": "per person",
-    "description": "Our signature multi-day treks through the most spectacular landscapes of the Greater Caucasus.",
+    "unit": "თითო ადამიანზე",
+    "description": "ჩვენი საფირმო მრავალდღიანი ლაშქრობები კავკასიონის ყველაზე თვალწარმტაც ლანდშაფტებში.",
     "features": [
-      "Expert mountain guide",
-      "All accommodation included",
-      "Full board (all meals)",
-      "Luggage/gear transfer",
-      "Small groups (4-8 people)",
-      "Flexible booking & cancellation",
-      "Emergency satellite phone"
+      "ექსპერტი მთის გიდი",
+      "სრული განთავსება",
+      "სრული კვება (ყველა კერძი)",
+      "ბარგის/აღჭურვილობის გადატანა",
+      "მცირე ჯგუფები (4-8 ადამიანი)",
+      "მოქნილი ჯავშანი და გაუქმება",
+      "საგანგებო სატელიტური ტელეფონი"
     ],
     "highlighted": true,
-    "cta": "View Multi-Day Treks"
+    "cta": "მრავალდღიანი ლაშქრობები"
   },
   {
     "id": 3,
-    "tier": "Custom Adventure",
+    "tier": "ინდივიდუალური თავგადასავალი",
     "price": null,
     "priceLabel": "Custom",
-    "unit": "tailored quote",
-    "description": "Design your dream Georgian adventure. We'll build a bespoke itinerary around your interests and schedule.",
+    "unit": "ინდივიდუალური შეთავაზება",
+    "description": "შექმენით თქვენი ოცნების ქართული თავგადასავალი. ჩვენ თქვენს ინტერესებსა და გრაფიკზე მორგებულ ინდივიდუალურ მარშრუტს შევადგენთ.",
     "features": [
-      "Fully customizable itinerary",
-      "Private guide dedicated to you",
-      "Handpicked accommodation",
-      "Any duration & difficulty",
-      "Airport transfers included",
-      "24/7 support throughout",
-      "Family & group friendly"
+      "სრულად მორგებადი მარშრუტი",
+      "პირადი გიდი მხოლოდ თქვენთვის",
+      "შერჩეული განთავსება",
+      "ნებისმიერი ხანგრძლივობა და სირთულე",
+      "აეროპორტის ტრანსფერი",
+      "24/7 მხარდაჭერა",
+      "ოჯახებისა და ჯგუფებისთვის"
     ],
     "highlighted": false,
-    "cta": "Request a Quote"
+    "cta": "მოითხოვე შეთავაზება"
   }
 ]

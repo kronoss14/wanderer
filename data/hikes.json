@@ -1,7 +1,7 @@
 [
   {
     "id": "kazbegi-gergeti",
-    "name": "Kazbegi & Gergeti Trinity Church",
+    "name": "ყაზბეგი და გერგეტის სამება",
     "type": "day",
     "duration": "1 day",
     "distance": "12 km",
@@ -10,27 +10,27 @@
     "groupSize": "4-12",
     "price": 85,
     "featured": true,
-    "summary": "Hike to the iconic Gergeti Trinity Church perched at 2170m with stunning views of Mount Kazbek.",
-    "description": "This unforgettable day hike takes you from the town of Stepantsminda up to the legendary Gergeti Trinity Church, a 14th-century Georgian Orthodox church dramatically situated against the backdrop of Mount Kazbek (5047m). The trail winds through alpine meadows filled with wildflowers in summer, crossing small streams and passing shepherd camps. At the top, the panoramic views of the Greater Caucasus range are breathtaking. On clear days, the glacier-capped summit of Kazbek towers above, creating one of the most photographed scenes in all of Georgia.",
+    "summary": "ალაშქრეთ იკონურ გერგეტის სამების ეკლესიამდე, რომელიც 2170მ სიმაღლეზე დგას, ყაზბეგის მთის თვალწარმტაცი ხედებით.",
+    "description": "ეს დაუვიწყარი ერთდღიანი ლაშქრობა სტეფანწმინდიდან ლეგენდარულ გერგეტის სამების ეკლესიამდე მიგიყვანთ — მე-14 საუკუნის ქართულ მართლმადიდებლურ ტაძარს, რომელიც ყაზბეგის მთის (5047მ) თვალწარმტაცი ფონზე დგას. ბილიკი ალპურ მდელოებზე გადის, რომლებიც ზაფხულში ველური ყვავილებით არის მოფენილი, კვეთს პატარა ნაკადულებს და მწყემსების ბანაკებს ჩაუვლის. მწვერვალზე კავკასიონის პანორამული ხედები თვალწარმტაცია. მოწმენდილ დღეებში ყაზბეგის მყინვარით დაფარული მწვერვალი ზევით ამოიზრდება — ეს საქართველოში ერთ-ერთი ყველაზე ხშირად ფოტოგრაფირებული სანახავია.",
     "highlights": [
-      "14th-century Gergeti Trinity Church at 2170m",
-      "Panoramic views of Mount Kazbek (5047m)",
-      "Alpine meadows and wildflower fields",
-      "Traditional shepherd camps along the trail",
-      "Photo opportunities at every turn"
+      "მე-14 საუკუნის გერგეტის სამების ეკლესია 2170მ სიმაღლეზე",
+      "ყაზბეგის მთის (5047მ) პანორამული ხედები",
+      "ალპური მდელოები და ველური ყვავილების მინდვრები",
+      "ტრადიციული მწყემსების ბანაკები ბილიკის გასწვრივ",
+      "ფოტოგრაფიის შესაძლებლობები ყოველ მოსახვევში"
     ],
     "included": [
-      "Professional English-speaking guide",
-      "Transport from Tbilisi",
-      "Lunch and snacks",
-      "Entrance fees",
-      "First aid kit"
+      "პროფესიონალი ინგლისურენოვანი გიდი",
+      "ტრანსპორტი თბილისიდან",
+      "სადილი და წასახემსებელი",
+      "შესასვლელის ბილეთები",
+      "პირველადი დახმარების ნაკრები"
     ],
     "notIncluded": [
-      "Travel insurance",
-      "Personal hiking gear",
-      "Alcoholic beverages",
-      "Tips for the guide"
+      "სამოგზაურო დაზღვევა",
+      "პირადი სალაშქრო აღჭურვილობა",
+      "ალკოჰოლური სასმელები",
+      "ჩაის ფული გიდისთვის"
     ],
     "images": [
       "https://picsum.photos/seed/kazbegi1/800/500",
@@ -40,11 +40,11 @@
     ],
     "heroImage": "https://picsum.photos/seed/kazbegi-hero/1600/900",
     "cardImage": "https://picsum.photos/seed/kazbegi-card/600/400",
-    "region": "Mtskheta-Mtianeti"
+    "region": "მცხეთა-მთიანეთი"
   },
   {
     "id": "mestia-ushguli",
-    "name": "Mestia to Ushguli Trek",
+    "name": "მესტიიდან უშგულამდე ლაშქრობა",
     "type": "multi-day",
     "duration": "4 days",
     "distance": "58 km",
@@ -53,28 +53,28 @@
     "groupSize": "4-8",
     "price": 450,
     "featured": true,
-    "summary": "The crown jewel of Georgian trekking — traverse Svaneti's dramatic valleys to Europe's highest continuously inhabited village.",
-    "description": "The Mestia to Ushguli trek is widely regarded as the finest multi-day hike in the Caucasus. Over four days, you'll traverse the heart of Upper Svaneti, a UNESCO World Heritage region renowned for its medieval defensive towers and ancient traditions. The route passes through pristine valleys, crosses high mountain passes with views of Svaneti's 4000m+ peaks including Shkhara (Georgia's highest at 5193m), and visits remote villages that have changed little in centuries. Each night is spent in family-run guesthouses where you'll experience legendary Svan hospitality and cuisine. The trek culminates in Ushguli, at 2200m the highest continuously inhabited village in Europe.",
+    "summary": "ქართული ტრეკინგის გვირგვინი — გაიარეთ სვანეთის თვალწარმტაცი ხეობები ევროპის ყველაზე მაღლა მდებარე მუდმივად დასახლებულ სოფლამდე.",
+    "description": "მესტიიდან უშგულამდე ლაშქრობა კავკასიაში საუკეთესო მრავალდღიან ლაშქრობად ითვლება. ოთხი დღის განმავლობაში გაივლით ზემო სვანეთის გულს — UNESCO-ს მსოფლიო მემკვიდრეობის რეგიონს, რომელიც შუა საუკუნეების თავდაცვითი კოშკებითა და უძველესი ტრადიციებით არის ცნობილი. მარშრუტი ხელუხლებელ ხეობებზე გადის, მაღალმთიან უღელტეხილებს კვეთს სვანეთის 4000მ-ზე მაღალი მწვერვალების, მათ შორის შხარას (საქართველოს უმაღლესი — 5193მ) ხედებით და ეწვევა შორეულ სოფლებს, რომლებიც საუკუნეების განმავლობაში თითქმის არ შეცვლილა. ყოველ ღამეს ოჯახურ სასტუმრო სახლებში გაატარებთ, სადაც ლეგენდარულ სვანურ სტუმართმოყვარეობასა და სამზარეულოს გაეცნობით. ლაშქრობა უშგულში სრულდება — 2200მ სიმაღლეზე მდებარე ევროპის ყველაზე მაღლა მუდმივად დასახლებულ სოფელში.",
     "highlights": [
-      "UNESCO World Heritage Svaneti towers",
-      "Views of Shkhara (5193m), Georgia's highest peak",
-      "Ushguli — Europe's highest inhabited village",
-      "Traditional Svan guesthouses and cuisine",
-      "River crossings and high alpine passes"
+      "UNESCO-ს მსოფლიო მემკვიდრეობის სვანური კოშკები",
+      "შხარას (5193მ) — საქართველოს უმაღლესი მწვერვალის ხედები",
+      "უშგული — ევროპის ყველაზე მაღლა დასახლებული სოფელი",
+      "ტრადიციული სვანური სასტუმრო სახლები და სამზარეულო",
+      "მდინარის გადასასვლელები და მაღალმთიანი უღელტეხილები"
     ],
     "included": [
-      "Professional mountain guide",
-      "3 nights guesthouse accommodation",
-      "All meals during the trek",
-      "Luggage transfer between villages",
-      "Transport from/to Mestia"
+      "პროფესიონალი მთის გიდი",
+      "3 ღამის განთავსება სასტუმრო სახლში",
+      "ყველა კვება ლაშქრობის განმავლობაში",
+      "ბარგის გადატანა სოფლებს შორის",
+      "ტრანსპორტი მესტიიდან/მესტიამდე"
     ],
     "notIncluded": [
-      "Transport to/from Mestia",
-      "Travel insurance (required)",
-      "Personal hiking equipment",
-      "Alcoholic beverages",
-      "Tips"
+      "ტრანსპორტი მესტიამდე/მესტიიდან",
+      "სამოგზაურო დაზღვევა (სავალდებულო)",
+      "პირადი სალაშქრო აღჭურვილობა",
+      "ალკოჰოლური სასმელები",
+      "ჩაის ფული"
     ],
     "images": [
       "https://picsum.photos/seed/ushguli1/800/500",
@@ -84,11 +84,11 @@
     ],
     "heroImage": "https://picsum.photos/seed/ushguli-hero/1600/900",
     "cardImage": "https://picsum.photos/seed/ushguli-card/600/400",
-    "region": "Svaneti"
+    "region": "სვანეთი"
   },
   {
     "id": "tusheti-trek",
-    "name": "Tusheti Wilderness Trek",
+    "name": "თუშეთის ველური ბუნების ლაშქრობა",
     "type": "multi-day",
     "duration": "5 days",
     "distance": "65 km",
@@ -97,28 +97,28 @@
     "groupSize": "4-8",
     "price": 520,
     "featured": false,
-    "summary": "Explore Georgia's most remote region — ancient villages, vast alpine meadows, and encounters with Tush shepherds.",
-    "description": "Tusheti is Georgia's wildest and most isolated region, accessible only from June to October via the dramatic Abano Pass road (2926m). This five-day trek takes you deep into the Tusheti National Park, connecting ancient fortified villages where Tush shepherds maintain traditions unchanged for millennia. You'll camp in flower-filled alpine meadows, ford crystal-clear rivers, and cross passes with 360-degree views of the Eastern Greater Caucasus. Wildlife encounters are common — look for East Caucasian tur, bearded vultures, and even brown bears. This is raw, untouched wilderness trekking at its finest.",
+    "summary": "აღმოაჩინეთ საქართველოს ყველაზე მიუდგომელი რეგიონი — უძველესი სოფლები, ვრცელი ალპური მდელოები და შეხვედრა თუშ მწყემსებთან.",
+    "description": "თუშეთი საქართველოს ყველაზე ველური და იზოლირებული რეგიონია, ხელმისაწვდომი მხოლოდ ივნისიდან ოქტომბრამდე აბანოს უღელტეხილის (2926მ) თვალბრიალი გზით. ეს ხუთდღიანი ლაშქრობა თუშეთის ეროვნული პარკის სიღრმეში მიგიყვანთ, აკავშირებს უძველეს გამაგრებულ სოფლებს, სადაც თუშ მწყემსები ათასწლეულების განმავლობაში უცვლელ ტრადიციებს ინარჩუნებენ. ყვავილებით სავსე ალპურ მდელოებზე დაბანაკდებით, კრისტალურად სუფთა მდინარეებს გადალახავთ და უღელტეხილებს აღმოსავლეთ კავკასიონის 360-გრადუსიანი ხედებით გადაკვეთთ. ველური ბუნების შეხვედრები ხშირია — ეძებეთ აღმოსავლეთ კავკასიური ჯიხვი, ბეგობანა და თუნდაც მურა დათვი. ეს არის ხელუხლებელი ველური ბუნების ლაშქრობა თავისი საუკეთესო გამოვლინებით.",
     "highlights": [
-      "Dramatic Abano Pass road (2926m)",
-      "Ancient fortified Tush villages",
-      "Tusheti National Park wilderness",
-      "East Caucasian tur and bearded vultures",
-      "Camping under star-filled skies"
+      "აბანოს უღელტეხილის თვალბრიალი გზა (2926მ)",
+      "უძველესი გამაგრებული თუშური სოფლები",
+      "თუშეთის ეროვნული პარკის ველური ბუნება",
+      "აღმოსავლეთ კავკასიური ჯიხვი და ბეგობანა",
+      "ვარსკვლავებიანი ცის ქვეშ კემპინგი"
     ],
     "included": [
-      "Expert mountain guide",
-      "All camping equipment",
-      "All meals and cooking",
-      "4WD transport over Abano Pass",
-      "Pack horses for gear"
+      "ექსპერტი მთის გიდი",
+      "სრული საკემპინგე აღჭურვილობა",
+      "ყველა კვება და საჭმლის მომზადება",
+      "4WD ტრანსპორტი აბანოს უღელტეხილზე",
+      "საჯდომი ცხენები აღჭურვილობისთვის"
     ],
     "notIncluded": [
-      "Transport to/from Tbilisi to Alvani",
-      "Travel insurance (required)",
-      "Sleeping bag (can be rented)",
-      "Personal items",
-      "Tips"
+      "ტრანსპორტი თბილისიდან ალვანამდე",
+      "სამოგზაურო დაზღვევა (სავალდებულო)",
+      "საძილე ტომარა (ქირავდება)",
+      "პირადი ნივთები",
+      "ჩაის ფული"
     ],
     "images": [
       "https://picsum.photos/seed/tusheti1/800/500",
@@ -128,11 +128,11 @@
     ],
     "heroImage": "https://picsum.photos/seed/tusheti-hero/1600/900",
     "cardImage": "https://picsum.photos/seed/tusheti-card/600/400",
-    "region": "Tusheti"
+    "region": "თუშეთი"
   },
   {
     "id": "tbilisi-walking-tour",
-    "name": "Tbilisi Old Town Walking Tour",
+    "name": "თბილისის ძველი ქალაქის საფეხმავლო ტური",
     "type": "cultural",
     "duration": "1 day",
     "distance": "8 km",
@@ -141,27 +141,27 @@
     "groupSize": "4-16",
     "price": 45,
     "featured": false,
-    "summary": "Discover Tbilisi's enchanting Old Town — sulfur baths, winding streets, ancient churches, and vibrant markets.",
-    "description": "Tbilisi is one of the world's most captivating capitals, where ancient history blends with a thriving modern culture. This full-day walking tour takes you through the heart of the Old Town, from the sulfur baths of Abanotubani to the hilltop Narikala Fortress. You'll wander through the charming streets of Shardeni and Erekle II, visit the stunning Anchiskhati Basilica (6th century), and explore the bustling Dry Bridge Market. Along the way, your guide shares stories of Tbilisi's 1500-year history, its diverse religious heritage, and its famous hospitality. The tour includes wine tasting at a traditional marani (cellar) and a traditional Georgian lunch.",
+    "summary": "აღმოაჩინეთ თბილისის მომაჯადოებელი ძველი ქალაქი — გოგირდის აბანოები, ხვეული ქუჩები, უძველესი ეკლესიები და ხალხმრავალი ბაზრები.",
+    "description": "თბილისი მსოფლიოს ერთ-ერთი ყველაზე მომხიბლავი დედაქალაქია, სადაც უძველესი ისტორია აყვავებულ თანამედროვე კულტურას ერწყმის. ეს სრულდღიანი საფეხმავლო ტური ძველი ქალაქის გულში გაგიძღვებათ — აბანოთუბნის გოგირდის აბანოებიდან ნარიყალას ციხესიმაგრის მწვერვალამდე. შარდენისა და ერეკლე II-ის მომხიბლავ ქუჩებში გაისეირნებთ, მე-6 საუკუნის ანჩისხატის ბაზილიკას მოინახულებთ და ხმაურიან მშრალი ხიდის ბაზარს აღმოაჩენთ. გზაზე გიდი თბილისის 1500-წლიან ისტორიას, მის მრავალფეროვან რელიგიურ მემკვიდრეობასა და განთქმულ სტუმართმოყვარეობას მოგიყვებათ. ტური მოიცავს ღვინის დეგუსტაციას ტრადიციულ მარანში და ქართულ ტრადიციულ სადილს.",
     "highlights": [
-      "Abanotubani sulfur bath district",
-      "Narikala Fortress panoramic views",
-      "6th-century Anchiskhati Basilica",
-      "Dry Bridge flea market",
-      "Traditional wine tasting and Georgian lunch"
+      "აბანოთუბნის გოგირდის აბანოების უბანი",
+      "ნარიყალას ციხესიმაგრის პანორამული ხედები",
+      "მე-6 საუკუნის ანჩისხატის ბაზილიკა",
+      "მშრალი ხიდის ბაზრობა",
+      "ტრადიციული ღვინის დეგუსტაცია და ქართული სადილი"
     ],
     "included": [
-      "Professional cultural guide",
-      "Traditional Georgian lunch",
-      "Wine tasting (3 wines)",
-      "Cable car to Narikala",
-      "All entrance fees"
+      "პროფესიონალი კულტურის გიდი",
+      "ტრადიციული ქართული სადილი",
+      "ღვინის დეგუსტაცია (3 ღვინო)",
+      "საბაგირო ნარიყალამდე",
+      "ყველა შესასვლელის ბილეთი"
     ],
     "notIncluded": [
-      "Hotel pickup/dropoff",
-      "Additional food and drinks",
-      "Shopping expenses",
-      "Tips"
+      "სასტუმროდან წამოყვანა/დაბრუნება",
+      "დამატებითი საჭმელი და სასმელი",
+      "საყიდლების ხარჯები",
+      "ჩაის ფული"
     ],
     "images": [
       "https://picsum.photos/seed/tbilisi1/800/500",
@@ -171,11 +171,11 @@
     ],
     "heroImage": "https://picsum.photos/seed/tbilisi-hero/1600/900",
     "cardImage": "https://picsum.photos/seed/tbilisi-card/600/400",
-    "region": "Tbilisi"
+    "region": "თბილისი"
   },
   {
     "id": "shatili-cultural",
-    "name": "Shatili Fortress Village Tour",
+    "name": "შატილის ციხე-სოფლის ტური",
     "type": "cultural",
     "duration": "2 days",
     "distance": "15 km",
@@ -184,27 +184,27 @@
     "groupSize": "4-10",
     "price": 195,
     "featured": false,
-    "summary": "Step back in time at Shatili, a breathtaking medieval fortress village in the Khevsureti mountains.",
-    "description": "Shatili is one of Georgia's most extraordinary historical sites — a fortified village of interconnected stone towers clinging to a mountainside in the remote Arghun Valley. This two-day cultural tour combines moderate hiking with deep cultural immersion. On day one, you'll explore the abandoned fortress village with its maze-like passages and towers dating back to the 7th century, learning about the fierce Khevsur warriors who defended these mountains. Day two features a hike to the eerie Anatori crypts and the surrounding highland meadows. Overnight stay in a restored tower guesthouse with traditional Khevsur dinner.",
+    "summary": "გადადით წარსულში შატილში — შუა საუკუნეების თვალწარმტაცი ციხე-სოფელი ხევსურეთის მთებში.",
+    "description": "შატილი საქართველოს ერთ-ერთი ყველაზე განსაკუთრებული ისტორიული ძეგლია — გამაგრებული სოფელი ერთმანეთთან დაკავშირებული ქვის კოშკებით, რომლებიც არღუნის ხეობაში მთის ფერდობს ეკვრის. ეს ორდღიანი კულტურული ტური საშუალო სირთულის ლაშქრობასა და ღრმა კულტურულ ჩაძირვას აერთიანებს. პირველ დღეს მიტოვებულ ციხე-სოფელს შეისწავლით — მისი ლაბირინთისებური გადასასვლელებითა და მე-7 საუკუნის კოშკებით, შეიტყობთ მამაცი ხევსური მეომრების შესახებ, რომლებიც ამ მთებს იცავდნენ. მეორე დღეს ანატორის უძველეს კრიპტებთან და მიმდებარე მთის მდელოებზე ლაშქრობა გელით. ღამეს აღდგენილ კოშკის სასტუმრო სახლში გაატარებთ ტრადიციული ხევსურული ვახშმით.",
     "highlights": [
-      "Medieval fortress village of Shatili",
-      "Khevsur warrior history and traditions",
-      "Anatori ancient crypts",
-      "Overnight in a restored tower",
-      "Traditional Khevsur cuisine"
+      "შუა საუკუნეების ციხე-სოფელი შატილი",
+      "ხევსური მეომრების ისტორია და ტრადიციები",
+      "ანატორის უძველესი კრიპტები",
+      "ღამისთევა აღდგენილ კოშკში",
+      "ტრადიციული ხევსურული სამზარეულო"
     ],
     "included": [
-      "Cultural guide with local expertise",
-      "1 night tower guesthouse",
-      "All meals",
-      "4WD transport from Tbilisi",
-      "Village entrance fees"
+      "კულტურის გიდი ადგილობრივი ექსპერტიზით",
+      "1 ღამის განთავსება კოშკის სასტუმრო სახლში",
+      "ყველა კვება",
+      "4WD ტრანსპორტი თბილისიდან",
+      "სოფელში შესასვლელის ბილეთები"
     ],
     "notIncluded": [
-      "Travel insurance",
-      "Personal items",
-      "Alcoholic beverages",
-      "Tips"
+      "სამოგზაურო დაზღვევა",
+      "პირადი ნივთები",
+      "ალკოჰოლური სასმელები",
+      "ჩაის ფული"
     ],
     "images": [
       "https://picsum.photos/seed/shatili1/800/500",
@@ -214,11 +214,11 @@
     ],
     "heroImage": "https://picsum.photos/seed/shatili-hero/1600/900",
     "cardImage": "https://picsum.photos/seed/shatili-card/600/400",
-    "region": "Khevsureti"
+    "region": "ხევსურეთი"
   },
   {
     "id": "juta-valley",
-    "name": "Juta Valley & Chaukhi Pass",
+    "name": "ჯუთის ხეობა და ჩაუხის უღელტეხილი",
     "type": "day",
     "duration": "1 day",
     "distance": "16 km",
@@ -227,27 +227,27 @@
     "groupSize": "4-10",
     "price": 95,
     "featured": true,
-    "summary": "Hike through the stunning Juta Valley to the foot of the dramatic Chaukhi rock massif — Georgia's Dolomites.",
-    "description": "The Juta Valley hike is a spectacular day trek to one of the most dramatic mountain landscapes in the Caucasus. Starting from the tiny village of Juta (2165m), the trail follows the Juta River through a vast U-shaped valley flanked by towering peaks. The destination is the base of the Chaukhi Massif, a wall of jagged rock spires often compared to the Italian Dolomites. The final push to Chaukhi Pass (3338m) rewards with views deep into the Pirikita Valley. In summer, the meadows are ablaze with wildflowers, and the area is home to herds of horses and the occasional golden eagle overhead.",
+    "summary": "ალაშქრეთ ჯუთის თვალწარმტაც ხეობაში ჩაუხის კლდოვანი მასივის ძირამდე — საქართველოს დოლომიტები.",
+    "description": "ჯუთის ხეობის ლაშქრობა კავკასიის ერთ-ერთი ყველაზე თვალწარმტაცი ერთდღიანი მარშრუტია. პატარა ჯუთის სოფლიდან (2165მ) დაწყებული, ბილიკი ჯუთის მდინარის გაყოლებით მიდის ვრცელ U-ფორმის ხეობაში, რომელიც მაღალი მწვერვალებით არის შემოზღუდული. დანიშნულების ადგილი ჩაუხის მასივის ძირია — თლილი კლდოვანი ქიმების კედელი, რომელსაც ხშირად იტალიის დოლომიტებს ადარებენ. საბოლოო ასვლა ჩაუხის უღელტეხილზე (3338მ) პირიქითის ხეობის სიღრმეში ჩახედვით ჯილდოვდება. ზაფხულში მდელოები ველური ყვავილებით ანთია, ხოლო ტერიტორიაზე ველურ ცხენებსა და ოქროს არწივებს ნახავთ.",
     "highlights": [
-      "Dramatic Chaukhi rock massif",
-      "Juta Valley wildflower meadows",
-      "Chaukhi Pass at 3338m",
-      "Views into Pirikita Valley",
-      "Wild horses and golden eagles"
+      "ჩაუხის თვალწარმტაცი კლდოვანი მასივი",
+      "ჯუთის ხეობის ველური ყვავილების მდელოები",
+      "ჩაუხის უღელტეხილი 3338მ სიმაღლეზე",
+      "პირიქითის ხეობის ხედები",
+      "ველური ცხენები და ოქროს არწივები"
     ],
     "included": [
-      "Professional mountain guide",
-      "Transport from Tbilisi",
-      "Lunch and trail snacks",
-      "Hot drinks at Juta",
-      "First aid kit"
+      "პროფესიონალი მთის გიდი",
+      "ტრანსპორტი თბილისიდან",
+      "სადილი და საგზაო წასახემსებელი",
+      "ცხელი სასმელები ჯუთაში",
+      "პირველადი დახმარების ნაკრები"
     ],
     "notIncluded": [
-      "Travel insurance",
-      "Personal hiking gear",
-      "Alcoholic beverages",
-      "Tips"
+      "სამოგზაურო დაზღვევა",
+      "პირადი სალაშქრო აღჭურვილობა",
+      "ალკოჰოლური სასმელები",
+      "ჩაის ფული"
     ],
     "images": [
       "https://picsum.photos/seed/juta1/800/500",
@@ -257,6 +257,6 @@
     ],
     "heroImage": "https://picsum.photos/seed/juta-hero/1600/900",
     "cardImage": "https://picsum.photos/seed/juta-card/600/400",
-    "region": "Mtskheta-Mtianeti"
+    "region": "მცხეთა-მთიანეთი"
   }
 ]

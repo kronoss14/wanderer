@@ -2,7 +2,7 @@
   <a href="/hikes/<%= hike.id %>" class="hike-card-link">
     <div class="hike-card-image">
       <img src="<%= hike.cardImage %>" alt="<%= hike.name %>" loading="lazy">
-      <span class="hike-card-badge badge-<%= hike.type %>"><%= hike.type === 'multi-day' ? 'Multi-Day' : hike.type.charAt(0).toUpperCase() + hike.type.slice(1) %></span>
+      <span class="hike-card-badge badge-<%= hike.type %>"><%= hike.type === 'day' ? 'ერთდღიანი' : hike.type === 'multi-day' ? 'მრავალდღიანი' : 'კულტურული' %></span>
       <div class="hike-card-overlay"></div>
     </div>
     <div class="hike-card-body">
@@ -18,7 +18,7 @@
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
           <%= hike.difficulty %>
         </span>
-        <span class="meta-item price">From $<%= hike.price %></span>
+        <span class="meta-item price">$<%= hike.price %>-დან</span>
       </div>
     </div>
   </a>

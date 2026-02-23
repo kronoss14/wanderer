@@ -3,8 +3,8 @@
   <div class="page-hero-bg" style="background-image: url('https://picsum.photos/seed/reviews-hero/1920/600')"></div>
   <div class="page-hero-overlay"></div>
   <div class="page-hero-content container">
-    <h1>Hiker <span class="text-accent">Reviews</span></h1>
-    <p>Real stories from real adventurers who explored Georgia with Wanderer.</p>
+    <h1>მოლაშქრეთა <span class="text-accent">შეფასებები</span></h1>
+    <p>ნამდვილი ისტორიები ნამდვილი მოგზაურებისგან, რომლებმაც საქართველო Wanderer-ით აღმოაჩინეს.</p>
   </div>
 </section>
 
@@ -19,14 +19,14 @@
             <svg class="star" width="24" height="24" viewBox="0 0 24 24" fill="<%= i < Math.round(avgRating) ? '#F59E0B' : 'none' %>" stroke="<%= i < Math.round(avgRating) ? '#F59E0B' : '#718096' %>" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
           <% } %>
         </div>
-        <p class="rating-count">Based on <%= reviews.length %> reviews</p>
+        <p class="rating-count"><%= reviews.length %> შეფასების საფუძველზე</p>
       </div>
       <div class="rating-breakdown">
         <% for (let stars = 5; stars >= 1; stars--) { %>
           <% const count = reviews.filter(r => r.rating === stars).length; %>
           <% const pct = reviews.length ? (count / reviews.length * 100) : 0; %>
           <div class="rating-bar-row">
-            <span class="rating-bar-label"><%= stars %> star<%= stars !== 1 ? 's' : '' %></span>
+            <span class="rating-bar-label"><%= stars %> ვარსკვლავი</span>
             <div class="rating-bar">
               <div class="rating-bar-fill" style="width: <%= pct %>%"></div>
             </div>

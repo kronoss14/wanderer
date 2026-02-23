@@ -3,8 +3,8 @@
   <div class="page-hero-bg" style="background-image: url('https://picsum.photos/seed/booking-hero/1920/600')"></div>
   <div class="page-hero-overlay"></div>
   <div class="page-hero-content container">
-    <h1>Pricing & <span class="text-accent">Booking</span></h1>
-    <p>Transparent pricing, flexible options, and easy booking for your Georgian adventure.</p>
+    <h1>ფასები და <span class="text-accent">ჯავშანი</span></h1>
+    <p>გამჭვირვალე ფასები, მოქნილი პირობები და მარტივი ჯავშანი თქვენი ქართული თავგადასავლისთვის.</p>
   </div>
 </section>
 
@@ -12,13 +12,13 @@
 <section class="section">
   <div class="container">
     <div class="text-center" style="margin-bottom: 3rem;">
-      <h2 class="section-title">Choose Your <span class="text-accent">Adventure</span></h2>
-      <p class="section-subtitle centered">All prices are per person. Group discounts available for 6+ travelers.</p>
+      <h2 class="section-title">აირჩიეთ თქვენი <span class="text-accent">თავგადასავალი</span></h2>
+      <p class="section-subtitle centered">ყველა ფასი თითო ადამიანზეა. 6+ მოგზაურისთვის ჯგუფური ფასდაკლება მოქმედებს.</p>
     </div>
     <div class="pricing-grid">
       <% pricing.forEach(tier => { %>
         <div class="pricing-card<%= tier.highlighted ? ' pricing-highlighted' : '' %>">
-          <% if (tier.highlighted) { %><span class="pricing-badge">Most Popular</span><% } %>
+          <% if (tier.highlighted) { %><span class="pricing-badge">ყველაზე პოპულარული</span><% } %>
           <h3 class="pricing-tier"><%= tier.tier %></h3>
           <div class="pricing-price">
             <span class="pricing-amount"><%= tier.priceLabel %></span>
@@ -45,68 +45,68 @@
   <div class="container" style="max-width: 700px;">
     <% if (success) { %>
       <div class="success-message">
-        <h3>Inquiry Received!</h3>
-        <p>Thank you for your booking inquiry. We'll send you a detailed quote and availability within 24 hours.</p>
+        <h3>მოთხოვნა მიღებულია!</h3>
+        <p>გმადლობთ ჯავშნის მოთხოვნისთვის. 24 საათის განმავლობაში გამოგიგზავნით დეტალურ შეთავაზებას და ხელმისაწვდომობის ინფორმაციას.</p>
       </div>
     <% } %>
     <div class="text-center" style="margin-bottom: 2.5rem;">
-      <h2 class="section-title">Book Your <span class="text-accent">Adventure</span></h2>
-      <p class="section-subtitle centered">Fill out the form below and we'll get back to you with availability and a detailed quote.</p>
+      <h2 class="section-title">დაჯავშნეთ თქვენი <span class="text-accent">თავგადასავალი</span></h2>
+      <p class="section-subtitle centered">შეავსეთ ქვემოთ მოცემული ფორმა და ჩვენ ხელმისაწვდომობისა და დეტალური შეთავაზების შესახებ გიპასუხებთ.</p>
     </div>
     <form action="/booking" method="POST" class="booking-form" id="booking-form-el" novalidate>
       <div class="form-row">
         <div class="form-group">
-          <label class="form-label" for="b-name">Your Name *</label>
+          <label class="form-label" for="b-name">თქვენი სახელი *</label>
           <input type="text" id="b-name" name="name" class="form-input" required>
-          <p class="form-error">Please enter your name.</p>
+          <p class="form-error">გთხოვთ, შეიყვანოთ სახელი.</p>
         </div>
         <div class="form-group">
-          <label class="form-label" for="b-email">Email Address *</label>
+          <label class="form-label" for="b-email">ელ. ფოსტა *</label>
           <input type="email" id="b-email" name="email" class="form-input" required>
-          <p class="form-error">Please enter a valid email.</p>
+          <p class="form-error">გთხოვთ, შეიყვანოთ სწორი ელ. ფოსტა.</p>
         </div>
       </div>
       <div class="form-row">
         <div class="form-group">
-          <label class="form-label" for="b-phone">Phone Number</label>
+          <label class="form-label" for="b-phone">ტელეფონის ნომერი</label>
           <input type="tel" id="b-phone" name="phone" class="form-input">
         </div>
         <div class="form-group">
-          <label class="form-label" for="b-group">Group Size *</label>
+          <label class="form-label" for="b-group">ჯგუფის ზომა *</label>
           <select id="b-group" name="groupSize" class="form-select" required>
-            <option value="">Select...</option>
-            <option value="1">1 person</option>
-            <option value="2">2 people</option>
-            <option value="3-4">3-4 people</option>
-            <option value="5-8">5-8 people</option>
-            <option value="9+">9+ people</option>
+            <option value="">აირჩიეთ...</option>
+            <option value="1">1 ადამიანი</option>
+            <option value="2">2 ადამიანი</option>
+            <option value="3-4">3-4 ადამიანი</option>
+            <option value="5-8">5-8 ადამიანი</option>
+            <option value="9+">9+ ადამიანი</option>
           </select>
-          <p class="form-error">Please select a group size.</p>
+          <p class="form-error">გთხოვთ, აირჩიოთ ჯგუფის ზომა.</p>
         </div>
       </div>
       <div class="form-row">
         <div class="form-group">
-          <label class="form-label" for="b-hike">Preferred Hike *</label>
+          <label class="form-label" for="b-hike">სასურველი ლაშქრობა *</label>
           <select id="b-hike" name="hikeId" class="form-select" required>
-            <option value="">Select a hike...</option>
+            <option value="">აირჩიეთ ლაშქრობა...</option>
             <% hikes.forEach(h => { %>
               <option value="<%= h.id %>"><%= h.name %> ($<%= h.price %>)</option>
             <% }) %>
-            <option value="custom">Custom Tour (Request Quote)</option>
+            <option value="custom">ინდივიდუალური ტური (შეთავაზების მოთხოვნა)</option>
           </select>
-          <p class="form-error">Please select a hike.</p>
+          <p class="form-error">გთხოვთ, აირჩიოთ ლაშქრობა.</p>
         </div>
         <div class="form-group">
-          <label class="form-label" for="b-date">Preferred Date *</label>
+          <label class="form-label" for="b-date">სასურველი თარიღი *</label>
           <input type="date" id="b-date" name="preferredDate" class="form-input" required>
-          <p class="form-error">Please select a date.</p>
+          <p class="form-error">გთხოვთ, აირჩიოთ თარიღი.</p>
         </div>
       </div>
       <div class="form-group">
-        <label class="form-label" for="b-message">Additional Notes</label>
-        <textarea id="b-message" name="message" class="form-textarea" rows="4" placeholder="Tell us about any special requirements, dietary needs, or questions..."></textarea>
+        <label class="form-label" for="b-message">დამატებითი შენიშვნები</label>
+        <textarea id="b-message" name="message" class="form-textarea" rows="4" placeholder="მოგვიყევით სპეციალური მოთხოვნების, დიეტური საჭიროებების ან კითხვების შესახებ..."></textarea>
       </div>
-      <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center;">Submit Booking Inquiry</button>
+      <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center;">ჯავშნის მოთხოვნის გაგზავნა</button>
     </form>
   </div>
 </section>
