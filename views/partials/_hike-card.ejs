@@ -1,0 +1,25 @@
+<article class="hike-card">
+  <a href="/hikes/<%= hike.id %>" class="hike-card-link">
+    <div class="hike-card-image">
+      <img src="<%= hike.cardImage %>" alt="<%= hike.name %>" loading="lazy">
+      <span class="hike-card-badge badge-<%= hike.type %>"><%= hike.type === 'multi-day' ? 'Multi-Day' : hike.type.charAt(0).toUpperCase() + hike.type.slice(1) %></span>
+      <div class="hike-card-overlay"></div>
+    </div>
+    <div class="hike-card-body">
+      <h3 class="hike-card-title"><%= hike.name %></h3>
+      <p class="hike-card-region"><%= hike.region %></p>
+      <p class="hike-card-summary"><%= hike.summary %></p>
+      <div class="hike-card-meta">
+        <span class="meta-item">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          <%= hike.duration %>
+        </span>
+        <span class="meta-item">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+          <%= hike.difficulty %>
+        </span>
+        <span class="meta-item price">From $<%= hike.price %></span>
+      </div>
+    </div>
+  </a>
+</article>

@@ -1,0 +1,44 @@
+<!-- PAGE HERO -->
+<section class="page-hero">
+  <div class="page-hero-bg" style="background-image: url('https://picsum.photos/seed/gallery-hero/1920/600')"></div>
+  <div class="page-hero-overlay"></div>
+  <div class="page-hero-content container">
+    <h1>Photo <span class="text-accent">Gallery</span></h1>
+    <p>Landscapes, culture, and adventure — see Georgia through our lens.</p>
+  </div>
+</section>
+
+<!-- GALLERY GRID -->
+<section class="section">
+  <div class="container">
+    <div class="filter-bar" id="gallery-filters">
+      <button class="filter-btn active" data-filter="all">All</button>
+      <button class="filter-btn" data-filter="landscapes">Landscapes</button>
+      <button class="filter-btn" data-filter="hiking">Hiking</button>
+      <button class="filter-btn" data-filter="culture">Culture</button>
+    </div>
+    <div class="gallery-grid" id="gallery-grid">
+      <% gallery.forEach(item => { %>
+        <%- include('../partials/_gallery-item', { item }) %>
+      <% }) %>
+    </div>
+  </div>
+</section>
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox" role="dialog" aria-hidden="true">
+  <button class="lightbox-close" aria-label="Close">&times;</button>
+  <button class="lightbox-prev" aria-label="Previous">
+    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+  </button>
+  <div class="lightbox-content">
+    <img src="" alt="" id="lightbox-img">
+    <div class="lightbox-caption">
+      <h4 id="lightbox-title"></h4>
+      <p id="lightbox-location"></p>
+    </div>
+  </div>
+  <button class="lightbox-next" aria-label="Next">
+    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+  </button>
+</div>

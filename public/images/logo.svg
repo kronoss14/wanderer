@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="48" height="48">
+  <defs>
+    <linearGradient id="mountain-grad" x1="0" y1="1" x2="1" y2="0">
+      <stop offset="0%" stop-color="#E8811A"/>
+      <stop offset="100%" stop-color="#F59E0B"/>
+    </linearGradient>
+  </defs>
+  <!-- Mountain peaks -->
+  <path d="M4 38 L16 12 L24 24 L32 8 L44 38 Z" fill="url(#mountain-grad)" opacity="0.9"/>
+  <!-- Snow caps -->
+  <path d="M14 16 L16 12 L18 16 Z" fill="#F5F5F5" opacity="0.8"/>
+  <path d="M30 12 L32 8 L34 12 Z" fill="#F5F5F5" opacity="0.8"/>
+  <!-- Trail path -->
+  <path d="M8 36 Q18 28 24 32 Q30 36 40 30" fill="none" stroke="#10B981" stroke-width="2" stroke-linecap="round" stroke-dasharray="4 3"/>
+</svg>

@@ -1,0 +1,26 @@
+[
+  {
+    "id": 1,
+    "name": "Giorgi Khachidze",
+    "role": "Founder & Lead Guide",
+    "bio": "Born and raised in the shadow of Mount Kazbek, Giorgi founded Wanderer to share his lifelong passion for Georgia's mountains. With 15 years of guiding experience and certifications from the International Mountain Leaders Association, he has led over 500 treks across every region of the Caucasus. Giorgi speaks fluent English, Russian, and of course Georgian.",
+    "specialties": ["High-altitude trekking", "Mountain safety", "Photography"],
+    "image": "https://picsum.photos/seed/guide-giorgi/400/400"
+  },
+  {
+    "id": 2,
+    "name": "Nino Gelashvili",
+    "role": "Cultural Tour Specialist",
+    "bio": "Nino holds a degree in Georgian History from Tbilisi State University and has spent a decade leading cultural tours across Georgia. Her deep knowledge of Georgian architecture, traditions, wine-making, and cuisine makes every tour an immersive cultural experience. She specializes in Tbilisi, Kakheti, and Svaneti cultural programs.",
+    "specialties": ["Georgian history", "Wine culture", "Architecture"],
+    "image": "https://picsum.photos/seed/guide-nino/400/400"
+  },
+  {
+    "id": 3,
+    "name": "Dato Margvelashvili",
+    "role": "Mountain Guide",
+    "bio": "Dato grew up in Mestia, Svaneti, surrounded by 4000m peaks and medieval towers. A certified mountain guide and former member of the Georgian Alpine Club, he knows every trail, pass, and river crossing in the Greater Caucasus. His calm expertise and encyclopedic knowledge of local flora, fauna, and geology make him the perfect companion for challenging multi-day treks.",
+    "specialties": ["Alpine routes", "Wilderness survival", "Local flora & fauna"],
+    "image": "https://picsum.photos/seed/guide-dato/400/400"
+  }
+]

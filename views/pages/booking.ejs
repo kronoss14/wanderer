@@ -1,0 +1,112 @@
+<!-- PAGE HERO -->
+<section class="page-hero">
+  <div class="page-hero-bg" style="background-image: url('https://picsum.photos/seed/booking-hero/1920/600')"></div>
+  <div class="page-hero-overlay"></div>
+  <div class="page-hero-content container">
+    <h1>Pricing & <span class="text-accent">Booking</span></h1>
+    <p>Transparent pricing, flexible options, and easy booking for your Georgian adventure.</p>
+  </div>
+</section>
+
+<!-- PRICING TIERS -->
+<section class="section">
+  <div class="container">
+    <div class="text-center" style="margin-bottom: 3rem;">
+      <h2 class="section-title">Choose Your <span class="text-accent">Adventure</span></h2>
+      <p class="section-subtitle centered">All prices are per person. Group discounts available for 6+ travelers.</p>
+    </div>
+    <div class="pricing-grid">
+      <% pricing.forEach(tier => { %>
+        <div class="pricing-card<%= tier.highlighted ? ' pricing-highlighted' : '' %>">
+          <% if (tier.highlighted) { %><span class="pricing-badge">Most Popular</span><% } %>
+          <h3 class="pricing-tier"><%= tier.tier %></h3>
+          <div class="pricing-price">
+            <span class="pricing-amount"><%= tier.priceLabel %></span>
+            <span class="pricing-unit"><%= tier.unit %></span>
+          </div>
+          <p class="pricing-desc"><%= tier.description %></p>
+          <ul class="pricing-features">
+            <% tier.features.forEach(f => { %>
+              <li>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--accent-emerald)" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                <%= f %>
+              </li>
+            <% }) %>
+          </ul>
+          <a href="#booking-form" class="btn <%= tier.highlighted ? 'btn-primary' : 'btn-secondary' %>" style="width:100%;justify-content:center;"><%= tier.cta %></a>
+        </div>
+      <% }) %>
+    </div>
+  </div>
+</section>
+
+<!-- BOOKING FORM -->
+<section class="section section-dark" id="booking-form">
+  <div class="container" style="max-width: 700px;">
+    <% if (success) { %>
+      <div class="success-message">
+        <h3>Inquiry Received!</h3>
+        <p>Thank you for your booking inquiry. We'll send you a detailed quote and availability within 24 hours.</p>
+      </div>
+    <% } %>
+    <div class="text-center" style="margin-bottom: 2.5rem;">
+      <h2 class="section-title">Book Your <span class="text-accent">Adventure</span></h2>
+      <p class="section-subtitle centered">Fill out the form below and we'll get back to you with availability and a detailed quote.</p>
+    </div>
+    <form action="/booking" method="POST" class="booking-form" id="booking-form-el" novalidate>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label" for="b-name">Your Name *</label>
+          <input type="text" id="b-name" name="name" class="form-input" required>
+          <p class="form-error">Please enter your name.</p>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="b-email">Email Address *</label>
+          <input type="email" id="b-email" name="email" class="form-input" required>
+          <p class="form-error">Please enter a valid email.</p>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label" for="b-phone">Phone Number</label>
+          <input type="tel" id="b-phone" name="phone" class="form-input">
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="b-group">Group Size *</label>
+          <select id="b-group" name="groupSize" class="form-select" required>
+            <option value="">Select...</option>
+            <option value="1">1 person</option>
+            <option value="2">2 people</option>
+            <option value="3-4">3-4 people</option>
+            <option value="5-8">5-8 people</option>
+            <option value="9+">9+ people</option>
+          </select>
+          <p class="form-error">Please select a group size.</p>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label" for="b-hike">Preferred Hike *</label>
+          <select id="b-hike" name="hikeId" class="form-select" required>
+            <option value="">Select a hike...</option>
+            <% hikes.forEach(h => { %>
+              <option value="<%= h.id %>"><%= h.name %> ($<%= h.price %>)</option>
+            <% }) %>
+            <option value="custom">Custom Tour (Request Quote)</option>
+          </select>
+          <p class="form-error">Please select a hike.</p>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="b-date">Preferred Date *</label>
+          <input type="date" id="b-date" name="preferredDate" class="form-input" required>
+          <p class="form-error">Please select a date.</p>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="b-message">Additional Notes</label>
+        <textarea id="b-message" name="message" class="form-textarea" rows="4" placeholder="Tell us about any special requirements, dietary needs, or questions..."></textarea>
+      </div>
+      <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center;">Submit Booking Inquiry</button>
+    </form>
+  </div>
+</section>

@@ -1,0 +1,262 @@
+[
+  {
+    "id": "kazbegi-gergeti",
+    "name": "Kazbegi & Gergeti Trinity Church",
+    "type": "day",
+    "duration": "1 day",
+    "distance": "12 km",
+    "difficulty": "Moderate",
+    "elevation": "2170m",
+    "groupSize": "4-12",
+    "price": 85,
+    "featured": true,
+    "summary": "Hike to the iconic Gergeti Trinity Church perched at 2170m with stunning views of Mount Kazbek.",
+    "description": "This unforgettable day hike takes you from the town of Stepantsminda up to the legendary Gergeti Trinity Church, a 14th-century Georgian Orthodox church dramatically situated against the backdrop of Mount Kazbek (5047m). The trail winds through alpine meadows filled with wildflowers in summer, crossing small streams and passing shepherd camps. At the top, the panoramic views of the Greater Caucasus range are breathtaking. On clear days, the glacier-capped summit of Kazbek towers above, creating one of the most photographed scenes in all of Georgia.",
+    "highlights": [
+      "14th-century Gergeti Trinity Church at 2170m",
+      "Panoramic views of Mount Kazbek (5047m)",
+      "Alpine meadows and wildflower fields",
+      "Traditional shepherd camps along the trail",
+      "Photo opportunities at every turn"
+    ],
+    "included": [
+      "Professional English-speaking guide",
+      "Transport from Tbilisi",
+      "Lunch and snacks",
+      "Entrance fees",
+      "First aid kit"
+    ],
+    "notIncluded": [
+      "Travel insurance",
+      "Personal hiking gear",
+      "Alcoholic beverages",
+      "Tips for the guide"
+    ],
+    "images": [
+      "https://picsum.photos/seed/kazbegi1/800/500",
+      "https://picsum.photos/seed/kazbegi2/800/500",
+      "https://picsum.photos/seed/kazbegi3/800/500",
+      "https://picsum.photos/seed/kazbegi4/800/500"
+    ],
+    "heroImage": "https://picsum.photos/seed/kazbegi-hero/1600/900",
+    "cardImage": "https://picsum.photos/seed/kazbegi-card/600/400",
+    "region": "Mtskheta-Mtianeti"
+  },
+  {
+    "id": "mestia-ushguli",
+    "name": "Mestia to Ushguli Trek",
+    "type": "multi-day",
+    "duration": "4 days",
+    "distance": "58 km",
+    "difficulty": "Challenging",
+    "elevation": "2960m",
+    "groupSize": "4-8",
+    "price": 450,
+    "featured": true,
+    "summary": "The crown jewel of Georgian trekking — traverse Svaneti's dramatic valleys to Europe's highest continuously inhabited village.",
+    "description": "The Mestia to Ushguli trek is widely regarded as the finest multi-day hike in the Caucasus. Over four days, you'll traverse the heart of Upper Svaneti, a UNESCO World Heritage region renowned for its medieval defensive towers and ancient traditions. The route passes through pristine valleys, crosses high mountain passes with views of Svaneti's 4000m+ peaks including Shkhara (Georgia's highest at 5193m), and visits remote villages that have changed little in centuries. Each night is spent in family-run guesthouses where you'll experience legendary Svan hospitality and cuisine. The trek culminates in Ushguli, at 2200m the highest continuously inhabited village in Europe.",
+    "highlights": [
+      "UNESCO World Heritage Svaneti towers",
+      "Views of Shkhara (5193m), Georgia's highest peak",
+      "Ushguli — Europe's highest inhabited village",
+      "Traditional Svan guesthouses and cuisine",
+      "River crossings and high alpine passes"
+    ],
+    "included": [
+      "Professional mountain guide",
+      "3 nights guesthouse accommodation",
+      "All meals during the trek",
+      "Luggage transfer between villages",
+      "Transport from/to Mestia"
+    ],
+    "notIncluded": [
+      "Transport to/from Mestia",
+      "Travel insurance (required)",
+      "Personal hiking equipment",
+      "Alcoholic beverages",
+      "Tips"
+    ],
+    "images": [
+      "https://picsum.photos/seed/ushguli1/800/500",
+      "https://picsum.photos/seed/ushguli2/800/500",
+      "https://picsum.photos/seed/ushguli3/800/500",
+      "https://picsum.photos/seed/ushguli4/800/500"
+    ],
+    "heroImage": "https://picsum.photos/seed/ushguli-hero/1600/900",
+    "cardImage": "https://picsum.photos/seed/ushguli-card/600/400",
+    "region": "Svaneti"
+  },
+  {
+    "id": "tusheti-trek",
+    "name": "Tusheti Wilderness Trek",
+    "type": "multi-day",
+    "duration": "5 days",
+    "distance": "65 km",
+    "difficulty": "Challenging",
+    "elevation": "3100m",
+    "groupSize": "4-8",
+    "price": 520,
+    "featured": false,
+    "summary": "Explore Georgia's most remote region — ancient villages, vast alpine meadows, and encounters with Tush shepherds.",
+    "description": "Tusheti is Georgia's wildest and most isolated region, accessible only from June to October via the dramatic Abano Pass road (2926m). This five-day trek takes you deep into the Tusheti National Park, connecting ancient fortified villages where Tush shepherds maintain traditions unchanged for millennia. You'll camp in flower-filled alpine meadows, ford crystal-clear rivers, and cross passes with 360-degree views of the Eastern Greater Caucasus. Wildlife encounters are common — look for East Caucasian tur, bearded vultures, and even brown bears. This is raw, untouched wilderness trekking at its finest.",
+    "highlights": [
+      "Dramatic Abano Pass road (2926m)",
+      "Ancient fortified Tush villages",
+      "Tusheti National Park wilderness",
+      "East Caucasian tur and bearded vultures",
+      "Camping under star-filled skies"
+    ],
+    "included": [
+      "Expert mountain guide",
+      "All camping equipment",
+      "All meals and cooking",
+      "4WD transport over Abano Pass",
+      "Pack horses for gear"
+    ],
+    "notIncluded": [
+      "Transport to/from Tbilisi to Alvani",
+      "Travel insurance (required)",
+      "Sleeping bag (can be rented)",
+      "Personal items",
+      "Tips"
+    ],
+    "images": [
+      "https://picsum.photos/seed/tusheti1/800/500",
+      "https://picsum.photos/seed/tusheti2/800/500",
+      "https://picsum.photos/seed/tusheti3/800/500",
+      "https://picsum.photos/seed/tusheti4/800/500"
+    ],
+    "heroImage": "https://picsum.photos/seed/tusheti-hero/1600/900",
+    "cardImage": "https://picsum.photos/seed/tusheti-card/600/400",
+    "region": "Tusheti"
+  },
+  {
+    "id": "tbilisi-walking-tour",
+    "name": "Tbilisi Old Town Walking Tour",
+    "type": "cultural",
+    "duration": "1 day",
+    "distance": "8 km",
+    "difficulty": "Easy",
+    "elevation": "480m",
+    "groupSize": "4-16",
+    "price": 45,
+    "featured": false,
+    "summary": "Discover Tbilisi's enchanting Old Town — sulfur baths, winding streets, ancient churches, and vibrant markets.",
+    "description": "Tbilisi is one of the world's most captivating capitals, where ancient history blends with a thriving modern culture. This full-day walking tour takes you through the heart of the Old Town, from the sulfur baths of Abanotubani to the hilltop Narikala Fortress. You'll wander through the charming streets of Shardeni and Erekle II, visit the stunning Anchiskhati Basilica (6th century), and explore the bustling Dry Bridge Market. Along the way, your guide shares stories of Tbilisi's 1500-year history, its diverse religious heritage, and its famous hospitality. The tour includes wine tasting at a traditional marani (cellar) and a traditional Georgian lunch.",
+    "highlights": [
+      "Abanotubani sulfur bath district",
+      "Narikala Fortress panoramic views",
+      "6th-century Anchiskhati Basilica",
+      "Dry Bridge flea market",
+      "Traditional wine tasting and Georgian lunch"
+    ],
+    "included": [
+      "Professional cultural guide",
+      "Traditional Georgian lunch",
+      "Wine tasting (3 wines)",
+      "Cable car to Narikala",
+      "All entrance fees"
+    ],
+    "notIncluded": [
+      "Hotel pickup/dropoff",
+      "Additional food and drinks",
+      "Shopping expenses",
+      "Tips"
+    ],
+    "images": [
+      "https://picsum.photos/seed/tbilisi1/800/500",
+      "https://picsum.photos/seed/tbilisi2/800/500",
+      "https://picsum.photos/seed/tbilisi3/800/500",
+      "https://picsum.photos/seed/tbilisi4/800/500"
+    ],
+    "heroImage": "https://picsum.photos/seed/tbilisi-hero/1600/900",
+    "cardImage": "https://picsum.photos/seed/tbilisi-card/600/400",
+    "region": "Tbilisi"
+  },
+  {
+    "id": "shatili-cultural",
+    "name": "Shatili Fortress Village Tour",
+    "type": "cultural",
+    "duration": "2 days",
+    "distance": "15 km",
+    "difficulty": "Moderate",
+    "elevation": "1400m",
+    "groupSize": "4-10",
+    "price": 195,
+    "featured": false,
+    "summary": "Step back in time at Shatili, a breathtaking medieval fortress village in the Khevsureti mountains.",
+    "description": "Shatili is one of Georgia's most extraordinary historical sites — a fortified village of interconnected stone towers clinging to a mountainside in the remote Arghun Valley. This two-day cultural tour combines moderate hiking with deep cultural immersion. On day one, you'll explore the abandoned fortress village with its maze-like passages and towers dating back to the 7th century, learning about the fierce Khevsur warriors who defended these mountains. Day two features a hike to the eerie Anatori crypts and the surrounding highland meadows. Overnight stay in a restored tower guesthouse with traditional Khevsur dinner.",
+    "highlights": [
+      "Medieval fortress village of Shatili",
+      "Khevsur warrior history and traditions",
+      "Anatori ancient crypts",
+      "Overnight in a restored tower",
+      "Traditional Khevsur cuisine"
+    ],
+    "included": [
+      "Cultural guide with local expertise",
+      "1 night tower guesthouse",
+      "All meals",
+      "4WD transport from Tbilisi",
+      "Village entrance fees"
+    ],
+    "notIncluded": [
+      "Travel insurance",
+      "Personal items",
+      "Alcoholic beverages",
+      "Tips"
+    ],
+    "images": [
+      "https://picsum.photos/seed/shatili1/800/500",
+      "https://picsum.photos/seed/shatili2/800/500",
+      "https://picsum.photos/seed/shatili3/800/500",
+      "https://picsum.photos/seed/shatili4/800/500"
+    ],
+    "heroImage": "https://picsum.photos/seed/shatili-hero/1600/900",
+    "cardImage": "https://picsum.photos/seed/shatili-card/600/400",
+    "region": "Khevsureti"
+  },
+  {
+    "id": "juta-valley",
+    "name": "Juta Valley & Chaukhi Pass",
+    "type": "day",
+    "duration": "1 day",
+    "distance": "16 km",
+    "difficulty": "Moderate",
+    "elevation": "3338m",
+    "groupSize": "4-10",
+    "price": 95,
+    "featured": true,
+    "summary": "Hike through the stunning Juta Valley to the foot of the dramatic Chaukhi rock massif — Georgia's Dolomites.",
+    "description": "The Juta Valley hike is a spectacular day trek to one of the most dramatic mountain landscapes in the Caucasus. Starting from the tiny village of Juta (2165m), the trail follows the Juta River through a vast U-shaped valley flanked by towering peaks. The destination is the base of the Chaukhi Massif, a wall of jagged rock spires often compared to the Italian Dolomites. The final push to Chaukhi Pass (3338m) rewards with views deep into the Pirikita Valley. In summer, the meadows are ablaze with wildflowers, and the area is home to herds of horses and the occasional golden eagle overhead.",
+    "highlights": [
+      "Dramatic Chaukhi rock massif",
+      "Juta Valley wildflower meadows",
+      "Chaukhi Pass at 3338m",
+      "Views into Pirikita Valley",
+      "Wild horses and golden eagles"
+    ],
+    "included": [
+      "Professional mountain guide",
+      "Transport from Tbilisi",
+      "Lunch and trail snacks",
+      "Hot drinks at Juta",
+      "First aid kit"
+    ],
+    "notIncluded": [
+      "Travel insurance",
+      "Personal hiking gear",
+      "Alcoholic beverages",
+      "Tips"
+    ],
+    "images": [
+      "https://picsum.photos/seed/juta1/800/500",
+      "https://picsum.photos/seed/juta2/800/500",
+      "https://picsum.photos/seed/juta3/800/500",
+      "https://picsum.photos/seed/juta4/800/500"
+    ],
+    "heroImage": "https://picsum.photos/seed/juta-hero/1600/900",
+    "cardImage": "https://picsum.photos/seed/juta-card/600/400",
+    "region": "Mtskheta-Mtianeti"
+  }
+]

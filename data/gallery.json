@@ -1,0 +1,98 @@
+[
+  {
+    "id": 1,
+    "category": "landscapes",
+    "title": "Mount Kazbek at Sunrise",
+    "location": "Stepantsminda",
+    "image": "https://picsum.photos/seed/gallery-kazbek/800/600",
+    "thumbnail": "https://picsum.photos/seed/gallery-kazbek/400/300"
+  },
+  {
+    "id": 2,
+    "category": "hiking",
+    "title": "Trekking to Chaukhi Pass",
+    "location": "Juta Valley",
+    "image": "https://picsum.photos/seed/gallery-chaukhi/800/600",
+    "thumbnail": "https://picsum.photos/seed/gallery-chaukhi/400/300"
+  },
+  {
+    "id": 3,
+    "category": "culture",
+    "title": "Svaneti Defense Towers",
+    "location": "Mestia",
+    "image": "https://picsum.photos/seed/gallery-towers/800/600",
+    "thumbnail": "https://picsum.photos/seed/gallery-towers/400/300"
+  },
+  {
+    "id": 4,
+    "category": "landscapes",
+    "title": "Ushguli Valley Panorama",
+    "location": "Upper Svaneti",
+    "image": "https://picsum.photos/seed/gallery-ushguli/800/600",
+    "thumbnail": "https://picsum.photos/seed/gallery-ushguli/400/300"
+  },
+  {
+    "id": 5,
+    "category": "hiking",
+    "title": "Crossing the Alpine Meadows",
+    "location": "Tusheti",
+    "image": "https://picsum.photos/seed/gallery-meadows/800/600",
+    "thumbnail": "https://picsum.photos/seed/gallery-meadows/400/300"
+  },
+  {
+    "id": 6,
+    "category": "culture",
+    "title": "Traditional Wine Making",
+    "location": "Kakheti",
+    "image": "https://picsum.photos/seed/gallery-wine/800/600",
+    "thumbnail": "https://picsum.photos/seed/gallery-wine/400/300"
+  },
+  {
+    "id": 7,
+    "category": "landscapes",
+    "title": "Gergeti Trinity Church",
+    "location": "Kazbegi",
+    "image": "https://picsum.photos/seed/gallery-gergeti/800/600",
+    "thumbnail": "https://picsum.photos/seed/gallery-gergeti/400/300"
+  },
+  {
+    "id": 8,
+    "category": "hiking",
+    "title": "River Crossing in Svaneti",
+    "location": "Mestia-Ushguli Trek",
+    "image": "https://picsum.photos/seed/gallery-river/800/600",
+    "thumbnail": "https://picsum.photos/seed/gallery-river/400/300"
+  },
+  {
+    "id": 9,
+    "category": "culture",
+    "title": "Shatili Fortress Village",
+    "location": "Khevsureti",
+    "image": "https://picsum.photos/seed/gallery-shatili/800/600",
+    "thumbnail": "https://picsum.photos/seed/gallery-shatili/400/300"
+  },
+  {
+    "id": 10,
+    "category": "landscapes",
+    "title": "Tusheti Autumn Colors",
+    "location": "Tusheti National Park",
+    "image": "https://picsum.photos/seed/gallery-autumn/800/600",
+    "thumbnail": "https://picsum.photos/seed/gallery-autumn/400/300"
+  },
+  {
+    "id": 11,
+    "category": "hiking",
+    "title": "Summit Push at Dawn",
+    "location": "Greater Caucasus",
+    "image": "https://picsum.photos/seed/gallery-summit/800/600",
+    "thumbnail": "https://picsum.photos/seed/gallery-summit/400/300"
+  },
+  {
+    "id": 12,
+    "category": "culture",
+    "title": "Old Tbilisi Streets",
+    "location": "Tbilisi",
+    "image": "https://picsum.photos/seed/gallery-tbilisi/800/600",
+    "thumbnail": "https://picsum.photos/seed/gallery-tbilisi/400/300"
+  }
+]
