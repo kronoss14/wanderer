@@ -313,6 +313,35 @@ body.admin-body {
 .flash-success { background: #ecfdf5; color: #065f46; border: 1px solid #a7f3d0; }
 .flash-error { background: #fef2f2; color: #991b1b; border: 1px solid #fca5a5; }
 
+/* Upload controls */
+.upload-wrap {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 0.35rem;
+}
+
+.upload-btn { flex-shrink: 0; }
+
+.upload-status {
+  font-size: 0.8rem;
+  color: var(--admin-text-muted);
+}
+
+.upload-status.upload-success { color: #065f46; }
+.upload-status.upload-error { color: var(--admin-danger); }
+
+.upload-preview {
+  display: block;
+  max-width: 200px;
+  max-height: 120px;
+  border-radius: var(--admin-radius);
+  border: 1px solid var(--admin-border);
+  margin-top: 0.25rem;
+  object-fit: cover;
+}
+
 /* Responsive */
 @media (max-width: 768px) {
   .admin-sidebar { width: 100%; position: relative; }

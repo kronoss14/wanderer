@@ -1,6 +1,8 @@
 import { Router } from 'express';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { readFileSync, writeFileSync, mkdirSync, existsSync } from 'node:fs';
+import { randomBytes } from 'node:crypto';
 import { readJSON, writeJSON } from '../helpers/data.js';
 import { checkPassword, setAuthCookie, clearAuthCookie, requireAdmin } from '../helpers/auth.js';
 
@@ -39,6 +41,52 @@ router.post('/login', (req, res) => {
 
 // ─── All routes below require auth ───
 router.use(requireAdmin);
+
+// ─── Image Upload ───
+const UPLOAD_DIR = join(__dirname, '..', 'public', 'images', 'uploads');
+const ALLOWED_EXT = new Set(['jpg', 'jpeg', 'png', 'gif', 'webp', 'svg']);
+
+router.post('/upload', (req, res) => {
+  try {
+    const { filename, data } = req.body;
+    if (!filename || !data) {
+      return res.status(400).json({ error: 'Missing filename or data' });
+    }
+
+    // Validate data URL format
+    const match = data.match(/^data:image\/\w+;base64,(.+)$/);
+    if (!match) {
+      return res.status(400).json({ error: 'Invalid data URL format' });
+    }
+
+    // Validate extension
+    const ext = filename.split('.').pop().toLowerCase();
+    if (!ALLOWED_EXT.has(ext)) {
+      return res.status(400).json({ error: 'File type not allowed' });
+    }
+
+    // Decode and check size
+    const buffer = Buffer.from(match[1], 'base64');
+    if (buffer.length > 10 * 1024 * 1024) {
+      return res.status(400).json({ error: 'File too large (max 10 MB)' });
+    }
+
+    // Sanitise filename: keep only alphanumeric, dash, underscore, dot
+    const safe = filename.replace(/[^a-zA-Z0-9._-]/g, '_');
+    const unique = Date.now() + '-' + randomBytes(4).toString('hex') + '-' + safe;
+
+    // Ensure upload directory exists
+    if (!existsSync(UPLOAD_DIR)) {
+      mkdirSync(UPLOAD_DIR, { recursive: true });
+    }
+
+    writeFileSync(join(UPLOAD_DIR, unique), buffer);
+    res.json({ url: '/images/uploads/' + unique });
+  } catch (err) {
+    console.error('Upload error:', err);
+    res.status(500).json({ error: 'Upload failed' });
+  }
+});
 
 // ─── Logout ───
 router.get('/logout', (req, res) => {
