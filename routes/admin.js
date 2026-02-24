@@ -145,7 +145,9 @@ router.post('/hikes', async (req, res) => {
     images: textToArray(b.images),
     heroImage: b.heroImage,
     cardImage: b.cardImage,
-    region: b.region
+    region: b.region,
+    messengerLink: b.messengerLink || '',
+    whatsappLink: b.whatsappLink || ''
   };
   hikes.push(hike);
   await writeJSON('hikes.json', hikes);
@@ -185,7 +187,9 @@ router.post('/hikes/edit/:id', async (req, res) => {
     images: textToArray(b.images),
     heroImage: b.heroImage,
     cardImage: b.cardImage,
-    region: b.region
+    region: b.region,
+    messengerLink: b.messengerLink || '',
+    whatsappLink: b.whatsappLink || ''
   };
   await writeJSON('hikes.json', hikes);
   res.redirect('/admin/hikes');

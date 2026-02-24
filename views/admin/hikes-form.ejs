@@ -35,9 +35,9 @@
   <div class="form-group">
     <label for="difficulty">Difficulty</label>
     <select id="difficulty" name="difficulty">
-      <option value="Easy" <%= hike.difficulty === 'Easy' ? 'selected' : '' %>>Easy</option>
-      <option value="Moderate" <%= hike.difficulty === 'Moderate' ? 'selected' : '' %>>Moderate</option>
-      <option value="Challenging" <%= hike.difficulty === 'Challenging' ? 'selected' : '' %>>Challenging</option>
+      <option value="მარტივი" <%= hike.difficulty === 'მარტივი' ? 'selected' : '' %>>მარტივი</option>
+      <option value="საშუალო" <%= hike.difficulty === 'საშუალო' ? 'selected' : '' %>>საშუალო</option>
+      <option value="რთული" <%= hike.difficulty === 'რთული' ? 'selected' : '' %>>რთული</option>
     </select>
   </div>
 
@@ -98,18 +98,28 @@
 
   <div class="form-group">
     <label for="heroImage">Hero Image URL</label>
-    <input type="url" id="heroImage" name="heroImage" value="<%= hike.heroImage || '' %>" data-upload="single">
+    <input type="text" id="heroImage" name="heroImage" value="<%= hike.heroImage || '' %>" data-upload="single">
   </div>
 
   <div class="form-group">
     <label for="cardImage">Card Image URL</label>
-    <input type="url" id="cardImage" name="cardImage" value="<%= hike.cardImage || '' %>" data-upload="single">
+    <input type="text" id="cardImage" name="cardImage" value="<%= hike.cardImage || '' %>" data-upload="single">
   </div>
 
   <div class="form-group">
     <label for="images">Gallery Images</label>
     <div class="hint">One URL per line</div>
     <textarea id="images" name="images" rows="4" data-upload="multi"><%= (hike.images || []).join('\n') %></textarea>
+  </div>
+
+  <div class="form-group">
+    <label for="messengerLink">Messenger Group Chat Link</label>
+    <input type="url" id="messengerLink" name="messengerLink" value="<%= hike.messengerLink || '' %>" placeholder="https://m.me/...">
+  </div>
+
+  <div class="form-group">
+    <label for="whatsappLink">WhatsApp Group Chat Link</label>
+    <input type="url" id="whatsappLink" name="whatsappLink" value="<%= hike.whatsappLink || '' %>" placeholder="https://chat.whatsapp.com/...">
   </div>
 
   <div class="form-actions">

@@ -49,13 +49,3 @@ document.querySelectorAll('form[novalidate]').forEach(form => {
     });
   });
 });
-
-// Pre-select hike from query param on booking page
-const bookingHikeSelect = document.getElementById('b-hike');
-if (bookingHikeSelect) {
-  const params = new URLSearchParams(window.location.search);
-  const hikeParam = params.get('hike');
-  if (hikeParam) {
-    bookingHikeSelect.value = hikeParam;
-  }
-}
