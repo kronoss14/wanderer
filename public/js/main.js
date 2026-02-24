@@ -7,7 +7,6 @@ if (navToggle && mainNav) {
     const expanded = navToggle.getAttribute('aria-expanded') === 'true';
     navToggle.setAttribute('aria-expanded', !expanded);
     mainNav.classList.toggle('open');
-    document.body.style.overflow = mainNav.classList.contains('open') ? 'hidden' : '';
   });
 
   // Close nav when clicking a link
@@ -15,7 +14,6 @@ if (navToggle && mainNav) {
     link.addEventListener('click', () => {
       mainNav.classList.remove('open');
       navToggle.setAttribute('aria-expanded', 'false');
-      document.body.style.overflow = '';
     });
   });
 }

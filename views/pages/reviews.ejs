@@ -37,11 +37,15 @@
     </div>
 
     <!-- REVIEW GRID -->
-    <div class="review-grid">
-      <% reviews.forEach(review => { %>
-        <% const hike = hikes.find(h => h.id === review.hikeId); %>
-        <%- include('../partials/_review-card', { review, hikeName: hike ? hike.name : '' }) %>
-      <% }) %>
-    </div>
+    <% if (reviews.length) { %>
+      <div class="review-grid">
+        <% reviews.forEach(review => { %>
+          <% const hike = hikes.find(h => h.id === review.hikeId); %>
+          <%- include('../partials/_review-card', { review, hikeName: hike ? hike.name : '' }) %>
+        <% }) %>
+      </div>
+    <% } else { %>
+      <p style="text-align:center;color:var(--text-muted);padding:2rem 0;">ჯერ არ არის შეფასებები. იყავით პირველი!</p>
+    <% } %>
   </div>
 </section>

@@ -342,31 +342,48 @@ h1, h2, h3, h4, h5, h6 {
     z-index: 1001;
   }
   .main-nav {
-    position: fixed;
-    top: 0; left: 0; right: 0; bottom: 0;
+    position: absolute;
+    top: 70px;
+    left: 0;
+    right: 0;
     background: rgba(13, 13, 13, 0.98);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--border-color);
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: 2rem;
+    align-items: stretch;
+    gap: 0;
+    padding: 0;
+    max-height: 0;
+    overflow: hidden;
     opacity: 0;
     pointer-events: none;
-    transition: opacity var(--transition);
+    transition: max-height 0.35s ease, opacity 0.25s ease, padding 0.35s ease;
   }
   .main-nav.open {
+    max-height: 500px;
     opacity: 1;
     pointer-events: all;
+    padding: 1rem 0;
   }
   .nav-list {
     flex-direction: column;
-    align-items: center;
-    gap: 0.5rem;
+    align-items: stretch;
+    gap: 0;
+    padding: 0 1.5rem;
   }
   .nav-link {
-    font-size: 1.25rem;
-    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+    padding: 0.85rem 1rem;
+    border-radius: var(--radius);
+    text-align: left;
   }
-  .nav-social { margin-left: 0; }
+  .nav-social {
+    margin-left: 0;
+    padding: 0.75rem 1.5rem 0.5rem;
+    justify-content: center;
+    border-top: 1px solid var(--border-color);
+    margin-top: 0.5rem;
+  }
   .footer-grid {
     grid-template-columns: 1fr;
     gap: 2rem;
