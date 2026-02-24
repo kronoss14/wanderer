@@ -6,11 +6,12 @@
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
-    "dev": "node --watch server.js"
+    "dev": "node --env-file=.env --watch server.js"
   },
   "dependencies": {
-    "express": "^5.1.0",
     "ejs": "^3.1.10",
-    "express-ejs-layouts": "^2.5.1"
+    "express": "^5.1.0",
+    "express-ejs-layouts": "^2.5.1",
+    "nodemailer": "^8.0.1"
   }
 }

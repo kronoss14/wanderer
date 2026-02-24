@@ -1,98 +1,15 @@
 [
   {
     "id": 1,
-    "category": "landscapes",
-    "title": "ყაზბეგის მთა მზის ამოსვლისას",
-    "location": "სტეფანწმინდა",
-    "image": "https://picsum.photos/seed/gallery-kazbek/800/600",
-    "thumbnail": "https://picsum.photos/seed/gallery-kazbek/400/300"
-  },
-  {
-    "id": 2,
-    "category": "hiking",
-    "title": "ლაშქრობა ჩაუხის უღელტეხილისკენ",
-    "location": "ჯუთის ხეობა",
-    "image": "https://picsum.photos/seed/gallery-chaukhi/800/600",
-    "thumbnail": "https://picsum.photos/seed/gallery-chaukhi/400/300"
-  },
-  {
-    "id": 3,
-    "category": "culture",
-    "title": "სვანური თავდაცვითი კოშკები",
-    "location": "მესტია",
-    "image": "https://picsum.photos/seed/gallery-towers/800/600",
-    "thumbnail": "https://picsum.photos/seed/gallery-towers/400/300"
-  },
-  {
-    "id": 4,
-    "category": "landscapes",
-    "title": "უშგულის ხეობის პანორამა",
-    "location": "ზემო სვანეთი",
-    "image": "https://picsum.photos/seed/gallery-ushguli/800/600",
-    "thumbnail": "https://picsum.photos/seed/gallery-ushguli/400/300"
-  },
-  {
-    "id": 5,
-    "category": "hiking",
-    "title": "ალპურ მდელოებზე გადასვლა",
-    "location": "თუშეთი",
-    "image": "https://picsum.photos/seed/gallery-meadows/800/600",
-    "thumbnail": "https://picsum.photos/seed/gallery-meadows/400/300"
-  },
-  {
-    "id": 6,
-    "category": "culture",
-    "title": "ტრადიციული მეღვინეობა",
-    "location": "კახეთი",
-    "image": "https://picsum.photos/seed/gallery-wine/800/600",
-    "thumbnail": "https://picsum.photos/seed/gallery-wine/400/300"
-  },
-  {
-    "id": 7,
-    "category": "landscapes",
-    "title": "გერგეტის სამების ეკლესია",
-    "location": "ყაზბეგი",
-    "image": "https://picsum.photos/seed/gallery-gergeti/800/600",
-    "thumbnail": "https://picsum.photos/seed/gallery-gergeti/400/300"
-  },
-  {
-    "id": 8,
-    "category": "hiking",
-    "title": "მდინარის გადალახვა სვანეთში",
-    "location": "მესტია-უშგულის ლაშქრობა",
-    "image": "https://picsum.photos/seed/gallery-river/800/600",
-    "thumbnail": "https://picsum.photos/seed/gallery-river/400/300"
-  },
-  {
-    "id": 9,
-    "category": "culture",
-    "title": "შატილის ციხე-სოფელი",
-    "location": "ხევსურეთი",
-    "image": "https://picsum.photos/seed/gallery-shatili/800/600",
-    "thumbnail": "https://picsum.photos/seed/gallery-shatili/400/300"
-  },
-  {
-    "id": 10,
-    "category": "landscapes",
-    "title": "თუშეთის შემოდგომის ფერები",
-    "location": "თუშეთის ეროვნული პარკი",
-    "image": "https://picsum.photos/seed/gallery-autumn/800/600",
-    "thumbnail": "https://picsum.photos/seed/gallery-autumn/400/300"
-  },
-  {
-    "id": 11,
-    "category": "hiking",
-    "title": "მწვერვალისკენ ასვლა გარიჟრაჟზე",
-    "location": "კავკასიონი",
-    "image": "https://picsum.photos/seed/gallery-summit/800/600",
-    "thumbnail": "https://picsum.photos/seed/gallery-summit/400/300"
-  },
-  {
-    "id": 12,
-    "category": "culture",
-    "title": "ძველი თბილისის ქუჩები",
-    "location": "თბილისი",
-    "image": "https://picsum.photos/seed/gallery-tbilisi/800/600",
-    "thumbnail": "https://picsum.photos/seed/gallery-tbilisi/400/300"
+    "title": "ჯუთას ლაშქრობა",
+    "date": "2025-07-10",
+    "description": "ჯუთას ხეობაში ორდღიანი ლაშქრობა ჩაუხის კლდეების ხედებით.",
+    "mainImage": "/images/uploads/1771937421533-7e97a841-e2QAjKf.jpeg",
+    "images": [
+      "/images/uploads/1771937424168-a0dac624-a1U7TcX.jpeg",
+      "/images/uploads/1771937699335-445e7931-IMG_6848.jpeg",
+      "/images/uploads/1771937699344-321ae8e9-IMG_6849.jpeg"
+    ],
+    "hikeId": "kazbegi-gergeti"
   }
 ]

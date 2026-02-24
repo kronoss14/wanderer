@@ -1,44 +1,32 @@
 <!-- PAGE HERO -->
 <section class="page-hero">
-  <div class="page-hero-bg" style="background-image: url('https://picsum.photos/seed/gallery-hero/1920/600')"></div>
+  <div class="page-hero-bg" style="background-image: url('https://picsum.photos/seed/adventures-hero/1920/600')"></div>
   <div class="page-hero-overlay"></div>
   <div class="page-hero-content container">
-    <h1>ფოტო <span class="text-accent">გალერეა</span></h1>
-    <p>ლანდშაფტები, კულტურა და თავგადასავალი — იხილეთ საქართველო ჩვენი ობიექტივით.</p>
+    <h1>ჩვენი <span class="text-accent">თავგადასავლები</span></h1>
+    <p>მოგონებები, ისტორიები და ფოტოები ჩვენი გასული ლაშქრობებიდან.</p>
   </div>
 </section>
 
-<!-- GALLERY GRID -->
+<!-- ADVENTURES GRID -->
 <section class="section">
   <div class="container">
-    <div class="filter-bar" id="gallery-filters">
-      <button class="filter-btn active" data-filter="all">ყველა</button>
-      <button class="filter-btn" data-filter="landscapes">ლანდშაფტები</button>
-      <button class="filter-btn" data-filter="hiking">ლაშქრობა</button>
-      <button class="filter-btn" data-filter="culture">კულტურა</button>
-    </div>
-    <div class="gallery-grid" id="gallery-grid">
-      <% gallery.forEach(item => { %>
-        <%- include('../partials/_gallery-item', { item }) %>
-      <% }) %>
-    </div>
+    <% if (gallery.length) { %>
+      <div class="adventures-grid">
+        <% gallery.forEach(item => { %>
+          <a href="/gallery/<%= item.id %>" class="adventure-card">
+            <div class="adventure-card-img">
+              <img src="<%= item.mainImage %>" alt="<%= item.title %>" loading="lazy">
+            </div>
+            <div class="adventure-card-overlay">
+              <h3><%= item.title %></h3>
+              <span class="adventure-card-date"><%= item.date %></span>
+            </div>
+          </a>
+        <% }) %>
+      </div>
+    <% } else { %>
+      <p style="text-align:center;color:var(--text-muted);padding:3rem 0;">ჯერ არ არის თავგადასავლები დამატებული.</p>
+    <% } %>
   </div>
 </section>
-
-<!-- LIGHTBOX -->
-<div class="lightbox" id="lightbox" role="dialog" aria-hidden="true">
-  <button class="lightbox-close" aria-label="Close">&times;</button>
-  <button class="lightbox-prev" aria-label="Previous">
-    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
-  </button>
-  <div class="lightbox-content">
-    <img src="" alt="" id="lightbox-img">
-    <div class="lightbox-caption">
-      <h4 id="lightbox-title"></h4>
-      <p id="lightbox-location"></p>
-    </div>
-  </div>
-  <button class="lightbox-next" aria-label="Next">
-    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
-  </button>
-</div>

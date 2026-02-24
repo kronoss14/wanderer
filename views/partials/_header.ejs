@@ -15,7 +15,7 @@
         <li><a href="/" class="nav-link<%= currentPath === '/' ? ' active' : '' %>">Home</a></li>
         <li><a href="/hikes" class="nav-link<%= currentPath.startsWith('/hikes') ? ' active' : '' %>">Hikes</a></li>
         <li><a href="/about" class="nav-link<%= currentPath === '/about' ? ' active' : '' %>">About</a></li>
-        <li><a href="/gallery" class="nav-link<%= currentPath === '/gallery' ? ' active' : '' %>">Gallery</a></li>
+        <li><a href="/gallery" class="nav-link<%= currentPath.startsWith('/gallery') ? ' active' : '' %>">თავგადასავლები</a></li>
         <li><a href="/reviews" class="nav-link<%= currentPath === '/reviews' ? ' active' : '' %>">Reviews</a></li>
         <li><a href="/contact" class="nav-link<%= currentPath === '/contact' ? ' active' : '' %>">Contact</a></li>
       </ul>

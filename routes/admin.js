@@ -342,12 +342,13 @@ router.post('/pricing/delete/:id', async (req, res) => {
 
 router.get('/gallery', async (req, res) => {
   const gallery = await readJSON('gallery.json');
-  renderAdmin(res, join(__dirname, '..', 'views', 'admin', 'gallery-list.ejs'), { title: 'Gallery', gallery });
+  renderAdmin(res, join(__dirname, '..', 'views', 'admin', 'gallery-list.ejs'), { title: 'Adventures', gallery });
 });
 
-router.get('/gallery/new', (req, res) => {
+router.get('/gallery/new', async (req, res) => {
+  const hikes = await readJSON('hikes.json');
   renderAdmin(res, join(__dirname, '..', 'views', 'admin', 'gallery-form.ejs'), {
-    title: 'New Gallery Item', editing: false, item: {}
+    title: 'New Adventure', editing: false, item: {}, hikes
   });
 });
 
@@ -357,22 +358,26 @@ router.post('/gallery', async (req, res) => {
   const nextId = gallery.length ? Math.max(...gallery.map(g => g.id)) + 1 : 1;
   gallery.push({
     id: nextId,
-    category: b.category,
     title: b.title,
-    location: b.location,
-    image: b.image,
-    thumbnail: b.thumbnail
+    date: b.date,
+    description: b.description,
+    mainImage: b.mainImage,
+    images: textToArray(b.images),
+    hikeId: b.hikeId || ''
   });
   await writeJSON('gallery.json', gallery);
   res.redirect('/admin/gallery');
 });
 
 router.get('/gallery/edit/:id', async (req, res) => {
-  const gallery = await readJSON('gallery.json');
+  const [gallery, hikes] = await Promise.all([
+    readJSON('gallery.json'),
+    readJSON('hikes.json')
+  ]);
   const item = gallery.find(g => g.id === Number(req.params.id));
   if (!item) return res.redirect('/admin/gallery');
   renderAdmin(res, join(__dirname, '..', 'views', 'admin', 'gallery-form.ejs'), {
-    title: 'Edit Gallery Item', editing: true, item
+    title: 'Edit Adventure', editing: true, item, hikes
   });
 });
 
@@ -383,11 +388,12 @@ router.post('/gallery/edit/:id', async (req, res) => {
   const b = req.body;
   gallery[idx] = {
     id: Number(req.params.id),
-    category: b.category,
     title: b.title,
-    location: b.location,
-    image: b.image,
-    thumbnail: b.thumbnail
+    date: b.date,
+    description: b.description,
+    mainImage: b.mainImage,
+    images: textToArray(b.images),
+    hikeId: b.hikeId || ''
   };
   await writeJSON('gallery.json', gallery);
   res.redirect('/admin/gallery');

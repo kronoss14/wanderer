@@ -1,38 +1,16 @@
-// Gallery filter
-const filterBtns = document.querySelectorAll('#gallery-filters .filter-btn');
-const galleryItems = document.querySelectorAll('.gallery-item');
-
-filterBtns.forEach(btn => {
-  btn.addEventListener('click', () => {
-    filterBtns.forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    const filter = btn.dataset.filter;
-    galleryItems.forEach(item => {
-      if (filter === 'all' || item.dataset.category === filter) {
-        item.classList.remove('hidden');
-      } else {
-        item.classList.add('hidden');
-      }
-    });
-  });
-});
-
-// Lightbox
+// Lightbox for gallery detail page
 const lightbox = document.getElementById('lightbox');
 const lightboxImg = document.getElementById('lightbox-img');
 const lightboxTitle = document.getElementById('lightbox-title');
 const lightboxLocation = document.getElementById('lightbox-location');
 
 if (lightbox) {
+  const galleryItems = document.querySelectorAll('.gallery-item');
   let currentItems = [];
   let currentIndex = 0;
 
-  function getVisibleItems() {
-    return [...document.querySelectorAll('.gallery-item:not(.hidden)')];
-  }
-
   function openLightbox(index) {
-    currentItems = getVisibleItems();
+    currentItems = [...galleryItems];
     currentIndex = index;
     updateLightbox();
     lightbox.classList.add('open');
@@ -50,9 +28,9 @@ if (lightbox) {
     const item = currentItems[currentIndex];
     if (!item) return;
     lightboxImg.src = item.dataset.full;
-    lightboxImg.alt = item.dataset.title;
-    lightboxTitle.textContent = item.dataset.title;
-    lightboxLocation.textContent = item.dataset.location;
+    lightboxImg.alt = item.dataset.title || '';
+    if (lightboxTitle) lightboxTitle.textContent = item.dataset.title || '';
+    if (lightboxLocation) lightboxLocation.textContent = item.dataset.location || '';
   }
 
   function nextImage() {
@@ -66,10 +44,8 @@ if (lightbox) {
   }
 
   // Click gallery items
-  galleryItems.forEach(item => {
+  galleryItems.forEach((item, idx) => {
     item.addEventListener('click', () => {
-      const visible = getVisibleItems();
-      const idx = visible.indexOf(item);
       openLightbox(idx);
     });
   });

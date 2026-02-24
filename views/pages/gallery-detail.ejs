@@ -1,0 +1,70 @@
+<!-- DETAIL HERO -->
+<section class="detail-hero">
+  <div class="detail-hero-bg" style="background-image: url('<%= item.mainImage %>')"></div>
+  <div class="detail-hero-overlay"></div>
+  <div class="detail-hero-content container">
+    <a href="/gallery" class="back-link">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+      თავგადასავლებზე დაბრუნება
+    </a>
+    <h1><%= item.title %></h1>
+    <p class="detail-region"><%= item.date %></p>
+  </div>
+</section>
+
+<!-- DESCRIPTION -->
+<% if (item.description) { %>
+<section class="section">
+  <div class="container" style="max-width: 800px;">
+    <p class="detail-description"><%= item.description %></p>
+  </div>
+</section>
+<% } %>
+
+<!-- PHOTO GALLERY -->
+<% if (item.images && item.images.length) { %>
+<section class="section section-dark">
+  <div class="container">
+    <h2 class="section-title text-center" style="margin-bottom: 2rem;">ფოტო <span class="text-accent">გალერეა</span></h2>
+    <div class="gallery-grid">
+      <% item.images.forEach((img, idx) => { %>
+        <div class="gallery-item" data-full="<%= img %>" data-title="<%= item.title %>" data-location="">
+          <img src="<%= img %>" alt="<%= item.title %>" loading="lazy">
+        </div>
+      <% }) %>
+    </div>
+  </div>
+</section>
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox" role="dialog" aria-hidden="true">
+  <button class="lightbox-close" aria-label="Close">&times;</button>
+  <button class="lightbox-prev" aria-label="Previous">
+    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+  </button>
+  <div class="lightbox-content">
+    <img src="" alt="" id="lightbox-img">
+    <div class="lightbox-caption">
+      <h4 id="lightbox-title"></h4>
+      <p id="lightbox-location"></p>
+    </div>
+  </div>
+  <button class="lightbox-next" aria-label="Next">
+    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+  </button>
+</div>
+<% } %>
+
+<!-- REVIEWS FROM LINKED HIKE -->
+<% if (reviews.length > 0) { %>
+<section class="section">
+  <div class="container">
+    <h2 class="section-title text-center" style="margin-bottom: 2rem;">მოლაშქრეთა <span class="text-accent">შეფასებები</span></h2>
+    <div class="review-grid">
+      <% reviews.forEach(review => { %>
+        <%- include('../partials/_review-card', { review, hikeName: '' }) %>
+      <% }) %>
+    </div>
+  </div>
+</section>
+<% } %>

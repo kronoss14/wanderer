@@ -209,6 +209,60 @@
   display: none;
 }
 
+/* === ADVENTURES GRID === */
+.adventures-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  gap: 1.5rem;
+}
+.adventure-card {
+  position: relative;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  aspect-ratio: 16/10;
+  display: block;
+  color: #fff;
+  text-decoration: none;
+  transition: transform var(--transition), box-shadow var(--transition);
+}
+.adventure-card:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--shadow-lg);
+  color: #fff;
+}
+.adventure-card-img {
+  position: absolute;
+  inset: 0;
+}
+.adventure-card-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+.adventure-card:hover .adventure-card-img img {
+  transform: scale(1.08);
+}
+.adventure-card-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(0,0,0,0.75) 0%, transparent 60%);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 1.5rem;
+}
+.adventure-card-overlay h3 {
+  font-size: 1.25rem;
+  text-transform: none;
+  margin-bottom: 0.3rem;
+}
+.adventure-card-date {
+  color: var(--accent-orange);
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+
 /* === LIGHTBOX === */
 .lightbox {
   position: fixed;
@@ -592,6 +646,7 @@
   .hike-grid { grid-template-columns: 1fr; }
   .review-grid { grid-template-columns: 1fr; }
   .gallery-grid { grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); }
+  .adventures-grid { grid-template-columns: 1fr; }
   .pricing-grid { grid-template-columns: 1fr; max-width: 400px; margin: 0 auto; }
   .guides-grid { grid-template-columns: 1fr; }
   .contact-layout { grid-template-columns: 1fr; }

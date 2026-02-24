@@ -38,7 +38,7 @@
       </div>
       <div class="quick-info-item">
         <span class="quick-info-label">ფასი</span>
-        <span class="quick-info-value price">₾<%= hike.price %>-დან</span>
+        <span class="quick-info-value price">₾<%= hike.price %></span>
       </div>
     </div>
   </div>
@@ -111,7 +111,7 @@
             <% } %>
           <% } else { %>
             <h3>რეგისტრაცია</h3>
-            <p class="widget-price"><strong>₾<%= hike.price %></strong>-დან თითო ადამიანზე</p>
+            <p class="widget-price"><strong>₾<%= hike.price %></strong> თითო ადამიანზე</p>
             <form action="/hikes/<%= hike.id %>/register" method="POST" novalidate>
               <input type="hidden" name="hikeId" value="<%= hike.id %>">
               <div class="form-group" style="margin-bottom: 0.75rem;">

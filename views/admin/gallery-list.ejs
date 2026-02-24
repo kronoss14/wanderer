@@ -1,6 +1,6 @@
 <div class="admin-header">
-  <h1>Gallery</h1>
-  <a href="/admin/gallery/new" class="btn btn-primary">+ New Item</a>
+  <h1>Adventures</h1>
+  <a href="/admin/gallery/new" class="btn btn-primary">+ New Adventure</a>
 </div>
 
 <div class="admin-table-wrap">
@@ -8,10 +8,9 @@
     <thead>
       <tr>
         <th>ID</th>
-        <th>Thumbnail</th>
+        <th>Main Image</th>
         <th>Title</th>
-        <th>Category</th>
-        <th>Location</th>
+        <th>Date</th>
         <th>Actions</th>
       </tr>
     </thead>
@@ -19,20 +18,19 @@
       <% gallery.forEach(g => { %>
         <tr>
           <td><%= g.id %></td>
-          <td><img src="<%= g.thumbnail %>" alt="" style="width:60px;height:40px;object-fit:cover;border-radius:4px"></td>
+          <td><img src="<%= g.mainImage %>" alt="" style="width:60px;height:40px;object-fit:cover;border-radius:4px"></td>
           <td><%= g.title %></td>
-          <td><%= g.category %></td>
-          <td><%= g.location %></td>
+          <td><%= g.date %></td>
           <td class="actions">
             <a href="/admin/gallery/edit/<%= g.id %>" class="btn btn-secondary btn-sm">Edit</a>
-            <form method="POST" action="/admin/gallery/delete/<%= g.id %>" onsubmit="return confirm('Delete this item?')">
+            <form method="POST" action="/admin/gallery/delete/<%= g.id %>" onsubmit="return confirm('Delete this adventure?')">
               <button type="submit" class="btn btn-danger btn-sm">Delete</button>
             </form>
           </td>
         </tr>
       <% }) %>
       <% if (!gallery.length) { %>
-        <tr><td colspan="6" style="text-align:center;color:var(--admin-text-muted)">No gallery items yet</td></tr>
+        <tr><td colspan="5" style="text-align:center;color:var(--admin-text-muted)">No adventures yet</td></tr>
       <% } %>
     </tbody>
   </table>
