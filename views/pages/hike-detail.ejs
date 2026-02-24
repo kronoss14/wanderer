@@ -16,6 +16,13 @@
 <section class="quick-info-bar">
   <div class="container">
     <div class="quick-info-grid">
+      <% const dates = Array.isArray(hike.dates) ? hike.dates : (hike.date ? [hike.date] : []); %>
+      <% if (dates.length) { %>
+        <div class="quick-info-item">
+          <span class="quick-info-label"><%= dates.length > 1 ? 'თარიღები' : 'თარიღი' %></span>
+          <span class="quick-info-value"><%= dates.map(d => new Date(d).toLocaleDateString('ka-GE', { year: 'numeric', month: 'long', day: 'numeric' })).join(', ') %></span>
+        </div>
+      <% } %>
       <div class="quick-info-item">
         <span class="quick-info-label">ხანგრძლივობა</span>
         <span class="quick-info-value"><%= hike.duration %></span>

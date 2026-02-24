@@ -9,6 +9,7 @@
       <tr>
         <th>Name</th>
         <th>Type</th>
+        <th>Date</th>
         <th>Difficulty</th>
         <th>Price</th>
         <th>Featured</th>
@@ -20,6 +21,7 @@
         <tr>
           <td><%= h.name %></td>
           <td><%= h.type %></td>
+          <td><%= Array.isArray(h.dates) && h.dates.length ? h.dates.join(', ') : (h.date || '—') %></td>
           <td><%= h.difficulty %></td>
           <td>₾<%= h.price %></td>
           <td><%= h.featured ? 'Yes' : 'No' %></td>
@@ -32,7 +34,7 @@
         </tr>
       <% }) %>
       <% if (!hikes.length) { %>
-        <tr><td colspan="6" style="text-align:center;color:var(--admin-text-muted)">No hikes yet</td></tr>
+        <tr><td colspan="7" style="text-align:center;color:var(--admin-text-muted)">No hikes yet</td></tr>
       <% } %>
     </tbody>
   </table>

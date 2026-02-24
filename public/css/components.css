@@ -61,6 +61,14 @@
   color: var(--accent-orange);
   font-size: 0.85rem;
   font-weight: 500;
+  margin-bottom: 0.5rem;
+}
+.hike-card-date {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  color: var(--text-secondary);
+  font-size: 0.82rem;
   margin-bottom: 0.75rem;
 }
 .hike-card-summary {

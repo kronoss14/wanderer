@@ -1,15 +1,43 @@
 [
   {
     "id": 1,
-    "title": "ჯუთას ლაშქრობა",
+    "title": "ჯუთა-ჭაუხები",
     "date": "2025-07-10",
-    "description": "ჯუთას ხეობაში ორდღიანი ლაშქრობა ჩაუხის კლდეების ხედებით.",
-    "mainImage": "/images/uploads/1771937421533-7e97a841-e2QAjKf.jpeg",
+    "description": "აქ აღწერა",
+    "mainImage": "/images/uploads/1771973905827-a653ae92-image00003.jpeg",
+    "images": [],
+    "hikeId": ""
+  },
+  {
+    "id": 2,
+    "title": "ბატეთის ტბა",
+    "date": "2025-09-28",
+    "description": "აღწერა მერე",
+    "mainImage": "/images/uploads/1771974151156-3022a31d-image00026.jpeg",
     "images": [
-      "/images/uploads/1771937424168-a0dac624-a1U7TcX.jpeg",
-      "/images/uploads/1771937699335-445e7931-IMG_6848.jpeg",
-      "/images/uploads/1771937699344-321ae8e9-IMG_6849.jpeg"
+      "/images/uploads/1771974161642-464a0d75-image00026.jpeg",
+      "/images/uploads/1771974161753-b7b6d6bb-image00027.jpeg",
+      "/images/uploads/1771974324274-b8a6c430-image00028.jpeg",
+      "/images/uploads/1771974324534-9b1dc2b6-image00029.jpeg"
     ],
-    "hikeId": "kazbegi-gergeti"
+    "hikeId": ""
+  },
+  {
+    "id": 3,
+    "title": "სვანეთი",
+    "date": "2025-06-12",
+    "description": "აღწერა იქნება აქაც",
+    "mainImage": "/images/uploads/1771974273948-f13fef74-image00001.jpeg",
+    "images": [
+      "/images/uploads/1771974309342-32240e91-image00006.jpeg",
+      "/images/uploads/1771974309458-f37037d5-image00008.jpeg",
+      "/images/uploads/1771974309481-703d31f7-image00012.jpeg",
+      "/images/uploads/1771974309578-0c2476e6-image00009.jpeg",
+      "/images/uploads/1771974309680-0c171f1c-image00010.jpeg",
+      "/images/uploads/1771974309761-57436fb4-image00013.jpeg",
+      "/images/uploads/1771974309878-4fdbfeed-image00011.jpeg",
+      "/images/uploads/1771974310085-7bee09da-image00001.jpeg"
+    ],
+    "hikeId": ""
   }
 ]

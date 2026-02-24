@@ -146,6 +146,7 @@ router.post('/hikes', async (req, res) => {
     heroImage: b.heroImage,
     cardImage: b.cardImage,
     region: b.region,
+    dates: textToArray(b.dates),
     messengerLink: b.messengerLink || '',
     whatsappLink: b.whatsappLink || ''
   };
@@ -188,6 +189,7 @@ router.post('/hikes/edit/:id', async (req, res) => {
     heroImage: b.heroImage,
     cardImage: b.cardImage,
     region: b.region,
+    dates: textToArray(b.dates),
     messengerLink: b.messengerLink || '',
     whatsappLink: b.whatsappLink || ''
   };
