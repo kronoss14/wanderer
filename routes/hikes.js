@@ -51,11 +51,9 @@ router.post('/:id/register', registrationValidation, asyncHandler(async (req, re
     date: new Date().toISOString()
   });
 
-  try {
-    await sendRegistrationEmail({ name, email, phone, hikeName: hike.name });
-  } catch (err) {
-    log('error', 'Registration email failed', { error: err.message, hikeId: hike.id });
-  }
+  // Send email in background — don't block the response
+  sendRegistrationEmail({ name, email, phone, hikeName: hike.name })
+    .catch(err => log('error', 'Registration email failed', { error: err.message, hikeId: hike.id }));
 
   const hikeReviews = reviews.filter(r => r.hikeId === hike.id);
   res.render('pages/hike-detail', { title: hike.name, hike, hikeReviews, success: true, errors: [] });

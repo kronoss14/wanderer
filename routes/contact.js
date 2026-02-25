@@ -36,11 +36,9 @@ router.post('/', contactValidation, asyncHandler(async (req, res) => {
     date: new Date().toISOString()
   });
 
-  try {
-    await sendContactEmail({ name, email, subject, message });
-  } catch (err) {
-    log('error', 'Failed to send contact email', { error: err.message });
-  }
+  // Send email in background — don't block the response
+  sendContactEmail({ name, email, subject, message })
+    .catch(err => log('error', 'Failed to send contact email', { error: err.message }));
 
   res.render('pages/contact', { title: 'Contact Us', success: true, errors: [] });
 }));
