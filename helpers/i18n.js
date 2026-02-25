@@ -44,8 +44,8 @@ export function i18nMiddleware(req, res, next) {
   // l() — localize a data field
   res.locals.l = (obj, field) => localize(obj, field, lang);
 
-  // Save preference to session
-  req.session.lang = lang;
+  // Save preference to session (if available)
+  if (req.session) req.session.lang = lang;
 
   next();
 }
