@@ -15,7 +15,6 @@
   --font-heading: 'Oswald', sans-serif;
   --font-body: 'Inter', sans-serif;
   --font-georgian: 'Noto Sans Georgian', sans-serif;
-  --font-georgian-display: 'Noto Serif Georgian', serif;
   --radius: 8px;
   --radius-lg: 12px;
   --shadow: 0 4px 20px rgba(0,0,0,0.4);
@@ -443,118 +442,35 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 /* === GEORGIAN TYPOGRAPHY === */
-html[lang="ka"] body {
-  font-family: var(--font-georgian), var(--font-body);
-}
-
-/* Nav links — Sans, medium weight, slightly tracked */
-html[lang="ka"] .nav-link {
-  font-family: var(--font-georgian);
-  font-weight: 600;
-  letter-spacing: 0.02em;
-}
-
-/* Big display headings — Serif for elegance */
+html[lang="ka"] body { font-family: var(--font-georgian), var(--font-body); }
+html[lang="ka"] .nav-link { font-family: var(--font-georgian); font-weight: 700; }
 html[lang="ka"] .hero-title,
-html[lang="ka"] .page-hero-content h1,
-html[lang="ka"] .detail-hero-content h1 {
-  font-family: var(--font-georgian-display);
-  font-weight: 900;
-  letter-spacing: -0.01em;
-  line-height: 1.1;
-}
-
-/* Section titles — Serif bold */
 html[lang="ka"] .section-title,
+html[lang="ka"] .page-hero-content h1,
+html[lang="ka"] .detail-hero-content h1,
 html[lang="ka"] .cta-content h2 {
-  font-family: var(--font-georgian-display);
+  font-family: var(--font-georgian);
   font-weight: 700;
   letter-spacing: 0;
 }
-
-/* Subtitles and pre-text — Sans, light feel */
-html[lang="ka"] .hero-pre {
-  font-family: var(--font-georgian);
-  font-weight: 500;
-  letter-spacing: 0.08em;
-}
+html[lang="ka"] .hero-pre,
 html[lang="ka"] .hero-sub,
 html[lang="ka"] .section-subtitle {
   font-family: var(--font-georgian);
-  font-weight: 400;
-  line-height: 1.8;
 }
-
-/* Buttons — Sans, punchy weight */
 html[lang="ka"] .btn {
   font-family: var(--font-georgian);
   font-weight: 700;
-  letter-spacing: 0.03em;
+  letter-spacing: 0;
 }
-
-/* Filter buttons and map filters — Sans medium */
 html[lang="ka"] .filter-btn,
 html[lang="ka"] .map-filter {
   font-family: var(--font-georgian);
-  font-weight: 600;
-}
-
-/* Card titles — Serif for contrast */
-html[lang="ka"] .hike-card-title,
-html[lang="ka"] .adventure-card-overlay h3,
-html[lang="ka"] .blog-card-title,
-html[lang="ka"] .guide-info h3 {
-  font-family: var(--font-georgian-display);
   font-weight: 700;
 }
-
-/* Why/value card headings — Sans bold */
-html[lang="ka"] .why-card h3,
-html[lang="ka"] .value-card h3 {
-  font-family: var(--font-georgian);
-  font-weight: 800;
-  letter-spacing: 0;
-}
-
-/* Footer headings — Sans, uppercase feel */
 html[lang="ka"] .footer-links h4,
 html[lang="ka"] .footer-contact h4 {
   font-family: var(--font-georgian);
-  font-weight: 700;
-  letter-spacing: 0.04em;
-}
-
-/* Review text — Sans, lighter for readability */
-html[lang="ka"] .review-text {
-  font-family: var(--font-georgian);
-  font-weight: 400;
-  line-height: 1.9;
-}
-
-/* Pricing tier names — Serif display */
-html[lang="ka"] .pricing-tier {
-  font-family: var(--font-georgian-display);
-  font-weight: 800;
-}
-
-/* Body text within cards — Sans normal */
-html[lang="ka"] .hike-card-summary,
-html[lang="ka"] .why-card p,
-html[lang="ka"] .value-card p,
-html[lang="ka"] .guide-bio,
-html[lang="ka"] .about-story-text p {
-  font-family: var(--font-georgian);
-  font-weight: 400;
-  line-height: 1.8;
-}
-
-/* Contact info — Sans medium */
-html[lang="ka"] .contact-info-item strong {
-  font-family: var(--font-georgian);
-  font-weight: 600;
-}
-html[lang="ka"] .contact-info-card h3 {
-  font-family: var(--font-georgian-display);
   font-weight: 700;
 }
 
@@ -605,53 +521,30 @@ html[lang="ka"] .contact-info-card h3 {
   box-shadow: 0 2px 20px rgba(0,0,0,0.5);
 }
 
-/* === FLOATING SOCIAL BUTTONS === */
-.social-float {
-  position: fixed;
-  right: 1.25rem;
-  top: 50%;
-  transform: translateY(-50%);
-  z-index: 900;
-  display: flex;
-  flex-direction: column;
-  gap: 0.6rem;
+/* === SOCIAL FOLLOW TOOLTIPS === */
+.social-link {
+  position: relative;
 }
-.social-float-btn {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 46px;
-  height: 46px;
-  border-radius: 50%;
+.social-link::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  bottom: -32px;
+  left: 50%;
+  transform: translateX(-50%) translateY(4px);
+  background: rgba(13, 13, 13, 0.95);
   color: #fff;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  padding: 0.3rem 0.6rem;
+  border-radius: 4px;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+  border: 1px solid var(--border-color);
 }
-.social-float-btn:hover {
-  transform: scale(1.15);
-  color: #fff;
-}
-.social-float-ig {
-  background: linear-gradient(135deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
-}
-.social-float-ig:hover {
-  box-shadow: 0 6px 25px rgba(225, 48, 108, 0.5);
-}
-.social-float-fb {
-  background: #1877F2;
-}
-.social-float-fb:hover {
-  box-shadow: 0 6px 25px rgba(24, 119, 242, 0.5);
-}
-@media (max-width: 768px) {
-  .social-float {
-    right: 0.75rem;
-    top: auto;
-    bottom: 1.25rem;
-    transform: none;
-  }
-  .social-float-btn {
-    width: 40px;
-    height: 40px;
-  }
+.social-link:hover::after {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
 }
