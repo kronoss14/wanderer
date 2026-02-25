@@ -2,7 +2,9 @@ import { Router } from 'express';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { readFileSync, writeFileSync, mkdirSync, existsSync } from 'node:fs';
-import { randomBytes } from 'node:crypto';
+import { randomBytes, randomUUID } from 'node:crypto';
+import multer from 'multer';
+import sharp from 'sharp';
 import { readJSON, writeJSON } from '../helpers/data.js';
 import { checkPassword, requireAdmin } from '../helpers/auth.js';
 import rateLimit from 'express-rate-limit';
@@ -138,48 +140,66 @@ router.use(requireAdmin);
 
 // ─── Image Upload ───
 const UPLOAD_DIR = join(__dirname, '..', 'public', 'images', 'uploads');
-const ALLOWED_EXT = new Set(['jpg', 'jpeg', 'png', 'gif', 'webp', 'svg']);
+const ALLOWED_MIME = new Set(['image/jpeg', 'image/png', 'image/gif', 'image/webp', 'image/svg+xml']);
 
-router.post('/upload', (req, res) => {
-  try {
-    const { filename, data } = req.body;
-    if (!filename || !data) {
-      return res.status(400).json({ error: 'Missing filename or data' });
+if (!existsSync(UPLOAD_DIR)) {
+  mkdirSync(UPLOAD_DIR, { recursive: true });
+}
+
+const upload = multer({
+  storage: multer.memoryStorage(),
+  limits: { fileSize: 10 * 1024 * 1024 },
+  fileFilter: (req, file, cb) => {
+    if (ALLOWED_MIME.has(file.mimetype)) {
+      cb(null, true);
+    } else {
+      cb(new Error('File type not allowed'));
     }
-
-    // Validate data URL format
-    const match = data.match(/^data:image\/\w+;base64,(.+)$/);
-    if (!match) {
-      return res.status(400).json({ error: 'Invalid data URL format' });
-    }
-
-    // Validate extension
-    const ext = filename.split('.').pop().toLowerCase();
-    if (!ALLOWED_EXT.has(ext)) {
-      return res.status(400).json({ error: 'File type not allowed' });
-    }
-
-    // Decode and check size
-    const buffer = Buffer.from(match[1], 'base64');
-    if (buffer.length > 10 * 1024 * 1024) {
-      return res.status(400).json({ error: 'File too large (max 10 MB)' });
-    }
-
-    // Sanitise filename: keep only alphanumeric, dash, underscore, dot
-    const safe = filename.replace(/[^a-zA-Z0-9._-]/g, '_');
-    const unique = Date.now() + '-' + randomBytes(4).toString('hex') + '-' + safe;
-
-    // Ensure upload directory exists
-    if (!existsSync(UPLOAD_DIR)) {
-      mkdirSync(UPLOAD_DIR, { recursive: true });
-    }
-
-    writeFileSync(join(UPLOAD_DIR, unique), buffer);
-    res.json({ url: '/images/uploads/' + unique });
-  } catch (err) {
-    console.error('Upload error:', err);
-    res.status(500).json({ error: 'Upload failed' });
   }
+});
+
+router.post('/upload', upload.single('file'), asyncHandler(async (req, res) => {
+  if (!req.file) {
+    return res.status(400).json({ error: 'No file provided' });
+  }
+
+  const id = randomUUID();
+
+  // Skip sharp processing for SVG
+  if (req.file.mimetype === 'image/svg+xml') {
+    const svgName = `${id}.svg`;
+    writeFileSync(join(UPLOAD_DIR, svgName), req.file.buffer);
+    await audit('upload', { filename: svgName });
+    return res.json({ url: `/images/uploads/${svgName}` });
+  }
+
+  // Process with sharp: resize to max 1920px wide, compress to 80% JPEG
+  const filename = `${id}.jpeg`;
+  await sharp(req.file.buffer)
+    .resize(1920, null, { withoutEnlargement: true })
+    .jpeg({ quality: 80 })
+    .toFile(join(UPLOAD_DIR, filename));
+
+  // Generate thumbnail (400px)
+  const thumbName = `${id}-thumb.jpeg`;
+  await sharp(req.file.buffer)
+    .resize(400, null, { withoutEnlargement: true })
+    .jpeg({ quality: 75 })
+    .toFile(join(UPLOAD_DIR, thumbName));
+
+  await audit('upload', { filename });
+  res.json({ url: `/images/uploads/${filename}` });
+}));
+
+// Handle multer errors
+router.use((err, req, res, next) => {
+  if (err.code === 'LIMIT_FILE_SIZE') {
+    return res.status(400).json({ error: 'File too large (max 10 MB)' });
+  }
+  if (err.message === 'File type not allowed') {
+    return res.status(400).json({ error: err.message });
+  }
+  next(err);
 });
 
 // ─── Logout ───

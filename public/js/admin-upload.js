@@ -117,7 +117,7 @@
   }
 
   function uploadFile(file, onSuccess, statusEl) {
-    // Validate extension
+    // Validate extension (client-side check — server also validates MIME)
     var ext = file.name.split('.').pop().toLowerCase();
     if (ALLOWED_EXT.indexOf(ext) === -1) {
       statusEl.textContent = 'Invalid file type: .' + ext;
@@ -125,7 +125,6 @@
       return;
     }
 
-    // Validate size
     if (file.size > MAX_SIZE) {
       statusEl.textContent = 'File too large (max 10 MB)';
       statusEl.className = 'upload-status upload-error';
@@ -135,34 +134,29 @@
     statusEl.textContent = 'Uploading...';
     statusEl.className = 'upload-status';
 
-    var reader = new FileReader();
-    reader.onload = function () {
-      var dataUrl = reader.result;
+    var csrfToken = document.querySelector('input[name="_csrf"]')?.value || '';
+    var formData = new FormData();
+    formData.append('file', file);
 
-      var csrfToken = document.querySelector('input[name="_csrf"]')?.value || '';
-
-      fetch('/admin/upload', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'X-CSRF-Token': csrfToken },
-        body: JSON.stringify({ filename: file.name, data: dataUrl })
-      })
-        .then(function (res) { return res.json(); })
-        .then(function (json) {
-          if (json.url) {
-            statusEl.textContent = 'Uploaded';
-            statusEl.className = 'upload-status upload-success';
-            onSuccess(json.url);
-          } else {
-            statusEl.textContent = json.error || 'Upload failed';
-            statusEl.className = 'upload-status upload-error';
-          }
-        })
-        .catch(function () {
-          statusEl.textContent = 'Upload failed';
+    fetch('/admin/upload', {
+      method: 'POST',
+      headers: { 'X-CSRF-Token': csrfToken },
+      body: formData
+    })
+      .then(function (res) { return res.json(); })
+      .then(function (json) {
+        if (json.url) {
+          statusEl.textContent = 'Uploaded';
+          statusEl.className = 'upload-status upload-success';
+          onSuccess(json.url);
+        } else {
+          statusEl.textContent = json.error || 'Upload failed';
           statusEl.className = 'upload-status upload-error';
-        });
-    };
-
-    reader.readAsDataURL(file);
+        }
+      })
+      .catch(function () {
+        statusEl.textContent = 'Upload failed';
+        statusEl.className = 'upload-status upload-error';
+      });
   }
 })();
