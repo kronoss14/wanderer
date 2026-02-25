@@ -190,5 +190,20 @@
   "reviews.stars": { "ka": "ვარსკვლავი", "en": "star" },
   "reviews.empty": { "ka": "ჯერ არ არის შეფასებები. იყავით პირველი!", "en": "No reviews yet. Be the first!" },
 
+  "review.form_title": { "ka": "დატოვეთ <span class=\"text-accent\">შეფასება</span>", "en": "Leave a <span class=\"text-accent\">Review</span>" },
+  "review.form_name_label": { "ka": "თქვენი სახელი *", "en": "Your Name *" },
+  "review.form_email_label": { "ka": "ელ. ფოსტა *", "en": "Email *" },
+  "review.form_rating_label": { "ka": "შეფასება *", "en": "Rating *" },
+  "review.form_hike_label": { "ka": "ლაშქრობა", "en": "Hike" },
+  "review.form_text_label": { "ka": "თქვენი შეფასება *", "en": "Your Review *" },
+  "review.form_name_error": { "ka": "გთხოვთ, შეიყვანოთ სახელი.", "en": "Please enter your name." },
+  "review.form_email_error": { "ka": "გთხოვთ, შეიყვანოთ სწორი ელ. ფოსტის მისამართი.", "en": "Please enter a valid email address." },
+  "review.form_rating_error": { "ka": "გთხოვთ, აირჩიეთ შეფასება.", "en": "Please select a rating." },
+  "review.form_text_error": { "ka": "გთხოვთ, დაწერეთ შეფასება.", "en": "Please write your review." },
+  "review.form_hike_placeholder": { "ka": "აირჩიეთ ლაშქრობა (არასავალდებულო)", "en": "Select a hike (optional)" },
+  "review.form_submit": { "ka": "შეფასების გაგზავნა", "en": "Submit Review" },
+  "review.form_success_title": { "ka": "მადლობა შეფასებისთვის!", "en": "Thank You for Your Review!" },
+  "review.form_success_text": { "ka": "თქვენი შეფასება წარმატებით გაიგზავნა.", "en": "Your review has been submitted successfully." },
+
   "page.view_hikes": { "ka": "ლაშქრობების ნახვა", "en": "View Hikes" }
 }

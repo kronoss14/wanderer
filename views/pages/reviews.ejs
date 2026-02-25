@@ -49,3 +49,116 @@
     <% } %>
   </div>
 </section>
+
+<!-- REVIEW FORM -->
+<section class="section">
+  <div class="container" style="max-width: 720px;">
+    <% if (success) { %>
+      <div class="success-message">
+        <h3><%= t('review.form_success_title') %></h3>
+        <p><%= t('review.form_success_text') %></p>
+      </div>
+    <% } %>
+
+    <% if (errors.length) { %>
+      <div class="form-errors" style="background: rgba(239,68,68,0.1); border: 1px solid rgba(239,68,68,0.3); border-radius: var(--radius); padding: 1rem 1.5rem; margin-bottom: 1.5rem;">
+        <% errors.forEach(err => { %>
+          <p style="color: #ef4444; font-size: 0.9rem; margin-bottom: 0.25rem;"><%= err.msg %></p>
+        <% }) %>
+      </div>
+    <% } %>
+
+    <h2 class="section-title"><%- t('review.form_title') %></h2>
+    <form action="<%= langPrefix %>/reviews" method="POST" class="review-form" id="review-form" novalidate>
+      <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label" for="review-name"><%= t('review.form_name_label') %></label>
+          <input type="text" id="review-name" name="name" class="form-input" required>
+          <p class="form-error"><%= t('review.form_name_error') %></p>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="review-email"><%= t('review.form_email_label') %></label>
+          <input type="email" id="review-email" name="email" class="form-input" required>
+          <p class="form-error"><%= t('review.form_email_error') %></p>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label"><%= t('review.form_rating_label') %></label>
+        <input type="hidden" name="rating" id="review-rating" required>
+        <div class="star-rating-picker" id="star-picker">
+          <% for (let i = 1; i <= 5; i++) { %>
+            <svg class="star" data-value="<%= i %>" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#718096" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <% } %>
+        </div>
+        <p class="form-error"><%= t('review.form_rating_error') %></p>
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="review-hike"><%= t('review.form_hike_label') %></label>
+        <select id="review-hike" name="hikeId" class="form-input form-select">
+          <option value=""><%= t('review.form_hike_placeholder') %></option>
+          <% hikes.forEach(hike => { %>
+            <option value="<%= hike.id %>"><%= l(hike, 'name') %></option>
+          <% }) %>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="review-text"><%= t('review.form_text_label') %></label>
+        <textarea id="review-text" name="text" class="form-textarea" rows="5" required></textarea>
+        <p class="form-error"><%= t('review.form_text_error') %></p>
+      </div>
+      <button type="submit" class="btn btn-primary"><%= t('review.form_submit') %></button>
+    </form>
+  </div>
+</section>
+
+<script>
+(function() {
+  var picker = document.getElementById('star-picker');
+  var input = document.getElementById('review-rating');
+  var stars = picker.querySelectorAll('.star');
+  var selected = 0;
+
+  function highlight(n) {
+    stars.forEach(function(s, i) {
+      if (i < n) {
+        s.setAttribute('fill', '#F59E0B');
+        s.setAttribute('stroke', '#F59E0B');
+      } else {
+        s.setAttribute('fill', 'none');
+        s.setAttribute('stroke', '#718096');
+      }
+    });
+  }
+
+  stars.forEach(function(star) {
+    star.style.cursor = 'pointer';
+
+    star.addEventListener('click', function() {
+      selected = parseInt(this.getAttribute('data-value'));
+      input.value = selected;
+      highlight(selected);
+      // Clear error on rating group
+      var group = picker.closest('.form-group');
+      if (group) group.classList.remove('error');
+    });
+
+    star.addEventListener('mouseenter', function() {
+      highlight(parseInt(this.getAttribute('data-value')));
+    });
+  });
+
+  picker.addEventListener('mouseleave', function() {
+    highlight(selected);
+  });
+
+  // Hook into form validation for the rating field
+  var form = document.getElementById('review-form');
+  form.addEventListener('submit', function(e) {
+    if (!input.value) {
+      var group = picker.closest('.form-group');
+      if (group) group.classList.add('error');
+    }
+  });
+})();
+</script>
