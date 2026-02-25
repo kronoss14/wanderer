@@ -2,8 +2,19 @@ services:
   - type: web
     name: wanderer
     runtime: node
+    plan: free
     buildCommand: npm install
     startCommand: node server.js
     envVars:
+      - key: NODE_ENV
+        value: production
+      - key: EMAIL_USER
+        sync: false
+      - key: EMAIL_PASS
+        sync: false
+      - key: ADMIN_PASSWORD_HASH
+        sync: false
+      - key: SESSION_SECRET
+        generateValue: true
       - key: MONGODB_URI
         sync: false

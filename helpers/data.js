@@ -1,6 +1,7 @@
 import { readFile, writeFile } from 'node:fs/promises';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { log } from './logger.js';
 import { getDb } from './db.js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -28,6 +29,24 @@ function stripId(doc) {
   return rest;
 }
 
+// Simple in-memory mutex per file (used for filesystem fallback)
+const locks = new Map();
+
+async function withLock(filename, fn) {
+  while (locks.get(filename)) {
+    await locks.get(filename);
+  }
+  let resolve;
+  const promise = new Promise(r => { resolve = r; });
+  locks.set(filename, promise);
+  try {
+    return await fn();
+  } finally {
+    locks.delete(filename);
+    resolve();
+  }
+}
+
 export async function readJSON(filename) {
   if (!DISK_ONLY.has(filename)) {
     const db = await getDb();
@@ -41,8 +60,13 @@ export async function readJSON(filename) {
   }
 
   const filepath = join(dataDir, filename);
-  const raw = await readFile(filepath, 'utf-8');
-  return JSON.parse(raw);
+  try {
+    const raw = await readFile(filepath, 'utf-8');
+    return JSON.parse(raw);
+  } catch (err) {
+    log('error', `Failed to read ${filename}`, { error: err.message });
+    return [];
+  }
 }
 
 export async function writeJSON(filename, data) {
@@ -59,7 +83,9 @@ export async function writeJSON(filename, data) {
   }
 
   const filepath = join(dataDir, filename);
-  await writeFile(filepath, JSON.stringify(data, null, 2), 'utf-8');
+  await withLock(filename, async () => {
+    await writeFile(filepath, JSON.stringify(data, null, 2), 'utf-8');
+  });
 }
 
 export async function appendJSON(filename, entry) {
@@ -73,14 +99,17 @@ export async function appendJSON(filename, entry) {
     return docs.map(stripId);
   }
 
-  let data;
-  try {
-    data = await readJSON(filename);
-  } catch {
-    data = [];
-  }
-  data.push(entry);
-  const filepath = join(dataDir, filename);
-  await writeFile(filepath, JSON.stringify(data, null, 2), 'utf-8');
-  return data;
+  return withLock(filename, async () => {
+    const filepath = join(dataDir, filename);
+    let data;
+    try {
+      const raw = await readFile(filepath, 'utf-8');
+      data = JSON.parse(raw);
+    } catch {
+      data = [];
+    }
+    data.push(entry);
+    await writeFile(filepath, JSON.stringify(data, null, 2), 'utf-8');
+    return data;
+  });
 }
