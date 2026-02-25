@@ -4,10 +4,19 @@ import { fileURLToPath } from 'node:url';
 import { readFileSync, writeFileSync, mkdirSync, existsSync } from 'node:fs';
 import { randomBytes } from 'node:crypto';
 import { readJSON, writeJSON } from '../helpers/data.js';
-import { checkPassword, setAuthCookie, clearAuthCookie, requireAdmin } from '../helpers/auth.js';
+import { checkPassword, requireAdmin } from '../helpers/auth.js';
+import rateLimit from 'express-rate-limit';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const router = Router();
+
+const loginLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 5,
+  message: 'Too many login attempts. Please try again in 15 minutes.',
+  standardHeaders: true,
+  legacyHeaders: false
+});
 
 // Helper: render with admin layout (bypasses express-ejs-layouts)
 function renderAdmin(res, view, locals = {}) {
@@ -28,15 +37,19 @@ function textToArray(text) {
 
 // ─── Login (public) ───
 router.get('/login', (req, res) => {
-  res.render(join(__dirname, '..', 'views', 'admin', 'login.ejs'), { layout: false, error: null });
+  res.render(join(__dirname, '..', 'views', 'admin', 'login.ejs'), {
+    layout: false, error: null, csrfToken: req.session.csrfToken
+  });
 });
 
-router.post('/login', (req, res) => {
-  if (checkPassword(req.body.password)) {
-    setAuthCookie(res);
+router.post('/login', loginLimiter, async (req, res) => {
+  if (await checkPassword(req.body.password)) {
+    req.session.isAdmin = true;
     return res.redirect('/admin');
   }
-  res.render(join(__dirname, '..', 'views', 'admin', 'login.ejs'), { layout: false, error: 'Invalid password' });
+  res.render(join(__dirname, '..', 'views', 'admin', 'login.ejs'), {
+    layout: false, error: 'Invalid password', csrfToken: req.session.csrfToken
+  });
 });
 
 // ─── All routes below require auth ───
@@ -90,8 +103,9 @@ router.post('/upload', (req, res) => {
 
 // ─── Logout ───
 router.get('/logout', (req, res) => {
-  clearAuthCookie(res);
-  res.redirect('/admin/login');
+  req.session.destroy(() => {
+    res.redirect('/admin/login');
+  });
 });
 
 // ─── Dashboard ───
