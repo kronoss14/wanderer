@@ -9,19 +9,34 @@ function todayString() {
   return new Date().toISOString().slice(0, 10);
 }
 
+let dirEnsured = false;
 async function ensureDir() {
+  if (dirEnsured) return;
   await mkdir(analyticsDir, { recursive: true });
+  dirEnsured = true;
 }
 
-export async function recordEvent(event) {
-  await ensureDir();
-  const file = join(analyticsDir, `${todayString()}.json`);
-  let events = [];
-  try {
-    events = JSON.parse(await readFile(file, 'utf-8'));
-  } catch { /* file doesn't exist yet */ }
-  events.push(event);
-  await writeFile(file, JSON.stringify(events, null, 2), 'utf-8');
+// Serialize writes to prevent race conditions under concurrent requests
+let writeQueue = Promise.resolve();
+
+export function recordEvent(event) {
+  writeQueue = writeQueue.then(async () => {
+    await ensureDir();
+    const file = join(analyticsDir, `${todayString()}.json`);
+    let events = [];
+    try {
+      events = JSON.parse(await readFile(file, 'utf-8'));
+    } catch (err) {
+      if (err.code !== 'ENOENT') {
+        console.error(`Analytics: corrupt file ${file}`, err.message);
+      }
+    }
+    events.push(event);
+    await writeFile(file, JSON.stringify(events, null, 2), 'utf-8');
+  }).catch(err => {
+    console.error('Analytics write failed:', err);
+  });
+  return writeQueue;
 }
 
 export async function readEventsForRange(fromDate, toDate) {
@@ -31,6 +46,7 @@ export async function readEventsForRange(fromDate, toDate) {
   for (const f of files) {
     if (!f.endsWith('.json')) continue;
     const date = f.replace('.json', '');
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(date)) continue;
     if (date >= fromDate && date <= toDate) {
       try {
         const data = JSON.parse(await readFile(join(analyticsDir, f), 'utf-8'));
