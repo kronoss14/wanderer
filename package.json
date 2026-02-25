@@ -9,9 +9,17 @@
     "dev": "node --env-file=.env --watch server.js"
   },
   "dependencies": {
+    "bcrypt": "^6.0.0",
+    "cookie-parser": "^1.4.7",
     "ejs": "^3.1.10",
     "express": "^5.1.0",
     "express-ejs-layouts": "^2.5.1",
-    "nodemailer": "^8.0.1"
+    "express-rate-limit": "^8.2.1",
+    "express-session": "^1.19.0",
+    "express-validator": "^7.3.1",
+    "helmet": "^8.1.0",
+    "multer": "^2.0.2",
+    "nodemailer": "^8.0.1",
+    "sharp": "^0.34.5"
   }
 }
