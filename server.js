@@ -24,6 +24,7 @@ import helmet from 'helmet';
 import cookieParser from 'cookie-parser';
 import session from 'express-session';
 import { randomBytes } from 'node:crypto';
+import { log } from './helpers/logger.js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const app = express();
@@ -115,6 +116,12 @@ app.use(analyticsRouter);
 // 404
 app.use((req, res) => {
   res.status(404).render('pages/404', { title: 'Page Not Found' });
+});
+
+// Error handler
+app.use((err, req, res, next) => {
+  log('error', 'Unhandled route error', { path: req.path, error: err.message });
+  res.status(500).render('pages/error', { title: 'Error' });
 });
 
 app.listen(PORT, () => {

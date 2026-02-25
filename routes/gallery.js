@@ -1,14 +1,15 @@
 import { Router } from 'express';
 import { readJSON } from '../helpers/data.js';
+import { asyncHandler } from '../helpers/async-handler.js';
 
 const router = Router();
 
-router.get('/', async (req, res) => {
+router.get('/', asyncHandler(async (req, res) => {
   const gallery = await readJSON('gallery.json');
   res.render('pages/gallery', { title: 'თავგადასავლები', gallery });
-});
+}));
 
-router.get('/:id', async (req, res) => {
+router.get('/:id', asyncHandler(async (req, res) => {
   const gallery = await readJSON('gallery.json');
   const item = gallery.find(g => g.id === Number(req.params.id));
   if (!item) return res.redirect('/gallery');
@@ -20,6 +21,6 @@ router.get('/:id', async (req, res) => {
   }
 
   res.render('pages/gallery-detail', { title: item.title, item, reviews });
-});
+}));
 
 export default router;

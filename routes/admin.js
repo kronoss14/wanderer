@@ -6,6 +6,7 @@ import { randomBytes } from 'node:crypto';
 import { readJSON, writeJSON } from '../helpers/data.js';
 import { checkPassword, requireAdmin } from '../helpers/auth.js';
 import rateLimit from 'express-rate-limit';
+import { asyncHandler } from '../helpers/async-handler.js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const router = Router();
@@ -42,7 +43,7 @@ router.get('/login', (req, res) => {
   });
 });
 
-router.post('/login', loginLimiter, async (req, res) => {
+router.post('/login', loginLimiter, asyncHandler(async (req, res) => {
   if (await checkPassword(req.body.password)) {
     req.session.isAdmin = true;
     return res.redirect('/admin');
@@ -50,7 +51,7 @@ router.post('/login', loginLimiter, async (req, res) => {
   res.render(join(__dirname, '..', 'views', 'admin', 'login.ejs'), {
     layout: false, error: 'Invalid password', csrfToken: req.session.csrfToken
   });
-});
+}));
 
 // ─── All routes below require auth ───
 router.use(requireAdmin);
@@ -109,7 +110,7 @@ router.get('/logout', (req, res) => {
 });
 
 // ─── Dashboard ───
-router.get('/', async (req, res) => {
+router.get('/', asyncHandler(async (req, res) => {
   const [hikes, guides, pricing, gallery] = await Promise.all([
     readJSON('hikes.json'),
     readJSON('guides.json'),
@@ -120,16 +121,16 @@ router.get('/', async (req, res) => {
     title: 'Dashboard',
     counts: { hikes: hikes.length, guides: guides.length, pricing: pricing.length, gallery: gallery.length }
   });
-});
+}));
 
 // ═══════════════════════════════════════════
 //  HIKES CRUD
 // ═══════════════════════════════════════════
 
-router.get('/hikes', async (req, res) => {
+router.get('/hikes', asyncHandler(async (req, res) => {
   const hikes = await readJSON('hikes.json');
   renderAdmin(res, join(__dirname, '..', 'views', 'admin', 'hikes-list.ejs'), { title: 'Hikes', hikes });
-});
+}));
 
 router.get('/hikes/new', (req, res) => {
   renderAdmin(res, join(__dirname, '..', 'views', 'admin', 'hikes-form.ejs'), {
@@ -137,7 +138,7 @@ router.get('/hikes/new', (req, res) => {
   });
 });
 
-router.post('/hikes', async (req, res) => {
+router.post('/hikes', asyncHandler(async (req, res) => {
   const hikes = await readJSON('hikes.json');
   const b = req.body;
   const hike = {
@@ -167,18 +168,18 @@ router.post('/hikes', async (req, res) => {
   hikes.push(hike);
   await writeJSON('hikes.json', hikes);
   res.redirect('/admin/hikes');
-});
+}));
 
-router.get('/hikes/edit/:id', async (req, res) => {
+router.get('/hikes/edit/:id', asyncHandler(async (req, res) => {
   const hikes = await readJSON('hikes.json');
   const hike = hikes.find(h => h.id === req.params.id);
   if (!hike) return res.redirect('/admin/hikes');
   renderAdmin(res, join(__dirname, '..', 'views', 'admin', 'hikes-form.ejs'), {
     title: 'Edit Hike', editing: true, hike
   });
-});
+}));
 
-router.post('/hikes/edit/:id', async (req, res) => {
+router.post('/hikes/edit/:id', asyncHandler(async (req, res) => {
   const hikes = await readJSON('hikes.json');
   const idx = hikes.findIndex(h => h.id === req.params.id);
   if (idx === -1) return res.redirect('/admin/hikes');
@@ -209,23 +210,23 @@ router.post('/hikes/edit/:id', async (req, res) => {
   };
   await writeJSON('hikes.json', hikes);
   res.redirect('/admin/hikes');
-});
+}));
 
-router.post('/hikes/delete/:id', async (req, res) => {
+router.post('/hikes/delete/:id', asyncHandler(async (req, res) => {
   const hikes = await readJSON('hikes.json');
   const filtered = hikes.filter(h => h.id !== req.params.id);
   await writeJSON('hikes.json', filtered);
   res.redirect('/admin/hikes');
-});
+}));
 
 // ═══════════════════════════════════════════
 //  GUIDES CRUD
 // ═══════════════════════════════════════════
 
-router.get('/guides', async (req, res) => {
+router.get('/guides', asyncHandler(async (req, res) => {
   const guides = await readJSON('guides.json');
   renderAdmin(res, join(__dirname, '..', 'views', 'admin', 'guides-list.ejs'), { title: 'Guides', guides });
-});
+}));
 
 router.get('/guides/new', (req, res) => {
   renderAdmin(res, join(__dirname, '..', 'views', 'admin', 'guides-form.ejs'), {
@@ -233,7 +234,7 @@ router.get('/guides/new', (req, res) => {
   });
 });
 
-router.post('/guides', async (req, res) => {
+router.post('/guides', asyncHandler(async (req, res) => {
   const guides = await readJSON('guides.json');
   const b = req.body;
   const nextId = guides.length ? Math.max(...guides.map(g => g.id)) + 1 : 1;
@@ -247,18 +248,18 @@ router.post('/guides', async (req, res) => {
   });
   await writeJSON('guides.json', guides);
   res.redirect('/admin/guides');
-});
+}));
 
-router.get('/guides/edit/:id', async (req, res) => {
+router.get('/guides/edit/:id', asyncHandler(async (req, res) => {
   const guides = await readJSON('guides.json');
   const guide = guides.find(g => g.id === Number(req.params.id));
   if (!guide) return res.redirect('/admin/guides');
   renderAdmin(res, join(__dirname, '..', 'views', 'admin', 'guides-form.ejs'), {
     title: 'Edit Guide', editing: true, guide
   });
-});
+}));
 
-router.post('/guides/edit/:id', async (req, res) => {
+router.post('/guides/edit/:id', asyncHandler(async (req, res) => {
   const guides = await readJSON('guides.json');
   const idx = guides.findIndex(g => g.id === Number(req.params.id));
   if (idx === -1) return res.redirect('/admin/guides');
@@ -273,23 +274,23 @@ router.post('/guides/edit/:id', async (req, res) => {
   };
   await writeJSON('guides.json', guides);
   res.redirect('/admin/guides');
-});
+}));
 
-router.post('/guides/delete/:id', async (req, res) => {
+router.post('/guides/delete/:id', asyncHandler(async (req, res) => {
   const guides = await readJSON('guides.json');
   const filtered = guides.filter(g => g.id !== Number(req.params.id));
   await writeJSON('guides.json', filtered);
   res.redirect('/admin/guides');
-});
+}));
 
 // ═══════════════════════════════════════════
 //  PRICING CRUD
 // ═══════════════════════════════════════════
 
-router.get('/pricing', async (req, res) => {
+router.get('/pricing', asyncHandler(async (req, res) => {
   const pricing = await readJSON('pricing.json');
   renderAdmin(res, join(__dirname, '..', 'views', 'admin', 'pricing-list.ejs'), { title: 'Pricing', pricing });
-});
+}));
 
 router.get('/pricing/new', (req, res) => {
   renderAdmin(res, join(__dirname, '..', 'views', 'admin', 'pricing-form.ejs'), {
@@ -297,7 +298,7 @@ router.get('/pricing/new', (req, res) => {
   });
 });
 
-router.post('/pricing', async (req, res) => {
+router.post('/pricing', asyncHandler(async (req, res) => {
   const pricing = await readJSON('pricing.json');
   const b = req.body;
   const nextId = pricing.length ? Math.max(...pricing.map(p => p.id)) + 1 : 1;
@@ -314,18 +315,18 @@ router.post('/pricing', async (req, res) => {
   });
   await writeJSON('pricing.json', pricing);
   res.redirect('/admin/pricing');
-});
+}));
 
-router.get('/pricing/edit/:id', async (req, res) => {
+router.get('/pricing/edit/:id', asyncHandler(async (req, res) => {
   const pricing = await readJSON('pricing.json');
   const tier = pricing.find(p => p.id === Number(req.params.id));
   if (!tier) return res.redirect('/admin/pricing');
   renderAdmin(res, join(__dirname, '..', 'views', 'admin', 'pricing-form.ejs'), {
     title: 'Edit Pricing Tier', editing: true, tier
   });
-});
+}));
 
-router.post('/pricing/edit/:id', async (req, res) => {
+router.post('/pricing/edit/:id', asyncHandler(async (req, res) => {
   const pricing = await readJSON('pricing.json');
   const idx = pricing.findIndex(p => p.id === Number(req.params.id));
   if (idx === -1) return res.redirect('/admin/pricing');
@@ -343,32 +344,32 @@ router.post('/pricing/edit/:id', async (req, res) => {
   };
   await writeJSON('pricing.json', pricing);
   res.redirect('/admin/pricing');
-});
+}));
 
-router.post('/pricing/delete/:id', async (req, res) => {
+router.post('/pricing/delete/:id', asyncHandler(async (req, res) => {
   const pricing = await readJSON('pricing.json');
   const filtered = pricing.filter(p => p.id !== Number(req.params.id));
   await writeJSON('pricing.json', filtered);
   res.redirect('/admin/pricing');
-});
+}));
 
 // ═══════════════════════════════════════════
 //  GALLERY CRUD
 // ═══════════════════════════════════════════
 
-router.get('/gallery', async (req, res) => {
+router.get('/gallery', asyncHandler(async (req, res) => {
   const gallery = await readJSON('gallery.json');
   renderAdmin(res, join(__dirname, '..', 'views', 'admin', 'gallery-list.ejs'), { title: 'Adventures', gallery });
-});
+}));
 
-router.get('/gallery/new', async (req, res) => {
+router.get('/gallery/new', asyncHandler(async (req, res) => {
   const hikes = await readJSON('hikes.json');
   renderAdmin(res, join(__dirname, '..', 'views', 'admin', 'gallery-form.ejs'), {
     title: 'New Adventure', editing: false, item: {}, hikes
   });
-});
+}));
 
-router.post('/gallery', async (req, res) => {
+router.post('/gallery', asyncHandler(async (req, res) => {
   const gallery = await readJSON('gallery.json');
   const b = req.body;
   const nextId = gallery.length ? Math.max(...gallery.map(g => g.id)) + 1 : 1;
@@ -383,9 +384,9 @@ router.post('/gallery', async (req, res) => {
   });
   await writeJSON('gallery.json', gallery);
   res.redirect('/admin/gallery');
-});
+}));
 
-router.get('/gallery/edit/:id', async (req, res) => {
+router.get('/gallery/edit/:id', asyncHandler(async (req, res) => {
   const [gallery, hikes] = await Promise.all([
     readJSON('gallery.json'),
     readJSON('hikes.json')
@@ -395,9 +396,9 @@ router.get('/gallery/edit/:id', async (req, res) => {
   renderAdmin(res, join(__dirname, '..', 'views', 'admin', 'gallery-form.ejs'), {
     title: 'Edit Adventure', editing: true, item, hikes
   });
-});
+}));
 
-router.post('/gallery/edit/:id', async (req, res) => {
+router.post('/gallery/edit/:id', asyncHandler(async (req, res) => {
   const gallery = await readJSON('gallery.json');
   const idx = gallery.findIndex(g => g.id === Number(req.params.id));
   if (idx === -1) return res.redirect('/admin/gallery');
@@ -413,13 +414,13 @@ router.post('/gallery/edit/:id', async (req, res) => {
   };
   await writeJSON('gallery.json', gallery);
   res.redirect('/admin/gallery');
-});
+}));
 
-router.post('/gallery/delete/:id', async (req, res) => {
+router.post('/gallery/delete/:id', asyncHandler(async (req, res) => {
   const gallery = await readJSON('gallery.json');
   const filtered = gallery.filter(g => g.id !== Number(req.params.id));
   await writeJSON('gallery.json', filtered);
   res.redirect('/admin/gallery');
-});
+}));
 
 export default router;
