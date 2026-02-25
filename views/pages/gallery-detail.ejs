@@ -1,6 +1,6 @@
 <!-- DETAIL HERO -->
 <section class="detail-hero">
-  <div class="detail-hero-bg" style="background-image: url('<%= item.mainImage %>')"></div>
+  <div class="detail-hero-bg" style="background-image: url('<%- escapeAttr(item.mainImage) %>')"></div>
   <div class="detail-hero-overlay"></div>
   <div class="detail-hero-content container">
     <a href="/gallery" class="back-link">
@@ -28,8 +28,8 @@
     <h2 class="section-title text-center" style="margin-bottom: 2rem;">ფოტო <span class="text-accent">გალერეა</span></h2>
     <div class="gallery-grid">
       <% item.images.forEach((img, idx) => { %>
-        <div class="gallery-item" data-full="<%= img %>" data-title="<%= item.title %>" data-location="">
-          <img src="<%= img %>" alt="<%= item.title %>" loading="lazy">
+        <div class="gallery-item" data-full="<%- escapeAttr(img) %>" data-title="<%- escapeAttr(item.title) %>" data-location="">
+          <img src="<%- escapeAttr(img) %>" alt="<%= item.title %>" loading="lazy">
         </div>
       <% }) %>
     </div>

@@ -25,6 +25,7 @@ import cookieParser from 'cookie-parser';
 import session from 'express-session';
 import { randomBytes } from 'node:crypto';
 import { log } from './helpers/logger.js';
+import { escapeAttr } from './helpers/escape-url.js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const app = express();
@@ -94,6 +95,7 @@ app.use(express.static(join(__dirname, 'public')));
 // Locals available to all templates
 app.use((req, res, next) => {
   res.locals.currentPath = req.path;
+  res.locals.escapeAttr = escapeAttr;
   res.locals.siteName = 'Wanderer';
   res.locals.siteNameGeo = 'მოხეტიალე';
   res.locals.socialLinks = {
