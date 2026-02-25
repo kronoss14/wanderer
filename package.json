@@ -8,6 +8,9 @@
     "start": "node server.js",
     "dev": "node --env-file=.env --watch server.js"
   },
+  "engines": {
+    "node": ">=20.0.0"
+  },
   "dependencies": {
     "@tmcw/togeojson": "^7.1.2",
     "bcrypt": "^6.0.0",
