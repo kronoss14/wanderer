@@ -72,28 +72,36 @@ app.use(session({
   name: 'wanderer.sid',
   cookie: {
     httpOnly: true,
-    sameSite: 'strict',
+    sameSite: 'lax',
     secure: process.env.NODE_ENV === 'production',
     maxAge: 24 * 60 * 60 * 1000 // 24 hours
   }
 }));
 
-// CSRF token — generate for all requests, validate on POST/PUT/DELETE
+// CSRF — double-submit cookie pattern (survives server restarts)
 app.use((req, res, next) => {
   if (['GET', 'HEAD', 'OPTIONS'].includes(req.method)) {
-    if (!req.session.csrfToken) {
-      req.session.csrfToken = randomBytes(32).toString('hex');
+    let token = req.cookies._csrf;
+    if (!token) {
+      token = randomBytes(32).toString('hex');
+      res.cookie('_csrf', token, {
+        httpOnly: true,
+        sameSite: 'lax',
+        secure: process.env.NODE_ENV === 'production',
+        maxAge: 24 * 60 * 60 * 1000
+      });
     }
-    res.locals.csrfToken = req.session.csrfToken;
+    res.locals.csrfToken = token;
     return next();
   }
   // POST/PUT/DELETE: validate token (exempt public analytics endpoint)
   if (req.path === '/api/analytics') return next();
-  const token = req.body?._csrf || req.headers['x-csrf-token'];
-  if (!token || token !== req.session?.csrfToken) {
+  const cookieToken = req.cookies._csrf;
+  const formToken = req.body?._csrf || req.headers['x-csrf-token'];
+  if (!cookieToken || !formToken || cookieToken !== formToken) {
     return res.status(403).send('Invalid or missing CSRF token');
   }
-  res.locals.csrfToken = req.session.csrfToken;
+  res.locals.csrfToken = cookieToken;
   next();
 });
 
