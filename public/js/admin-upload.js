@@ -139,9 +139,11 @@
     reader.onload = function () {
       var dataUrl = reader.result;
 
+      var csrfToken = document.querySelector('input[name="_csrf"]')?.value || '';
+
       fetch('/admin/upload', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json', 'X-CSRF-Token': csrfToken },
         body: JSON.stringify({ filename: file.name, data: dataUrl })
       })
         .then(function (res) { return res.json(); })

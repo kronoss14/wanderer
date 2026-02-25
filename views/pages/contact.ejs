@@ -21,6 +21,7 @@
         <% } %>
         <h2 class="section-title">გამოგვიგზავნეთ <span class="text-accent">შეტყობინება</span></h2>
         <form action="/contact" method="POST" class="contact-form" id="contact-form" novalidate>
+          <input type="hidden" name="_csrf" value="<%= csrfToken %>">
           <div class="form-row">
             <div class="form-group">
               <label class="form-label" for="name">თქვენი სახელი *</label>

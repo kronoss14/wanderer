@@ -26,6 +26,7 @@
           <td class="actions">
             <a href="/admin/pricing/edit/<%= p.id %>" class="btn btn-secondary btn-sm">Edit</a>
             <form method="POST" action="/admin/pricing/delete/<%= p.id %>" onsubmit="return confirm('Delete this tier?')">
+              <input type="hidden" name="_csrf" value="<%= csrfToken %>">
               <button type="submit" class="btn btn-danger btn-sm">Delete</button>
             </form>
           </td>

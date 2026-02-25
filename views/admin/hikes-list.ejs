@@ -28,6 +28,7 @@
           <td class="actions">
             <a href="/admin/hikes/edit/<%= h.id %>" class="btn btn-secondary btn-sm">Edit</a>
             <form method="POST" action="/admin/hikes/delete/<%= h.id %>" onsubmit="return confirm('Delete this hike?')">
+              <input type="hidden" name="_csrf" value="<%= csrfToken %>">
               <button type="submit" class="btn btn-danger btn-sm">Delete</button>
             </form>
           </td>

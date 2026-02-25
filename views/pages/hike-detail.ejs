@@ -120,6 +120,7 @@
             <h3>რეგისტრაცია</h3>
             <p class="widget-price"><strong>₾<%= hike.price %></strong> თითო ადამიანზე</p>
             <form action="/hikes/<%= hike.id %>/register" method="POST" novalidate>
+              <input type="hidden" name="_csrf" value="<%= csrfToken %>">
               <input type="hidden" name="hikeId" value="<%= hike.id %>">
               <div class="form-group" style="margin-bottom: 0.75rem;">
                 <label class="form-label" for="reg-name">სახელი *</label>

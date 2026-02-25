@@ -3,6 +3,7 @@
 </div>
 
 <form class="admin-form" method="POST" action="<%= editing ? '/admin/hikes/edit/' + hike.id : '/admin/hikes' %>">
+  <input type="hidden" name="_csrf" value="<%= csrfToken %>">
   <div class="form-group">
     <label for="id">ID (slug)</label>
     <input type="text" id="id" name="id" value="<%= hike.id || '' %>" required <%= editing ? 'readonly' : '' %>>
