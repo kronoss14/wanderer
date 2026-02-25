@@ -19,6 +19,7 @@ import contactRouter from './routes/contact.js';
 import galleryRouter from './routes/gallery.js';
 import reviewsRouter from './routes/reviews.js';
 import adminRouter from './routes/admin.js';
+import analyticsRouter from './routes/analytics.js';
 import helmet from 'helmet';
 import cookieParser from 'cookie-parser';
 import session from 'express-session';
@@ -76,7 +77,8 @@ app.use((req, res, next) => {
     res.locals.csrfToken = req.session.csrfToken;
     return next();
   }
-  // POST/PUT/DELETE: validate token
+  // POST/PUT/DELETE: validate token (exempt public analytics endpoint)
+  if (req.path === '/api/analytics') return next();
   const token = req.body?._csrf || req.headers['x-csrf-token'];
   if (!token || token !== req.session?.csrfToken) {
     return res.status(403).send('Invalid or missing CSRF token');
@@ -108,6 +110,7 @@ app.use('/contact', contactRouter);
 app.use('/gallery', galleryRouter);
 app.use('/reviews', reviewsRouter);
 app.use('/admin', adminRouter);
+app.use(analyticsRouter);
 
 // 404
 app.use((req, res) => {
