@@ -12,6 +12,7 @@ import { asyncHandler } from '../helpers/async-handler.js';
 import { body, validationResult } from 'express-validator';
 import { audit, log } from '../helpers/logger.js';
 import { parseRouteFile } from '../helpers/geo.js';
+import { uploadImage, isCloudinaryConfigured } from '../helpers/cloudinary.js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const router = Router();
@@ -41,7 +42,7 @@ function textToArray(text) {
   return text.split('\n').map(s => s.trim()).filter(Boolean);
 }
 
-// Helper: validate image URL (local path or http/https)
+// Helper: validate image URL (local path, http/https, or cloudinary)
 function isValidImageUrl(url) {
   if (!url) return true;
   if (url.startsWith('/images/')) return true;
@@ -215,6 +216,31 @@ router.post('/upload', upload.single('file'), asyncHandler(async (req, res) => {
 
   const id = randomUUID();
 
+  // ─── Cloudinary upload (persistent cloud storage) ───
+  if (isCloudinaryConfigured()) {
+    try {
+      // Process with sharp first (resize/compress), then upload to Cloudinary
+      let buffer = req.file.buffer;
+      let uploadOpts = { public_id: id };
+
+      if (req.file.mimetype !== 'image/svg+xml') {
+        buffer = await sharp(req.file.buffer)
+          .resize(1920, null, { withoutEnlargement: true })
+          .jpeg({ quality: 80 })
+          .toBuffer();
+        uploadOpts.format = 'jpg';
+      }
+
+      const url = await uploadImage(buffer, uploadOpts);
+      await audit('upload', { filename: id, storage: 'cloudinary' });
+      return res.json({ url });
+    } catch (err) {
+      log('error', 'Cloudinary upload failed', { error: err.message });
+      return res.status(500).json({ error: 'Image upload failed' });
+    }
+  }
+
+  // ─── Local filesystem fallback (dev only) ───
   // Skip sharp processing for SVG
   if (req.file.mimetype === 'image/svg+xml') {
     const svgName = `${id}.svg`;
