@@ -2,4 +2,3 @@ node_modules/
 .env
 data/analytics/
 data/audit-log.json
-public/dist/

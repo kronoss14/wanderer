@@ -9,10 +9,9 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Noto+Sans+Georgian:wght@400;500;600;700;800&family=Oswald:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
-  <% const assetPrefix = process.env.NODE_ENV === 'production' ? '/dist' : ''; %>
-  <link rel="stylesheet" href="<%= assetPrefix %>/css/main.css">
-  <link rel="stylesheet" href="<%= assetPrefix %>/css/components.css">
-  <link rel="stylesheet" href="<%= assetPrefix %>/css/pages.css">
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" href="/css/components.css">
+  <link rel="stylesheet" href="/css/pages.css">
 </head>
 <body>
   <%- include('partials/_header') %>
@@ -41,10 +40,10 @@
   </div>
 
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-  <script src="<%= assetPrefix %>/js/map.js"></script>
-  <script src="<%= assetPrefix %>/js/main.js"></script>
-  <script src="<%= assetPrefix %>/js/gallery.js"></script>
-  <script src="<%= assetPrefix %>/js/forms.js"></script>
-  <script src="<%= assetPrefix %>/js/analytics.js"></script>
+  <script src="/js/map.js"></script>
+  <script src="/js/main.js"></script>
+  <script src="/js/gallery.js"></script>
+  <script src="/js/forms.js"></script>
+  <script src="/js/analytics.js"></script>
 </body>
 </html>
