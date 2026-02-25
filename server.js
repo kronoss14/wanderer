@@ -19,6 +19,10 @@ import contactRouter from './routes/contact.js';
 import galleryRouter from './routes/gallery.js';
 import reviewsRouter from './routes/reviews.js';
 import adminRouter from './routes/admin.js';
+import helmet from 'helmet';
+import cookieParser from 'cookie-parser';
+import session from 'express-session';
+import { randomBytes } from 'node:crypto';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const app = express();
@@ -32,7 +36,54 @@ app.set('layout', 'layout');
 
 // Body parsing
 app.use(express.urlencoded({ extended: true }));
-app.use(express.json({ limit: '15mb' }));
+app.use(express.json());
+
+// Security headers
+app.use(helmet({
+  contentSecurityPolicy: {
+    directives: {
+      defaultSrc: ["'self'"],
+      scriptSrc: ["'self'"],
+      styleSrc: ["'self'", "'unsafe-inline'", "https://fonts.googleapis.com"],
+      fontSrc: ["'self'", "https://fonts.gstatic.com"],
+      imgSrc: ["'self'", "data:", "https:"],
+      connectSrc: ["'self'"]
+    }
+  }
+}));
+
+// Cookies & sessions
+app.use(cookieParser());
+app.use(session({
+  secret: process.env.SESSION_SECRET,
+  resave: false,
+  saveUninitialized: false,
+  name: 'wanderer.sid',
+  cookie: {
+    httpOnly: true,
+    sameSite: 'strict',
+    secure: process.env.NODE_ENV === 'production',
+    maxAge: 24 * 60 * 60 * 1000 // 24 hours
+  }
+}));
+
+// CSRF token — generate for all requests, validate on POST/PUT/DELETE
+app.use((req, res, next) => {
+  if (['GET', 'HEAD', 'OPTIONS'].includes(req.method)) {
+    if (!req.session.csrfToken) {
+      req.session.csrfToken = randomBytes(32).toString('hex');
+    }
+    res.locals.csrfToken = req.session.csrfToken;
+    return next();
+  }
+  // POST/PUT/DELETE: validate token
+  const token = req.body?._csrf || req.headers['x-csrf-token'];
+  if (!token || token !== req.session?.csrfToken) {
+    return res.status(403).send('Invalid or missing CSRF token');
+  }
+  res.locals.csrfToken = req.session.csrfToken;
+  next();
+});
 
 // Static files
 app.use(express.static(join(__dirname, 'public')));
