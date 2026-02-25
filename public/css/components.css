@@ -1,18 +1,18 @@
 /* === HIKE CARDS === */
 .hike-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(min(340px, 100%), 1fr));
   gap: 2rem;
 }
 .hike-card {
   border-radius: var(--radius-lg);
   overflow: hidden;
   background: var(--bg-card);
-  transition: transform var(--transition), box-shadow var(--transition);
+  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 .hike-card:hover {
-  transform: translateY(-6px);
-  box-shadow: var(--shadow-lg);
+  transform: translateY(-8px);
+  box-shadow: 0 12px 40px rgba(0,0,0,0.5), 0 0 0 1px rgba(232,129,26,0.15);
 }
 .hike-card-link { color: inherit; display: block; }
 .hike-card-link:hover { color: inherit; }
@@ -25,15 +25,15 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 0.5s ease;
+  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
 }
 .hike-card:hover .hike-card-image img {
-  transform: scale(1.08);
+  transform: scale(1.12);
 }
 .hike-card-overlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(to top, rgba(0,0,0,0.6) 0%, transparent 50%);
+  background: linear-gradient(to top, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0) 50%);
 }
 .hike-card-badge {
   position: absolute;
@@ -47,6 +47,7 @@
   letter-spacing: 0.05em;
   border-radius: 4px;
   z-index: 1;
+  backdrop-filter: blur(4px);
 }
 .badge-day { background: var(--accent-emerald); color: #fff; }
 .badge-multi-day { background: var(--accent-orange); color: #fff; }
@@ -131,7 +132,7 @@
 /* === REVIEW CARDS === */
 .review-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(min(400px, 100%), 1fr));
   gap: 1.5rem;
 }
 .review-card {
@@ -139,9 +140,13 @@
   border-radius: var(--radius-lg);
   padding: 2rem;
   border: 1px solid var(--border-color);
-  transition: transform var(--transition);
+  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.4s ease, border-color 0.4s ease;
 }
-.review-card:hover { transform: translateY(-3px); }
+.review-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 30px rgba(0,0,0,0.3);
+  border-color: rgba(232,129,26,0.2);
+}
 .review-stars { display: flex; gap: 0.2rem; margin-bottom: 1rem; }
 .review-text {
   color: var(--text-secondary);
@@ -175,7 +180,7 @@
 /* === GALLERY GRID === */
 .gallery-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(min(280px, 100%), 1fr));
   gap: 1rem;
 }
 .gallery-item {
@@ -189,21 +194,22 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 0.5s ease;
+  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1), filter 0.4s ease;
 }
-.gallery-item:hover img { transform: scale(1.08); }
+.gallery-item:hover img { transform: scale(1.1); filter: brightness(1.1); }
 .gallery-item-overlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, transparent 60%);
+  background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.2) 40%, rgba(0,0,0,0) 60%);
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
   padding: 1.25rem;
   opacity: 0;
-  transition: opacity var(--transition);
+  transform: translateY(5px);
+  transition: opacity 0.35s ease, transform 0.35s ease;
 }
-.gallery-item:hover .gallery-item-overlay { opacity: 1; }
+.gallery-item:hover .gallery-item-overlay { opacity: 1; transform: translateY(0); }
 .gallery-item-overlay h4 {
   font-size: 1rem;
   text-transform: none;
@@ -220,7 +226,7 @@
 /* === ADVENTURES GRID === */
 .adventures-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(min(340px, 100%), 1fr));
   gap: 1.5rem;
 }
 .adventure-card {
@@ -246,15 +252,15 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 0.5s ease;
+  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
 }
 .adventure-card:hover .adventure-card-img img {
-  transform: scale(1.08);
+  transform: scale(1.1);
 }
 .adventure-card-overlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(to top, rgba(0,0,0,0.75) 0%, transparent 60%);
+  background: linear-gradient(to top, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0) 60%);
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
@@ -348,7 +354,7 @@
 /* === PRICING CARDS === */
 .pricing-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr));
   gap: 2rem;
   align-items: start;
 }
@@ -420,7 +426,7 @@
 /* === GUIDE CARDS === */
 .guides-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(320px, 100%), 1fr));
   gap: 2rem;
 }
 .guide-card {
@@ -479,11 +485,13 @@
   border-radius: var(--radius-lg);
   background: rgba(255,255,255,0.03);
   border: 1px solid var(--border-color);
-  transition: transform var(--transition), border-color var(--transition);
+  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.4s ease, box-shadow 0.4s ease, background 0.4s ease;
 }
 .why-card:hover {
-  transform: translateY(-4px);
+  transform: translateY(-6px);
   border-color: var(--accent-orange);
+  background: rgba(232,129,26,0.04);
+  box-shadow: 0 8px 30px rgba(0,0,0,0.3);
 }
 .why-icon { margin-bottom: 1rem; }
 .why-card h3 {
@@ -666,7 +674,7 @@
 }
 
 /* Blog components */
-.blog-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 2rem; }
+.blog-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(340px, 100%), 1fr)); gap: 2rem; }
 .blog-card { background: var(--bg-card); border-radius: var(--radius-lg); overflow: hidden; transition: var(--transition); border: 1px solid var(--border-color); }
 .blog-card:hover { transform: translateY(-4px); box-shadow: var(--shadow); }
 .blog-card-image img { width: 100%; height: 200px; object-fit: cover; display: block; }

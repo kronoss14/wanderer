@@ -3,12 +3,29 @@
   <div class="page-hero-overlay" style="background: linear-gradient(180deg, rgba(13,13,13,0.7) 0%, rgba(13,13,13,0.5) 100%)"></div>
   <div class="page-hero-content container">
     <h1><%= t('map.title') %></h1>
-    <p><%= t('map.all_hikes') %></p>
+    <p><%= t('map.subtitle') %></p>
   </div>
 </section>
 
 <section class="section">
   <div class="container">
+    <div class="map-toolbar">
+      <div class="map-search-wrap">
+        <svg class="map-search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <input type="text" id="map-search" class="map-search" placeholder="<%= t('map.search_placeholder') %>" autocomplete="off">
+        <div id="map-search-results" class="map-search-results"></div>
+      </div>
+      <div class="map-filters">
+        <button class="map-filter active" data-category="all"><%= t('map.filter_all') %></button>
+        <button class="map-filter" data-category="hiking"><%= t('map.filter_hiking') %></button>
+        <button class="map-filter" data-category="sightseeing"><%= t('map.filter_sightseeing') %></button>
+        <button class="map-filter" data-category="monastery"><%= t('map.filter_monastery') %></button>
+        <button class="map-filter" data-category="fortress"><%= t('map.filter_fortress') %></button>
+        <button class="map-filter" data-category="canyon"><%= t('map.filter_canyon') %></button>
+        <button class="map-filter" data-category="waterfall"><%= t('map.filter_waterfall') %></button>
+        <button class="map-filter" data-category="cave"><%= t('map.filter_cave') %></button>
+      </div>
+    </div>
     <div id="overview-map" class="overview-map"></div>
     <script>
       document.addEventListener('DOMContentLoaded', function() {
@@ -19,7 +36,17 @@
             route: h.route || {}
           };
         })) %>;
-        initOverviewMap('overview-map', hikes, '<%= langPrefix %>');
+        var points = <%- JSON.stringify(mapPoints.map(function(p) {
+          return {
+            id: p.id,
+            name: l(p, 'name'),
+            desc: l(p, 'desc'),
+            category: p.category,
+            lat: p.lat,
+            lng: p.lng
+          };
+        })) %>;
+        initOverviewMap('overview-map', hikes, points, '<%= langPrefix %>');
       });
     </script>
   </div>

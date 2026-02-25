@@ -166,9 +166,9 @@
   <div class="container">
     <h2 class="section-title text-center" style="margin-bottom: 2rem;"><%- t('hike.photo_gallery') %></h2>
     <div class="detail-gallery-strip">
-      <% hike.images.forEach(img => { %>
-        <div class="detail-gallery-img">
-          <img src="<%- escapeAttr(img) %>" alt="<%= l(hike, 'name') %>" loading="lazy">
+      <% hike.images.forEach((img, i) => { %>
+        <div class="detail-gallery-img gallery-item" data-full="<%- escapeAttr(img) %>" data-title="<%= l(hike, 'name') %>" data-location="<%= l(hike, 'region') %>">
+          <img src="<%- escapeAttr(img) %>" alt="<%= l(hike, 'name') %> - <%= i + 1 %>" loading="lazy">
         </div>
       <% }) %>
     </div>

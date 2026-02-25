@@ -1,0 +1,412 @@
+[
+  {
+    "id": "gergeti-trinity",
+    "name": "გერგეტის სამება",
+    "name_en": "Gergeti Trinity Church",
+    "category": "hiking",
+    "lat": 42.6627,
+    "lng": 44.6200,
+    "desc": "ლაშქრობა ყაზბეგის ხეობაში, 2170მ სიმაღლეზე მდებარე ეკლესიისკენ",
+    "desc_en": "Hike to the iconic church at 2170m with stunning Kazbek views"
+  },
+  {
+    "id": "juta-chaukhi",
+    "name": "ჯუთა - ჩაუხის პერევალი",
+    "name_en": "Juta - Chaukhi Pass",
+    "category": "hiking",
+    "lat": 42.5689,
+    "lng": 44.5953,
+    "desc": "ლაშქრობა ჯუთადან ჩაუხის კლდეებამდე, ალპური მდელოები",
+    "desc_en": "Trek from Juta village to the dramatic Chaukhi rock formations"
+  },
+  {
+    "id": "abudelauri-lakes",
+    "name": "აბუდელაურის ტბები",
+    "name_en": "Abudelauri Lakes",
+    "category": "hiking",
+    "lat": 42.5750,
+    "lng": 44.5350,
+    "desc": "სამი ფერადი ტბა - ლურჯი, თეთრი და მწვანე",
+    "desc_en": "Three colorful alpine lakes - blue, white, and green"
+  },
+  {
+    "id": "truso-gorge",
+    "name": "თრუსოს ხეობა",
+    "name_en": "Truso Gorge",
+    "category": "hiking",
+    "lat": 42.6200,
+    "lng": 44.4500,
+    "desc": "მინერალური წყაროები, ტრავერტინები და მიტოვებული სოფლები",
+    "desc_en": "Mineral springs, travertine formations, and abandoned villages"
+  },
+  {
+    "id": "mestia-koruldi",
+    "name": "მესტია - ყორულდის ტბები",
+    "name_en": "Mestia - Koruldi Lakes",
+    "category": "hiking",
+    "lat": 43.0500,
+    "lng": 42.7100,
+    "desc": "ალპური ტბები სვანეთის მთების პანორამით",
+    "desc_en": "Alpine lakes with panoramic views of Svaneti peaks"
+  },
+  {
+    "id": "mestia-ushguli",
+    "name": "მესტია - უშგული",
+    "name_en": "Mestia to Ushguli Trek",
+    "category": "hiking",
+    "lat": 43.0078,
+    "lng": 42.7273,
+    "desc": "4-დღიანი ლაშქრობა ევროპის უმაღლეს დასახლებულ სოფლამდე",
+    "desc_en": "4-day trek to Europe's highest continuously inhabited settlement"
+  },
+  {
+    "id": "ushguli",
+    "name": "უშგული",
+    "name_en": "Ushguli",
+    "category": "sightseeing",
+    "lat": 42.9167,
+    "lng": 43.0167,
+    "desc": "UNESCO-ს მსოფლიო მემკვიდრეობის ძეგლი, სვანური კოშკები",
+    "desc_en": "UNESCO World Heritage Site with ancient Svan towers"
+  },
+  {
+    "id": "tusheti-omalo",
+    "name": "თუშეთი - ომალო",
+    "name_en": "Tusheti - Omalo",
+    "category": "hiking",
+    "lat": 42.3728,
+    "lng": 45.3506,
+    "desc": "ლაშქრობები თუშეთის ხეობებში, შუა საუკუნეების კოშკები",
+    "desc_en": "Hikes through Tusheti valleys with medieval towers"
+  },
+  {
+    "id": "tusheti-dartlo",
+    "name": "დართლო",
+    "name_en": "Dartlo Village",
+    "category": "sightseeing",
+    "lat": 42.4500,
+    "lng": 45.3200,
+    "desc": "შუა საუკუნეების სოფელი კოშკებით და ტრადიციული არქიტექტურით",
+    "desc_en": "Medieval village with watchtowers and traditional architecture"
+  },
+  {
+    "id": "borjomi-kharagauli",
+    "name": "ბორჯომ-ხარაგაულის ეროვნული პარკი",
+    "name_en": "Borjomi-Kharagauli National Park",
+    "category": "hiking",
+    "lat": 41.8434,
+    "lng": 43.5289,
+    "desc": "ევროპის ერთ-ერთი უდიდესი ეროვნული პარკი, 9 მარშრუტი",
+    "desc_en": "One of Europe's largest national parks with 9 marked trails"
+  },
+  {
+    "id": "lagodekhi",
+    "name": "ლაგოდეხის ნაკრძალი",
+    "name_en": "Lagodekhi Protected Areas",
+    "category": "hiking",
+    "lat": 41.8269,
+    "lng": 46.2847,
+    "desc": "ჩანჩქერები, ალპური ტბა და მრავალფეროვანი ფლორა-ფაუნა",
+    "desc_en": "Waterfalls, alpine lake, and rich biodiversity"
+  },
+  {
+    "id": "tobavarchkhili",
+    "name": "ტობავარჩხილი (ვერცხლის ტბა)",
+    "name_en": "Tobavarchkhili (Silver Lake)",
+    "category": "hiking",
+    "lat": 42.3833,
+    "lng": 42.1917,
+    "desc": "2-3 დღიანი ლაშქრობა ვერცხლისფერ ალპურ ტბამდე",
+    "desc_en": "2-3 day trek to a stunning silver-colored alpine lake"
+  },
+  {
+    "id": "shatili",
+    "name": "შატილი",
+    "name_en": "Shatili",
+    "category": "sightseeing",
+    "lat": 42.6589,
+    "lng": 45.1425,
+    "desc": "შუა საუკუნეების ციხე-სოფელი ხევსურეთში",
+    "desc_en": "Medieval fortress-village in Khevsureti"
+  },
+  {
+    "id": "shatili-mutso",
+    "name": "შატილი - მუცო",
+    "name_en": "Shatili to Mutso Trek",
+    "category": "hiking",
+    "lat": 42.6700,
+    "lng": 45.1600,
+    "desc": "ლაშქრობა ხევსურეთის მთებში ორ შუა საუკუნეების სოფელს შორის",
+    "desc_en": "Mountain trek between two medieval fortress-villages"
+  },
+  {
+    "id": "martvili-canyon",
+    "name": "მარტვილის კანიონი",
+    "name_en": "Martvili Canyon",
+    "category": "canyon",
+    "lat": 42.4561,
+    "lng": 42.3728,
+    "desc": "ზურმუხტისფერი წყლის კანიონი, ნავით გასეირნება",
+    "desc_en": "Emerald water canyon with boat tours"
+  },
+  {
+    "id": "okatse-canyon",
+    "name": "ოკაცეს კანიონი",
+    "name_en": "Okatse Canyon",
+    "category": "canyon",
+    "lat": 42.3789,
+    "lng": 42.6028,
+    "desc": "საცეცხლე ბილიკი კანიონის თავზე, 140მ სიღრმე",
+    "desc_en": "Suspended walkway over a 140m deep canyon"
+  },
+  {
+    "id": "dashbashi-canyon",
+    "name": "დაშბაშის კანიონი",
+    "name_en": "Dashbashi Canyon",
+    "category": "canyon",
+    "lat": 41.6778,
+    "lng": 44.3028,
+    "desc": "მინის ხიდი კანიონის თავზე, თანამედროვე ინფრასტრუქტურა",
+    "desc_en": "Glass bridge over the canyon with modern infrastructure"
+  },
+  {
+    "id": "prometheus-cave",
+    "name": "პრომეთეს გამოქვაბული",
+    "name_en": "Prometheus Cave",
+    "category": "cave",
+    "lat": 42.3764,
+    "lng": 42.6003,
+    "desc": "განათებული სტალაქტიტები და სტალაგმიტები, მიწისქვეშა მდინარე",
+    "desc_en": "Illuminated stalactites, underground river, and boat ride"
+  },
+  {
+    "id": "sataplia-cave",
+    "name": "სათაფლია",
+    "name_en": "Sataplia Cave & Dinosaur Footprints",
+    "category": "cave",
+    "lat": 42.3167,
+    "lng": 42.6667,
+    "desc": "დინოზავრის კვალი და მინის ხიდი ხეობის თავზე",
+    "desc_en": "Dinosaur footprints and glass walkway over the valley"
+  },
+  {
+    "id": "vardzia",
+    "name": "ვარძია",
+    "name_en": "Vardzia Cave Monastery",
+    "category": "monastery",
+    "lat": 41.3814,
+    "lng": 43.2833,
+    "desc": "XII საუკუნის კლდეში ნაკვეთი სამონასტრო კომპლექსი",
+    "desc_en": "12th-century cave monastery complex carved into a cliff"
+  },
+  {
+    "id": "ananuri",
+    "name": "ანანურის ციხე",
+    "name_en": "Ananuri Fortress",
+    "category": "fortress",
+    "lat": 42.1650,
+    "lng": 44.7025,
+    "desc": "შუა საუკუნეების ციხე ჟინვალის წყალსაცავის პირას",
+    "desc_en": "Medieval fortress on the shores of Zhinvali Reservoir"
+  },
+  {
+    "id": "jvari",
+    "name": "ჯვარის მონასტერი",
+    "name_en": "Jvari Monastery",
+    "category": "monastery",
+    "lat": 41.8381,
+    "lng": 44.7331,
+    "desc": "VI საუკუნის მონასტერი, მცხეთის და არაგვი-მტკვრის შეერთების ხედი",
+    "desc_en": "6th-century monastery with views of Mtskheta and two rivers merging"
+  },
+  {
+    "id": "david-gareja",
+    "name": "დავით გარეჯა",
+    "name_en": "David Gareja Monastery",
+    "category": "monastery",
+    "lat": 41.4500,
+    "lng": 45.3833,
+    "desc": "VI საუკუნის სამონასტრო კომპლექსი ნახევარ-უდაბნოში",
+    "desc_en": "6th-century monastery complex in semi-desert landscape"
+  },
+  {
+    "id": "gelati",
+    "name": "გელათის მონასტერი",
+    "name_en": "Gelati Monastery",
+    "category": "monastery",
+    "lat": 42.2958,
+    "lng": 42.7678,
+    "desc": "UNESCO-ს ძეგლი, XII საუკუნის აკადემია და მონასტერი",
+    "desc_en": "UNESCO site, 12th-century academy and monastery"
+  },
+  {
+    "id": "kinchkha-waterfall",
+    "name": "კინჩხას ჩანჩქერი",
+    "name_en": "Kinchkha Waterfall",
+    "category": "waterfall",
+    "lat": 42.3917,
+    "lng": 42.5833,
+    "desc": "საქართველოს ერთ-ერთი უმაღლესი ჩანჩქერი, 100მ",
+    "desc_en": "One of Georgia's tallest waterfalls at 100m"
+  },
+  {
+    "id": "gveleti-waterfall",
+    "name": "გველეთის ჩანჩქერი",
+    "name_en": "Gveleti Waterfall",
+    "category": "waterfall",
+    "lat": 42.7000,
+    "lng": 44.6100,
+    "desc": "ულამაზესი ჩანჩქერი ყაზბეგის ხეობაში",
+    "desc_en": "Beautiful waterfall in the Kazbegi valley"
+  },
+  {
+    "id": "rabati-castle",
+    "name": "რაბათის ციხე",
+    "name_en": "Rabati Castle",
+    "category": "fortress",
+    "lat": 41.6400,
+    "lng": 43.0100,
+    "desc": "რესტავრირებული შუა საუკუნეების ციხე ახალციხეში",
+    "desc_en": "Restored medieval fortress in Akhaltsikhe"
+  },
+  {
+    "id": "uplistsikhe",
+    "name": "უფლისციხე",
+    "name_en": "Uplistsikhe Cave Town",
+    "category": "sightseeing",
+    "lat": 41.9667,
+    "lng": 44.2094,
+    "desc": "ძვ.წ. I ათასწლეულის კლდეში ნაკვეთი ქალაქი",
+    "desc_en": "Ancient rock-hewn town dating back to the 1st millennium BC"
+  },
+  {
+    "id": "katskhi-pillar",
+    "name": "კაცხის სვეტი",
+    "name_en": "Katskhi Pillar",
+    "category": "sightseeing",
+    "lat": 42.2889,
+    "lng": 43.2842,
+    "desc": "40მ ქვის სვეტზე მდებარე ეკლესია",
+    "desc_en": "Church perched atop a 40m natural stone pillar"
+  },
+  {
+    "id": "signagi",
+    "name": "სიღნაღი",
+    "name_en": "Signagi (City of Love)",
+    "category": "sightseeing",
+    "lat": 41.6186,
+    "lng": 45.9225,
+    "desc": "პატარა ქალაქი ალაზნის ველის პანორამით, კახეთი",
+    "desc_en": "Charming hilltop town with panoramic views over Alazani Valley"
+  },
+  {
+    "id": "tsinandali",
+    "name": "წინანდლის მუზეუმი",
+    "name_en": "Tsinandali Estate",
+    "category": "sightseeing",
+    "lat": 41.8953,
+    "lng": 45.5939,
+    "desc": "ისტორიული მამული, ღვინის მარანი და ბაღი",
+    "desc_en": "Historic estate with wine cellar and beautiful gardens"
+  },
+  {
+    "id": "narikala",
+    "name": "ნარიყალას ციხე",
+    "name_en": "Narikala Fortress",
+    "category": "fortress",
+    "lat": 41.6878,
+    "lng": 44.8086,
+    "desc": "ძველი ციხე თბილისის ისტორიული ცენტრის თავზე",
+    "desc_en": "Ancient fortress overlooking Tbilisi's old town"
+  },
+  {
+    "id": "mtskheta",
+    "name": "მცხეთა - სვეტიცხოველი",
+    "name_en": "Mtskheta - Svetitskhoveli Cathedral",
+    "category": "monastery",
+    "lat": 41.8427,
+    "lng": 44.7206,
+    "desc": "საქართველოს ძველი დედაქალაქი, UNESCO-ს ძეგლი",
+    "desc_en": "Georgia's ancient capital, UNESCO World Heritage Site"
+  },
+  {
+    "id": "kazbegi-glacier",
+    "name": "ყაზბეგის მყინვარი",
+    "name_en": "Kazbek Glacier Trek",
+    "category": "hiking",
+    "lat": 42.6900,
+    "lng": 44.5500,
+    "desc": "ლაშქრობა ყაზბეგის მყინვარის ბაზამდე, მეტეოსადგური",
+    "desc_en": "Trek to Kazbek glacier base camp and weather station"
+  },
+  {
+    "id": "roshka",
+    "name": "როშკა - ჩაუხის ჯვარი",
+    "name_en": "Roshka - Chaukhi Cross Pass",
+    "category": "hiking",
+    "lat": 42.5300,
+    "lng": 44.6200,
+    "desc": "ლაშქრობა ხევსურეთის მთებში, ალპური მდელოები",
+    "desc_en": "Hike through Khevsureti mountains and alpine meadows"
+  },
+  {
+    "id": "tetnuldi",
+    "name": "თეთნულდის ბილიკი",
+    "name_en": "Tetnuldi Trail",
+    "category": "hiking",
+    "lat": 43.0333,
+    "lng": 42.9833,
+    "desc": "ლაშქრობა სვანეთის მეორე უმაღლესი მწვერვალისკენ",
+    "desc_en": "Trek towards Svaneti's second highest peak"
+  },
+  {
+    "id": "khulo-tago",
+    "name": "ხულო - ტაგო",
+    "name_en": "Khulo - Tago (Adjara)",
+    "category": "hiking",
+    "lat": 41.6500,
+    "lng": 42.3000,
+    "desc": "ლაშქრობა აჭარის მთიანეთში, ნატურალური ხიდები",
+    "desc_en": "Mountain hike in highland Adjara"
+  },
+  {
+    "id": "machakhela",
+    "name": "მაჭახელას ხეობა",
+    "name_en": "Machakhela Gorge",
+    "category": "sightseeing",
+    "lat": 41.5833,
+    "lng": 41.8333,
+    "desc": "ხელუხლებელი ხეობა აჭარაში, ეროვნული პარკი",
+    "desc_en": "Pristine gorge in Adjara, national park"
+  },
+  {
+    "id": "mtirala",
+    "name": "მტირალას ეროვნული პარკი",
+    "name_en": "Mtirala National Park",
+    "category": "hiking",
+    "lat": 41.6833,
+    "lng": 41.9167,
+    "desc": "სუბტროპიკული ტყე, ჩანჩქერები და ბუნებრივი აუზები",
+    "desc_en": "Subtropical rainforest with waterfalls and natural pools"
+  },
+  {
+    "id": "dedoplistskaro",
+    "name": "ვაშლოვანის ნაკრძალი",
+    "name_en": "Vashlovani Protected Areas",
+    "category": "hiking",
+    "lat": 41.3500,
+    "lng": 46.1000,
+    "desc": "უნიკალური ლანდშაფტი, კანიონები და სავანის ტიპის ბუნება",
+    "desc_en": "Unique landscape with canyons and savanna-like nature"
+  },
+  {
+    "id": "algeti",
+    "name": "ალგეთის ეროვნული პარკი",
+    "name_en": "Algeti National Park",
+    "category": "hiking",
+    "lat": 41.6833,
+    "lng": 44.3500,
+    "desc": "წიწვიანი ტყეების ლაშქრობა თბილისის მახლობლად",
+    "desc_en": "Coniferous forest hikes near Tbilisi"
+  }
+]
