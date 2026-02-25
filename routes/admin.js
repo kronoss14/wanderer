@@ -171,7 +171,7 @@ function parseBlogBody(b, id, slug) {
 // ─── Login (public) ───
 router.get('/login', (req, res) => {
   res.render(join(__dirname, '..', 'views', 'admin', 'login.ejs'), {
-    layout: false, error: null, csrfToken: req.session.csrfToken
+    layout: false, error: null, csrfToken: res.locals.csrfToken
   });
 });
 
@@ -181,7 +181,7 @@ router.post('/login', loginLimiter, asyncHandler(async (req, res) => {
     return res.redirect('/admin');
   }
   res.render(join(__dirname, '..', 'views', 'admin', 'login.ejs'), {
-    layout: false, error: 'Invalid password', csrfToken: req.session.csrfToken
+    layout: false, error: 'Invalid password', csrfToken: res.locals.csrfToken
   });
 }));
 
