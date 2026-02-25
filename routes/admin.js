@@ -223,7 +223,7 @@ router.post('/upload', upload.single('file'), asyncHandler(async (req, res) => {
       const uploadOpts = {
         public_id: id,
         transformation: req.file.mimetype !== 'image/svg+xml'
-          ? { width: 1920, crop: 'limit', quality: 'auto', fetch_format: 'auto' }
+          ? { width: 1920, crop: 'limit', quality: 'auto', fetch_format: 'auto', angle: 'auto' }
           : undefined
       };
 
