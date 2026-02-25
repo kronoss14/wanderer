@@ -217,21 +217,17 @@ router.post('/upload', upload.single('file'), asyncHandler(async (req, res) => {
   const id = randomUUID();
 
   // ─── Cloudinary upload (persistent cloud storage) ───
+  // Let Cloudinary handle resize/compression — no sharp needed, saves memory
   if (isCloudinaryConfigured()) {
     try {
-      // Process with sharp first (resize/compress), then upload to Cloudinary
-      let buffer = req.file.buffer;
-      let uploadOpts = { public_id: id };
+      const uploadOpts = {
+        public_id: id,
+        transformation: req.file.mimetype !== 'image/svg+xml'
+          ? { width: 1920, crop: 'limit', quality: 'auto', fetch_format: 'auto' }
+          : undefined
+      };
 
-      if (req.file.mimetype !== 'image/svg+xml') {
-        buffer = await sharp(req.file.buffer)
-          .resize(1920, null, { withoutEnlargement: true })
-          .jpeg({ quality: 80 })
-          .toBuffer();
-        uploadOpts.format = 'jpg';
-      }
-
-      const url = await uploadImage(buffer, uploadOpts);
+      const url = await uploadImage(req.file.buffer, uploadOpts);
       await audit('upload', { filename: id, storage: 'cloudinary' });
       return res.json({ url });
     } catch (err) {
