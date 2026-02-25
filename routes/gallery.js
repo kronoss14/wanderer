@@ -11,7 +11,7 @@ router.get('/', asyncHandler(async (req, res) => {
 
 router.get('/:id', asyncHandler(async (req, res) => {
   const gallery = await readJSON('gallery.json');
-  const item = gallery.find(g => g.id === Number(req.params.id));
+  const item = gallery.find(g => g.id === req.params.id);
   if (!item) return res.redirect('/gallery');
 
   let reviews = [];

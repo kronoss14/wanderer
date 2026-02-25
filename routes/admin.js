@@ -52,6 +52,17 @@ function isValidImageUrl(url) {
   }
 }
 
+// Helper: generate URL-friendly slug from text (supports Georgian/Unicode)
+function toSlug(text) {
+  return text
+    .toLowerCase()
+    .replace(/[^\p{L}\p{N}\s-]/gu, '')
+    .replace(/[\s_]+/g, '-')
+    .replace(/-+/g, '-')
+    .replace(/^-|-$/g, '')
+    || `item-${Date.now()}`;
+}
+
 // ─── Shared form parsers (DRY extraction) ───
 
 function parseHikeBody(b, id) {
@@ -417,7 +428,13 @@ router.get('/gallery/new', asyncHandler(async (req, res) => {
 router.post('/gallery', asyncHandler(async (req, res) => {
   const gallery = await readJSON('gallery.json');
   const b = req.body;
-  const nextId = gallery.length ? Math.max(...gallery.map(g => g.id)) + 1 : 1;
+  let nextId = toSlug(b.title);
+  // Ensure uniqueness
+  const baseId = nextId;
+  let counter = 1;
+  while (gallery.some(g => g.id === nextId)) {
+    nextId = `${baseId}-${counter++}`;
+  }
   gallery.push(parseGalleryBody(b, nextId));
   await writeJSON('gallery.json', gallery);
   await audit('gallery.create', { id: nextId, title: b.title });
@@ -429,7 +446,7 @@ router.get('/gallery/edit/:id', asyncHandler(async (req, res) => {
     readJSON('gallery.json'),
     readJSON('hikes.json')
   ]);
-  const item = gallery.find(g => g.id === Number(req.params.id));
+  const item = gallery.find(g => g.id === req.params.id);
   if (!item) return res.redirect('/admin/gallery');
   renderAdmin(res, join(__dirname, '..', 'views', 'admin', 'gallery-form.ejs'), {
     title: 'Edit Adventure', editing: true, item, hikes
@@ -438,19 +455,19 @@ router.get('/gallery/edit/:id', asyncHandler(async (req, res) => {
 
 router.post('/gallery/edit/:id', asyncHandler(async (req, res) => {
   const gallery = await readJSON('gallery.json');
-  const idx = gallery.findIndex(g => g.id === Number(req.params.id));
+  const idx = gallery.findIndex(g => g.id === req.params.id);
   if (idx === -1) return res.redirect('/admin/gallery');
-  gallery[idx] = parseGalleryBody(req.body, Number(req.params.id));
+  gallery[idx] = parseGalleryBody(req.body, req.params.id);
   await writeJSON('gallery.json', gallery);
-  await audit('gallery.edit', { id: Number(req.params.id) });
+  await audit('gallery.edit', { id: req.params.id });
   res.redirect('/admin/gallery');
 }));
 
 router.post('/gallery/delete/:id', asyncHandler(async (req, res) => {
   const gallery = await readJSON('gallery.json');
-  const filtered = gallery.filter(g => g.id !== Number(req.params.id));
+  const filtered = gallery.filter(g => g.id !== req.params.id);
   await writeJSON('gallery.json', filtered);
-  await audit('gallery.delete', { id: Number(req.params.id) });
+  await audit('gallery.delete', { id: req.params.id });
   res.redirect('/admin/gallery');
 }));
 
