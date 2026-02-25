@@ -1,3 +1,12 @@
+// ─── Env validation (must run before anything else) ───
+const REQUIRED_ENV = ['EMAIL_USER', 'EMAIL_PASS', 'ADMIN_PASSWORD_HASH', 'SESSION_SECRET'];
+const missing = REQUIRED_ENV.filter(k => !process.env[k]);
+if (missing.length) {
+  console.error(`\nMissing required environment variables: ${missing.join(', ')}`);
+  console.error('Copy .env.example to .env and fill in all values.\n');
+  process.exit(1);
+}
+
 import express from 'express';
 import expressLayouts from 'express-ejs-layouts';
 import { dirname, join } from 'node:path';
