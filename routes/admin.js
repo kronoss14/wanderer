@@ -7,6 +7,8 @@ import { readJSON, writeJSON } from '../helpers/data.js';
 import { checkPassword, requireAdmin } from '../helpers/auth.js';
 import rateLimit from 'express-rate-limit';
 import { asyncHandler } from '../helpers/async-handler.js';
+import { body, validationResult } from 'express-validator';
+import { audit, log } from '../helpers/logger.js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const router = Router();
@@ -34,6 +36,84 @@ function renderAdmin(res, view, locals = {}) {
 function textToArray(text) {
   if (!text) return [];
   return text.split('\n').map(s => s.trim()).filter(Boolean);
+}
+
+// Helper: validate image URL (local path or http/https)
+function isValidImageUrl(url) {
+  if (!url) return true;
+  if (url.startsWith('/images/')) return true;
+  try {
+    const parsed = new URL(url);
+    return ['http:', 'https:'].includes(parsed.protocol);
+  } catch {
+    return false;
+  }
+}
+
+// ─── Shared form parsers (DRY extraction) ───
+
+function parseHikeBody(b, id) {
+  return {
+    id,
+    name: b.name,
+    type: b.type,
+    duration: b.duration,
+    distance: b.distance,
+    difficulty: b.difficulty,
+    elevation: b.elevation,
+    groupSize: b.groupSize,
+    price: b.price ? Math.max(0, Number(b.price)) : 0,
+    featured: b.featured === 'true',
+    summary: b.summary,
+    description: b.description,
+    highlights: textToArray(b.highlights),
+    included: textToArray(b.included),
+    notIncluded: textToArray(b.notIncluded),
+    images: textToArray(b.images).filter(isValidImageUrl),
+    heroImage: b.heroImage,
+    cardImage: b.cardImage,
+    region: b.region,
+    dates: textToArray(b.dates),
+    messengerLink: b.messengerLink || '',
+    whatsappLink: b.whatsappLink || ''
+  };
+}
+
+function parseGuideBody(b, id) {
+  return {
+    id,
+    name: b.name,
+    role: b.role,
+    bio: b.bio,
+    specialties: textToArray(b.specialties),
+    image: b.image
+  };
+}
+
+function parsePricingBody(b, id) {
+  return {
+    id,
+    tier: b.tier,
+    price: b.price !== '' ? Math.max(0, Number(b.price)) : null,
+    priceLabel: b.priceLabel,
+    unit: b.unit,
+    description: b.description,
+    features: textToArray(b.features),
+    highlighted: b.highlighted === 'true',
+    cta: b.cta
+  };
+}
+
+function parseGalleryBody(b, id) {
+  return {
+    id,
+    title: b.title,
+    date: b.date,
+    description: b.description,
+    mainImage: b.mainImage,
+    images: textToArray(b.images).filter(isValidImageUrl),
+    hikeId: b.hikeId || ''
+  };
 }
 
 // ─── Login (public) ───
@@ -123,6 +203,14 @@ router.get('/', asyncHandler(async (req, res) => {
   });
 }));
 
+// ─── Validation rules ───
+const hikeValidation = [
+  body('id').trim().notEmpty().withMessage('ID is required'),
+  body('name').trim().notEmpty().withMessage('Name is required').isLength({ max: 200 }),
+  body('type').isIn(['day', 'multi-day', 'cultural']).withMessage('Invalid type'),
+  body('price').optional({ values: 'falsy' }).isFloat({ min: 0 }).withMessage('Price must be positive')
+];
+
 // ═══════════════════════════════════════════
 //  HIKES CRUD
 // ═══════════════════════════════════════════
@@ -138,35 +226,18 @@ router.get('/hikes/new', (req, res) => {
   });
 });
 
-router.post('/hikes', asyncHandler(async (req, res) => {
+router.post('/hikes', hikeValidation, asyncHandler(async (req, res) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return renderAdmin(res, join(__dirname, '..', 'views', 'admin', 'hikes-form.ejs'), {
+      title: 'New Hike', editing: false, hike: req.body, errors: errors.array()
+    });
+  }
   const hikes = await readJSON('hikes.json');
-  const b = req.body;
-  const hike = {
-    id: b.id,
-    name: b.name,
-    type: b.type,
-    duration: b.duration,
-    distance: b.distance,
-    difficulty: b.difficulty,
-    elevation: b.elevation,
-    groupSize: b.groupSize,
-    price: b.price ? Number(b.price) : 0,
-    featured: b.featured === 'true',
-    summary: b.summary,
-    description: b.description,
-    highlights: textToArray(b.highlights),
-    included: textToArray(b.included),
-    notIncluded: textToArray(b.notIncluded),
-    images: textToArray(b.images),
-    heroImage: b.heroImage,
-    cardImage: b.cardImage,
-    region: b.region,
-    dates: textToArray(b.dates),
-    messengerLink: b.messengerLink || '',
-    whatsappLink: b.whatsappLink || ''
-  };
+  const hike = parseHikeBody(req.body, req.body.id);
   hikes.push(hike);
   await writeJSON('hikes.json', hikes);
+  await audit('hike.create', { id: hike.id, name: hike.name });
   res.redirect('/admin/hikes');
 }));
 
@@ -179,36 +250,19 @@ router.get('/hikes/edit/:id', asyncHandler(async (req, res) => {
   });
 }));
 
-router.post('/hikes/edit/:id', asyncHandler(async (req, res) => {
+router.post('/hikes/edit/:id', hikeValidation, asyncHandler(async (req, res) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return renderAdmin(res, join(__dirname, '..', 'views', 'admin', 'hikes-form.ejs'), {
+      title: 'Edit Hike', editing: true, hike: { ...req.body, id: req.params.id }, errors: errors.array()
+    });
+  }
   const hikes = await readJSON('hikes.json');
   const idx = hikes.findIndex(h => h.id === req.params.id);
   if (idx === -1) return res.redirect('/admin/hikes');
-  const b = req.body;
-  hikes[idx] = {
-    id: req.params.id,
-    name: b.name,
-    type: b.type,
-    duration: b.duration,
-    distance: b.distance,
-    difficulty: b.difficulty,
-    elevation: b.elevation,
-    groupSize: b.groupSize,
-    price: b.price ? Number(b.price) : 0,
-    featured: b.featured === 'true',
-    summary: b.summary,
-    description: b.description,
-    highlights: textToArray(b.highlights),
-    included: textToArray(b.included),
-    notIncluded: textToArray(b.notIncluded),
-    images: textToArray(b.images),
-    heroImage: b.heroImage,
-    cardImage: b.cardImage,
-    region: b.region,
-    dates: textToArray(b.dates),
-    messengerLink: b.messengerLink || '',
-    whatsappLink: b.whatsappLink || ''
-  };
+  hikes[idx] = parseHikeBody(req.body, req.params.id);
   await writeJSON('hikes.json', hikes);
+  await audit('hike.edit', { id: req.params.id });
   res.redirect('/admin/hikes');
 }));
 
@@ -216,6 +270,7 @@ router.post('/hikes/delete/:id', asyncHandler(async (req, res) => {
   const hikes = await readJSON('hikes.json');
   const filtered = hikes.filter(h => h.id !== req.params.id);
   await writeJSON('hikes.json', filtered);
+  await audit('hike.delete', { id: req.params.id });
   res.redirect('/admin/hikes');
 }));
 
@@ -238,15 +293,9 @@ router.post('/guides', asyncHandler(async (req, res) => {
   const guides = await readJSON('guides.json');
   const b = req.body;
   const nextId = guides.length ? Math.max(...guides.map(g => g.id)) + 1 : 1;
-  guides.push({
-    id: nextId,
-    name: b.name,
-    role: b.role,
-    bio: b.bio,
-    specialties: textToArray(b.specialties),
-    image: b.image
-  });
+  guides.push(parseGuideBody(b, nextId));
   await writeJSON('guides.json', guides);
+  await audit('guide.create', { id: nextId, name: b.name });
   res.redirect('/admin/guides');
 }));
 
@@ -263,16 +312,9 @@ router.post('/guides/edit/:id', asyncHandler(async (req, res) => {
   const guides = await readJSON('guides.json');
   const idx = guides.findIndex(g => g.id === Number(req.params.id));
   if (idx === -1) return res.redirect('/admin/guides');
-  const b = req.body;
-  guides[idx] = {
-    id: Number(req.params.id),
-    name: b.name,
-    role: b.role,
-    bio: b.bio,
-    specialties: textToArray(b.specialties),
-    image: b.image
-  };
+  guides[idx] = parseGuideBody(req.body, Number(req.params.id));
   await writeJSON('guides.json', guides);
+  await audit('guide.edit', { id: Number(req.params.id) });
   res.redirect('/admin/guides');
 }));
 
@@ -280,6 +322,7 @@ router.post('/guides/delete/:id', asyncHandler(async (req, res) => {
   const guides = await readJSON('guides.json');
   const filtered = guides.filter(g => g.id !== Number(req.params.id));
   await writeJSON('guides.json', filtered);
+  await audit('guide.delete', { id: Number(req.params.id) });
   res.redirect('/admin/guides');
 }));
 
@@ -302,18 +345,9 @@ router.post('/pricing', asyncHandler(async (req, res) => {
   const pricing = await readJSON('pricing.json');
   const b = req.body;
   const nextId = pricing.length ? Math.max(...pricing.map(p => p.id)) + 1 : 1;
-  pricing.push({
-    id: nextId,
-    tier: b.tier,
-    price: b.price !== '' ? Number(b.price) : null,
-    priceLabel: b.priceLabel,
-    unit: b.unit,
-    description: b.description,
-    features: textToArray(b.features),
-    highlighted: b.highlighted === 'true',
-    cta: b.cta
-  });
+  pricing.push(parsePricingBody(b, nextId));
   await writeJSON('pricing.json', pricing);
+  await audit('pricing.create', { id: nextId, tier: b.tier });
   res.redirect('/admin/pricing');
 }));
 
@@ -330,19 +364,9 @@ router.post('/pricing/edit/:id', asyncHandler(async (req, res) => {
   const pricing = await readJSON('pricing.json');
   const idx = pricing.findIndex(p => p.id === Number(req.params.id));
   if (idx === -1) return res.redirect('/admin/pricing');
-  const b = req.body;
-  pricing[idx] = {
-    id: Number(req.params.id),
-    tier: b.tier,
-    price: b.price !== '' ? Number(b.price) : null,
-    priceLabel: b.priceLabel,
-    unit: b.unit,
-    description: b.description,
-    features: textToArray(b.features),
-    highlighted: b.highlighted === 'true',
-    cta: b.cta
-  };
+  pricing[idx] = parsePricingBody(req.body, Number(req.params.id));
   await writeJSON('pricing.json', pricing);
+  await audit('pricing.edit', { id: Number(req.params.id) });
   res.redirect('/admin/pricing');
 }));
 
@@ -350,6 +374,7 @@ router.post('/pricing/delete/:id', asyncHandler(async (req, res) => {
   const pricing = await readJSON('pricing.json');
   const filtered = pricing.filter(p => p.id !== Number(req.params.id));
   await writeJSON('pricing.json', filtered);
+  await audit('pricing.delete', { id: Number(req.params.id) });
   res.redirect('/admin/pricing');
 }));
 
@@ -373,16 +398,9 @@ router.post('/gallery', asyncHandler(async (req, res) => {
   const gallery = await readJSON('gallery.json');
   const b = req.body;
   const nextId = gallery.length ? Math.max(...gallery.map(g => g.id)) + 1 : 1;
-  gallery.push({
-    id: nextId,
-    title: b.title,
-    date: b.date,
-    description: b.description,
-    mainImage: b.mainImage,
-    images: textToArray(b.images),
-    hikeId: b.hikeId || ''
-  });
+  gallery.push(parseGalleryBody(b, nextId));
   await writeJSON('gallery.json', gallery);
+  await audit('gallery.create', { id: nextId, title: b.title });
   res.redirect('/admin/gallery');
 }));
 
@@ -402,17 +420,9 @@ router.post('/gallery/edit/:id', asyncHandler(async (req, res) => {
   const gallery = await readJSON('gallery.json');
   const idx = gallery.findIndex(g => g.id === Number(req.params.id));
   if (idx === -1) return res.redirect('/admin/gallery');
-  const b = req.body;
-  gallery[idx] = {
-    id: Number(req.params.id),
-    title: b.title,
-    date: b.date,
-    description: b.description,
-    mainImage: b.mainImage,
-    images: textToArray(b.images),
-    hikeId: b.hikeId || ''
-  };
+  gallery[idx] = parseGalleryBody(req.body, Number(req.params.id));
   await writeJSON('gallery.json', gallery);
+  await audit('gallery.edit', { id: Number(req.params.id) });
   res.redirect('/admin/gallery');
 }));
 
@@ -420,6 +430,7 @@ router.post('/gallery/delete/:id', asyncHandler(async (req, res) => {
   const gallery = await readJSON('gallery.json');
   const filtered = gallery.filter(g => g.id !== Number(req.params.id));
   await writeJSON('gallery.json', filtered);
+  await audit('gallery.delete', { id: Number(req.params.id) });
   res.redirect('/admin/gallery');
 }));
 
