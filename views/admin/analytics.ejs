@@ -1,0 +1,228 @@
+<div class="admin-header">
+  <h1>Analytics</h1>
+</div>
+
+<!-- Date Filters -->
+<div class="analytics-filters">
+  <button class="btn btn-secondary btn-sm active" data-range="today">Today</button>
+  <button class="btn btn-secondary btn-sm" data-range="7d">Last 7 Days</button>
+  <button class="btn btn-secondary btn-sm" data-range="30d">Last 30 Days</button>
+  <input type="date" id="analytics-from">
+  <span style="line-height:2">&mdash;</span>
+  <input type="date" id="analytics-to">
+  <button class="btn btn-secondary btn-sm" id="analytics-custom">Apply</button>
+</div>
+
+<!-- Loading State -->
+<div class="analytics-loading" id="analytics-loading">Loading analytics data...</div>
+
+<!-- Dashboard Content (hidden until data loads) -->
+<div id="analytics-content" style="display:none">
+
+<!-- Stat Cards -->
+<div class="stats-grid" id="stats-cards"></div>
+
+<!-- Traffic Sources -->
+<div class="analytics-section">
+  <h2>Traffic Sources</h2>
+  <div class="admin-table-wrap">
+    <table class="admin-table">
+      <thead><tr><th>Source</th><th>Visits</th><th>%</th></tr></thead>
+      <tbody id="sources-table"></tbody>
+    </table>
+  </div>
+</div>
+
+<!-- UTM Campaigns -->
+<div class="analytics-section" id="campaigns-section" style="display:none">
+  <h2>UTM Campaigns</h2>
+  <div class="admin-table-wrap">
+    <table class="admin-table">
+      <thead><tr><th>Campaign</th><th>Source</th><th>Medium</th><th>Visits</th></tr></thead>
+      <tbody id="campaigns-table"></tbody>
+    </table>
+  </div>
+</div>
+
+<!-- Top Pages -->
+<div class="analytics-section">
+  <h2>Top Pages</h2>
+  <div class="admin-table-wrap">
+    <table class="admin-table">
+      <thead><tr><th>Page</th><th>Views</th><th>Avg. Duration</th><th>Entries</th><th>Exits</th></tr></thead>
+      <tbody id="pages-table"></tbody>
+    </table>
+  </div>
+</div>
+
+<!-- Devices & Tech -->
+<div class="analytics-section">
+  <h2>Devices &amp; Tech</h2>
+  <div class="analytics-grid-2">
+    <div>
+      <h3 style="font-size:0.95rem;margin-bottom:0.75rem">Device Types</h3>
+      <div id="devices-bars"></div>
+    </div>
+    <div>
+      <h3 style="font-size:0.95rem;margin-bottom:0.75rem">Browsers</h3>
+      <div id="browsers-bars"></div>
+    </div>
+  </div>
+  <div class="analytics-grid-2" style="margin-top:1rem">
+    <div>
+      <h3 style="font-size:0.95rem;margin-bottom:0.75rem">Operating Systems</h3>
+      <div id="os-bars"></div>
+    </div>
+    <div>
+      <h3 style="font-size:0.95rem;margin-bottom:0.75rem">Connections</h3>
+      <div id="connections-bars"></div>
+    </div>
+  </div>
+</div>
+
+<!-- Languages -->
+<div class="analytics-section">
+  <h2>Visitor Languages</h2>
+  <div id="languages-bars"></div>
+</div>
+
+<!-- User Journeys -->
+<div class="analytics-section">
+  <h2>User Journeys</h2>
+  <div id="journeys-list"></div>
+</div>
+
+</div><!-- /analytics-content -->
+
+<script>
+(function() {
+  var loading = document.getElementById('analytics-loading');
+  var content = document.getElementById('analytics-content');
+
+  function today() { return new Date().toISOString().slice(0, 10); }
+
+  function daysAgo(n) {
+    var d = new Date();
+    d.setDate(d.getDate() - n);
+    return d.toISOString().slice(0, 10);
+  }
+
+  function formatDuration(s) {
+    if (s < 60) return s + 's';
+    var m = Math.floor(s / 60);
+    return m + 'm ' + (s % 60) + 's';
+  }
+
+  function trendHTML(current, previous, label) {
+    if (previous === 0 && current === 0) return '<div class="stat-trend neutral">&mdash;</div>';
+    if (previous === 0) return '<div class="stat-trend up">&uarr; new</div>';
+    var pct = Math.round(((current - previous) / previous) * 100);
+    if (pct > 0) return '<div class="stat-trend up">&uarr; ' + pct + '% vs yesterday</div>';
+    if (pct < 0) return '<div class="stat-trend down">&darr; ' + Math.abs(pct) + '% vs yesterday</div>';
+    return '<div class="stat-trend neutral">&mdash; same as yesterday</div>';
+  }
+
+  function escapeHTML(str) {
+    var div = document.createElement('div');
+    div.textContent = str;
+    return div.innerHTML;
+  }
+
+  function renderBars(containerId, items) {
+    var el = document.getElementById(containerId);
+    if (!items || items.length === 0) { el.innerHTML = '<div style="color:var(--admin-text-muted);font-size:0.85rem">No data</div>'; return; }
+    el.innerHTML = items.slice(0, 8).map(function(item) {
+      return '<div class="analytics-bar">' +
+        '<span class="analytics-bar-label" title="' + escapeHTML(item.name) + '">' + escapeHTML(item.name) + '</span>' +
+        '<div class="analytics-bar-track"><div class="analytics-bar-fill" style="width:' + item.pct + '%"></div></div>' +
+        '<span class="analytics-bar-value">' + item.count + ' (' + item.pct + '%)</span>' +
+      '</div>';
+    }).join('');
+  }
+
+  function render(data) {
+    loading.style.display = 'none';
+    content.style.display = 'block';
+
+    // Stat cards
+    document.getElementById('stats-cards').innerHTML =
+      '<div class="stat-card"><div class="stat-value">' + data.totalPageviews + '</div><div class="stat-label">Page Views</div>' + trendHTML(data.totalPageviews, data.yesterday.totalPageviews) + '</div>' +
+      '<div class="stat-card"><div class="stat-value">' + data.uniqueVisitors + '</div><div class="stat-label">Unique Visitors</div>' + trendHTML(data.uniqueVisitors, data.yesterday.uniqueVisitors) + '</div>' +
+      '<div class="stat-card"><div class="stat-value">' + formatDuration(data.avgDuration) + '</div><div class="stat-label">Avg. Time on Page</div></div>' +
+      '<div class="stat-card"><div class="stat-value">' + data.bounceRate + '%</div><div class="stat-label">Bounce Rate</div></div>';
+
+    // Sources table
+    document.getElementById('sources-table').innerHTML = data.sources.length === 0
+      ? '<tr><td colspan="3" style="color:var(--admin-text-muted)">No data yet</td></tr>'
+      : data.sources.map(function(s) { return '<tr><td>' + escapeHTML(s.name) + '</td><td>' + s.count + '</td><td>' + s.pct + '%</td></tr>'; }).join('');
+
+    // Campaigns table
+    var cs = document.getElementById('campaigns-section');
+    if (data.campaigns.length > 0) {
+      cs.style.display = 'block';
+      document.getElementById('campaigns-table').innerHTML = data.campaigns.map(function(c) {
+        return '<tr><td>' + escapeHTML(c.campaign) + '</td><td>' + escapeHTML(c.source || '\u2014') + '</td><td>' + escapeHTML(c.medium || '\u2014') + '</td><td>' + c.count + '</td></tr>';
+      }).join('');
+    } else {
+      cs.style.display = 'none';
+    }
+
+    // Pages table
+    document.getElementById('pages-table').innerHTML = data.pages.length === 0
+      ? '<tr><td colspan="5" style="color:var(--admin-text-muted)">No data yet</td></tr>'
+      : data.pages.map(function(p) { return '<tr><td>' + escapeHTML(p.path) + '</td><td>' + p.views + '</td><td>' + formatDuration(p.avgDuration) + '</td><td>' + p.entries + '</td><td>' + p.exits + '</td></tr>'; }).join('');
+
+    // Bar charts
+    renderBars('devices-bars', data.devices);
+    renderBars('browsers-bars', data.browsers);
+    renderBars('os-bars', data.operatingSystems);
+    renderBars('connections-bars', data.connections);
+    renderBars('languages-bars', data.languages);
+
+    // Journeys
+    var jl = document.getElementById('journeys-list');
+    if (data.journeys.length === 0) {
+      jl.innerHTML = '<div style="color:var(--admin-text-muted);font-size:0.85rem">No data yet</div>';
+    } else {
+      jl.innerHTML = data.journeys.map(function(j) {
+        return '<div class="journey-item"><span class="journey-path">' + escapeHTML(j.path) + '</span><span class="journey-count">' + j.count + 'x</span></div>';
+      }).join('');
+    }
+  }
+
+  function loadData(from, to) {
+    loading.style.display = 'block';
+    content.style.display = 'none';
+    fetch('/admin/analytics/data?from=' + from + '&to=' + to)
+      .then(function(r) { return r.json(); })
+      .then(render)
+      .catch(function() { loading.textContent = 'Failed to load analytics data.'; });
+  }
+
+  // Date filter buttons
+  var buttons = document.querySelectorAll('[data-range]');
+  buttons.forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      buttons.forEach(function(b) { b.classList.remove('active'); });
+      btn.classList.add('active');
+      var range = btn.getAttribute('data-range');
+      if (range === 'today') loadData(today(), today());
+      else if (range === '7d') loadData(daysAgo(6), today());
+      else if (range === '30d') loadData(daysAgo(29), today());
+    });
+  });
+
+  // Custom date range
+  document.getElementById('analytics-custom').addEventListener('click', function() {
+    var from = document.getElementById('analytics-from').value;
+    var to = document.getElementById('analytics-to').value;
+    if (from && to) {
+      buttons.forEach(function(b) { b.classList.remove('active'); });
+      loadData(from, to);
+    }
+  });
+
+  // Initial load: today
+  loadData(today(), today());
+})();
+</script>
