@@ -4,9 +4,16 @@
 
 <form class="admin-form" method="POST" action="<%= editing ? '/admin/pricing/edit/' + tier.id : '/admin/pricing' %>">
   <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-  <div class="form-group">
-    <label for="tier">Tier Name</label>
-    <input type="text" id="tier" name="tier" value="<%= tier.tier || '' %>" required>
+
+  <div class="form-lang-row">
+    <div class="form-group">
+      <label for="tier">Tier Name (KA)</label>
+      <input type="text" id="tier" name="tier" value="<%= tier.tier || '' %>" required>
+    </div>
+    <div class="form-group">
+      <label for="tier_en">Tier Name (EN)</label>
+      <input type="text" id="tier_en" name="tier_en" value="<%= tier.tier_en || '' %>">
+    </div>
   </div>
 
   <div class="form-group">
@@ -14,26 +21,52 @@
     <input type="number" id="price" name="price" value="<%= tier.price != null ? tier.price : '' %>">
   </div>
 
-  <div class="form-group">
-    <label for="priceLabel">Price Label</label>
-    <div class="hint">e.g. "From ₾45" or "Custom"</div>
-    <input type="text" id="priceLabel" name="priceLabel" value="<%= tier.priceLabel || '' %>" required>
+  <div class="form-lang-row">
+    <div class="form-group">
+      <label for="priceLabel">Price Label (KA)</label>
+      <div class="hint">e.g. "&#8382;45-dan" or "Custom"</div>
+      <input type="text" id="priceLabel" name="priceLabel" value="<%= tier.priceLabel || '' %>" required>
+    </div>
+    <div class="form-group">
+      <label for="priceLabel_en">Price Label (EN)</label>
+      <div class="hint">e.g. "From &#8382;45" or "Custom"</div>
+      <input type="text" id="priceLabel_en" name="priceLabel_en" value="<%= tier.priceLabel_en || '' %>">
+    </div>
   </div>
 
-  <div class="form-group">
-    <label for="unit">Unit</label>
-    <input type="text" id="unit" name="unit" value="<%= tier.unit || '' %>">
+  <div class="form-lang-row">
+    <div class="form-group">
+      <label for="unit">Unit (KA)</label>
+      <input type="text" id="unit" name="unit" value="<%= tier.unit || '' %>">
+    </div>
+    <div class="form-group">
+      <label for="unit_en">Unit (EN)</label>
+      <input type="text" id="unit_en" name="unit_en" value="<%= tier.unit_en || '' %>">
+    </div>
   </div>
 
-  <div class="form-group">
-    <label for="description">Description</label>
-    <textarea id="description" name="description" rows="3"><%= tier.description || '' %></textarea>
+  <div class="form-lang-row">
+    <div class="form-group">
+      <label for="description">Description (KA)</label>
+      <textarea id="description" name="description" rows="3"><%= tier.description || '' %></textarea>
+    </div>
+    <div class="form-group">
+      <label for="description_en">Description (EN)</label>
+      <textarea id="description_en" name="description_en" rows="3"><%= tier.description_en || '' %></textarea>
+    </div>
   </div>
 
-  <div class="form-group">
-    <label for="features">Features</label>
-    <div class="hint">One per line</div>
-    <textarea id="features" name="features" rows="5"><%= (tier.features || []).join('\n') %></textarea>
+  <div class="form-lang-row">
+    <div class="form-group">
+      <label for="features">Features (KA)</label>
+      <div class="hint">One per line</div>
+      <textarea id="features" name="features" rows="5"><%= (tier.features || []).join('\n') %></textarea>
+    </div>
+    <div class="form-group">
+      <label for="features_en">Features (EN)</label>
+      <div class="hint">One per line</div>
+      <textarea id="features_en" name="features_en" rows="5"><%= (tier.features_en || []).join('\n') %></textarea>
+    </div>
   </div>
 
   <div class="form-group">
@@ -43,9 +76,15 @@
     </label>
   </div>
 
-  <div class="form-group">
-    <label for="cta">CTA Text</label>
-    <input type="text" id="cta" name="cta" value="<%= tier.cta || '' %>">
+  <div class="form-lang-row">
+    <div class="form-group">
+      <label for="cta">CTA Text (KA)</label>
+      <input type="text" id="cta" name="cta" value="<%= tier.cta || '' %>">
+    </div>
+    <div class="form-group">
+      <label for="cta_en">CTA Text (EN)</label>
+      <input type="text" id="cta_en" name="cta_en" value="<%= tier.cta_en || '' %>">
+    </div>
   </div>
 
   <div class="form-actions">

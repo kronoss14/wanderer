@@ -391,3 +391,23 @@ h1, h2, h3, h4, h5, h6 {
   .section { padding: 3.5rem 0; }
   .section-title { font-size: 2rem; }
 }
+
+/* Language toggle */
+.nav-lang { margin-left: 1rem; }
+.lang-switch {
+  display: inline-block;
+  padding: 0.3rem 0.75rem;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius);
+  color: var(--text-primary);
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-decoration: none;
+  transition: var(--transition);
+}
+.lang-switch:hover {
+  background: var(--accent-orange);
+  border-color: var(--accent-orange);
+  color: #fff;
+}

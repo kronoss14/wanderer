@@ -1,13 +1,13 @@
 <!-- DETAIL HERO -->
 <section class="detail-hero">
-  <div class="detail-hero-bg" style="background-image: url('<%- escapeAttr(item.mainImage) %>')"></div>
+  <div class="detail-hero-bg" style="background-image: url('<%= item.mainImage %>')"></div>
   <div class="detail-hero-overlay"></div>
   <div class="detail-hero-content container">
-    <a href="/gallery" class="back-link">
+    <a href="<%= langPrefix %>/gallery" class="back-link">
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
-      თავგადასავლებზე დაბრუნება
+      <%= t('gallery.back') %>
     </a>
-    <h1><%= item.title %></h1>
+    <h1><%= l(item, 'title') %></h1>
     <p class="detail-region"><%= item.date %></p>
   </div>
 </section>
@@ -16,7 +16,7 @@
 <% if (item.description) { %>
 <section class="section">
   <div class="container" style="max-width: 800px;">
-    <p class="detail-description"><%= item.description %></p>
+    <p class="detail-description"><%= l(item, 'description') %></p>
   </div>
 </section>
 <% } %>
@@ -25,11 +25,11 @@
 <% if (item.images && item.images.length) { %>
 <section class="section section-dark">
   <div class="container">
-    <h2 class="section-title text-center" style="margin-bottom: 2rem;">ფოტო <span class="text-accent">გალერეა</span></h2>
+    <h2 class="section-title text-center" style="margin-bottom: 2rem;"><%- t('hike.photo_gallery') %></h2>
     <div class="gallery-grid">
       <% item.images.forEach((img, idx) => { %>
-        <div class="gallery-item" data-full="<%- escapeAttr(img) %>" data-title="<%- escapeAttr(item.title) %>" data-location="">
-          <img src="<%- escapeAttr(img) %>" alt="<%= item.title %>" loading="lazy">
+        <div class="gallery-item" data-full="<%= img %>" data-title="<%= l(item, 'title') %>" data-location="">
+          <img src="<%= img %>" alt="<%= l(item, 'title') %>" loading="lazy">
         </div>
       <% }) %>
     </div>
@@ -59,7 +59,7 @@
 <% if (reviews.length > 0) { %>
 <section class="section">
   <div class="container">
-    <h2 class="section-title text-center" style="margin-bottom: 2rem;">მოლაშქრეთა <span class="text-accent">შეფასებები</span></h2>
+    <h2 class="section-title text-center" style="margin-bottom: 2rem;"><%- t('hike.reviews_title') %></h2>
     <div class="review-grid">
       <% reviews.forEach(review => { %>
         <%- include('../partials/_review-card', { review, hikeName: '' }) %>

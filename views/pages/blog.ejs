@@ -1,0 +1,51 @@
+<section class="page-hero" style="min-height: 200px">
+  <div class="page-hero-bg" style="background-image: url('/images/hikes-hero.jpeg'); background-position: center 65%"></div>
+  <div class="page-hero-overlay" style="background: linear-gradient(180deg, rgba(13,13,13,0.7) 0%, rgba(13,13,13,0.5) 100%)"></div>
+  <div class="page-hero-content container">
+    <h1><%= t('blog.title') %></h1>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <% if (allTags.length) { %>
+    <div class="blog-tags-filter">
+      <a href="<%= langPrefix %>/blog" class="tag-btn<%= !activeTag ? ' active' : '' %>"><%= lang === 'en' ? 'All' : 'ყველა' %></a>
+      <% allTags.forEach(function(tag) { %>
+        <a href="<%= langPrefix %>/blog?tag=<%= encodeURIComponent(tag) %>" class="tag-btn<%= activeTag === tag ? ' active' : '' %>"><%= tag %></a>
+      <% }) %>
+    </div>
+    <% } %>
+
+    <% if (posts.length) { %>
+    <div class="blog-grid">
+      <% posts.forEach(function(post) { %>
+      <article class="blog-card">
+        <% if (post.coverImage) { %>
+        <a href="<%= langPrefix %>/blog/<%= post.slug %>" class="blog-card-image">
+          <img src="<%= post.coverImage %>" alt="<%= l(post, 'title') %>" loading="lazy">
+        </a>
+        <% } %>
+        <div class="blog-card-body">
+          <div class="blog-card-meta">
+            <time><%= new Date(post.publishedAt).toLocaleDateString(lang === 'en' ? 'en-US' : 'ka-GE', { year: 'numeric', month: 'long', day: 'numeric' }) %></time>
+            <% if (post.tags && post.tags.length) { %>
+              <% post.tags.forEach(function(tag) { %>
+                <span class="blog-tag"><%= tag %></span>
+              <% }) %>
+            <% } %>
+          </div>
+          <h2 class="blog-card-title">
+            <a href="<%= langPrefix %>/blog/<%= post.slug %>"><%= l(post, 'title') %></a>
+          </h2>
+          <p class="blog-card-excerpt"><%= (l(post, 'content') || '').split('\n')[0].replace(/^#+\s*/, '').substring(0, 200) %></p>
+          <a href="<%= langPrefix %>/blog/<%= post.slug %>" class="btn btn-secondary btn-sm"><%= t('blog.read_more') %></a>
+        </div>
+      </article>
+      <% }) %>
+    </div>
+    <% } else { %>
+    <p class="text-center" style="color: var(--text-muted); padding: 3rem 0;"><%= lang === 'en' ? 'No posts yet.' : 'პოსტები ჯერ არ არის.' %></p>
+    <% } %>
+  </div>
+</section>

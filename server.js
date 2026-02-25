@@ -20,12 +20,15 @@ import galleryRouter from './routes/gallery.js';
 import reviewsRouter from './routes/reviews.js';
 import adminRouter from './routes/admin.js';
 import analyticsRouter from './routes/analytics.js';
+import mapRouter from './routes/map.js';
+import blogRouter from './routes/blog.js';
 import helmet from 'helmet';
 import cookieParser from 'cookie-parser';
 import session from 'express-session';
 import { randomBytes } from 'node:crypto';
 import { log } from './helpers/logger.js';
 import { escapeAttr } from './helpers/escape-url.js';
+import { i18nMiddleware } from './helpers/i18n.js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const app = express();
@@ -46,8 +49,8 @@ app.use(helmet({
   contentSecurityPolicy: {
     directives: {
       defaultSrc: ["'self'"],
-      scriptSrc: ["'self'"],
-      styleSrc: ["'self'", "'unsafe-inline'", "https://fonts.googleapis.com"],
+      scriptSrc: ["'self'", "https://unpkg.com"],
+      styleSrc: ["'self'", "'unsafe-inline'", "https://fonts.googleapis.com", "https://unpkg.com"],
       fontSrc: ["'self'", "https://fonts.gstatic.com"],
       imgSrc: ["'self'", "data:", "https:"],
       connectSrc: ["'self'"]
@@ -89,12 +92,15 @@ app.use((req, res, next) => {
   next();
 });
 
+// i18n middleware (after CSRF, before static files)
+app.use(i18nMiddleware);
+
 // Static files
 app.use(express.static(join(__dirname, 'public')));
 
 // Locals available to all templates
 app.use((req, res, next) => {
-  res.locals.currentPath = req.path;
+  res.locals.currentPath = req.url.split('?')[0];
   res.locals.escapeAttr = escapeAttr;
   res.locals.siteName = 'Wanderer';
   res.locals.siteNameGeo = 'მოხეტიალე';
@@ -112,8 +118,20 @@ app.use('/about', aboutRouter);
 app.use('/contact', contactRouter);
 app.use('/gallery', galleryRouter);
 app.use('/reviews', reviewsRouter);
+app.use('/map', mapRouter);
+app.use('/blog', blogRouter);
 app.use('/admin', adminRouter);
 app.use(analyticsRouter);
+
+// English route mounts
+app.use('/en', indexRouter);
+app.use('/en/hikes', hikesRouter);
+app.use('/en/about', aboutRouter);
+app.use('/en/contact', contactRouter);
+app.use('/en/gallery', galleryRouter);
+app.use('/en/reviews', reviewsRouter);
+app.use('/en/map', mapRouter);
+app.use('/en/blog', blogRouter);
 
 // 404
 app.use((req, res) => {

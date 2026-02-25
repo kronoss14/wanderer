@@ -1,31 +1,31 @@
 <article class="hike-card">
-  <a href="/hikes/<%= hike.id %>" class="hike-card-link">
+  <a href="<%= langPrefix %>/hikes/<%= hike.id %>" class="hike-card-link">
     <div class="hike-card-image">
-      <img src="<%= hike.cardImage %>" alt="<%= hike.name %>" loading="lazy">
-      <span class="hike-card-badge badge-<%= hike.type %>"><%= hike.type === 'day' ? 'ერთდღიანი' : hike.type === 'multi-day' ? 'მრავალდღიანი' : 'კულტურული' %></span>
+      <img src="<%= hike.cardImage %>" alt="<%= l(hike, 'name') %>" loading="lazy">
+      <span class="hike-card-badge badge-<%= hike.type %>"><%= t('hike.type.' + hike.type) %></span>
       <div class="hike-card-overlay"></div>
     </div>
     <div class="hike-card-body">
-      <h3 class="hike-card-title"><%= hike.name %></h3>
-      <p class="hike-card-region"><%= hike.region %></p>
+      <h3 class="hike-card-title"><%= l(hike, 'name') %></h3>
+      <p class="hike-card-region"><%= l(hike, 'region') %></p>
       <% const dates = Array.isArray(hike.dates) ? hike.dates : (hike.date ? [hike.date] : []); %>
       <% if (dates.length) { %>
         <p class="hike-card-date">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--accent-orange)" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-          <%= dates.map(d => new Date(d).toLocaleDateString('ka-GE', { day: 'numeric', month: 'short' })).join(', ') %>
+          <%= dates.map(d => new Date(d).toLocaleDateString(lang === 'en' ? 'en-US' : 'ka-GE', { day: 'numeric', month: 'short' })).join(', ') %>
         </p>
       <% } %>
-      <p class="hike-card-summary"><%= hike.summary %></p>
+      <p class="hike-card-summary"><%= l(hike, 'summary') %></p>
       <div class="hike-card-meta">
         <span class="meta-item">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-          <%= hike.duration %>
+          <%= l(hike, 'duration') %>
         </span>
         <span class="meta-item">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
-          <%= hike.difficulty %>
+          <%= t('hike.difficulty.' + hike.difficulty) %>
         </span>
-        <span class="meta-item price">₾<%= hike.price %></span>
+        <span class="meta-item price">&#8382;<%= hike.price %></span>
       </div>
     </div>
   </a>

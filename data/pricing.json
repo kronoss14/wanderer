@@ -1,58 +1,99 @@
 [
   {
     "id": 1,
-    "tier": "ერთდღიანი მოგზაური",
+    "tier": "\u10d4\u10e0\u10d7\u10d3\u10e6\u10d8\u10d0\u10dc\u10d8 \u10db\u10dd\u10d2\u10d6\u10d0\u10e3\u10e0\u10d8",
+    "tier_en": "Day Traveler",
     "price": 45,
-    "priceLabel": "₾45-დან",
-    "unit": "თითო ადამიანზე",
-    "description": "იდეალურია მათთვის, ვისაც შეზღუდული დრო აქვს და საქართველოს მთავარ ღირსშესანიშნაობებს ერთ დღეში სურს აღმოაჩინოს.",
+    "priceLabel": "\u20be45-\u10d3\u10d0\u10dc",
+    "priceLabel_en": "From \u20be45",
+    "unit": "\u10d7\u10d8\u10d7\u10dd \u10d0\u10d3\u10d0\u10db\u10d8\u10d0\u10dc\u10d6\u10d4",
+    "unit_en": "per person",
+    "description": "\u10d8\u10d3\u10d4\u10d0\u10da\u10e3\u10e0\u10d8\u10d0 \u10db\u10d0\u10d7\u10d7\u10d5\u10d8\u10e1, \u10d5\u10d8\u10e1\u10d0\u10ea \u10e8\u10d4\u10d6\u10e6\u10e3\u10d3\u10e3\u10da\u10d8 \u10d3\u10e0\u10dd \u10d0\u10e5\u10d5\u10e1 \u10d3\u10d0 \u10e1\u10d0\u10e5\u10d0\u10e0\u10d7\u10d5\u10d4\u10da\u10dd\u10e1 \u10db\u10d7\u10d0\u10d5\u10d0\u10e0 \u10e6\u10d8\u10e0\u10e1\u10e8\u10d4\u10e1\u10d0\u10dc\u10d8\u10e8\u10dc\u10d0\u10dd\u10d1\u10d4\u10d1\u10e1 \u10d4\u10e0\u10d7 \u10d3\u10e6\u10d4\u10e8\u10d8 \u10e1\u10e3\u10e0\u10e1 \u10d0\u10e6\u10db\u10dd\u10d0\u10e9\u10d8\u10dc\u10dd\u10e1.",
+    "description_en": "Ideal for those with limited time who want to discover Georgia's main attractions in a single day.",
     "features": [
-      "პროფესიონალი ინგლისურენოვანი გიდი",
-      "ტრანსპორტი თბილისიდან",
-      "სადილი და გამაგრილებლები",
-      "ყველა შესასვლელის ბილეთი",
-      "მცირე ჯგუფები (4-16 ადამიანი)",
-      "უფასო გაუქმება 48 საათით ადრე"
+      "\u10de\u10e0\u10dd\u10e4\u10d4\u10e1\u10d8\u10dd\u10dc\u10d0\u10da\u10d8 \u10d8\u10dc\u10d2\u10da\u10d8\u10e1\u10e3\u10e0\u10d4\u10dc\u10dd\u10d5\u10d0\u10dc\u10d8 \u10d2\u10d8\u10d3\u10d8",
+      "\u10e2\u10e0\u10d0\u10dc\u10e1\u10de\u10dd\u10e0\u10e2\u10d8 \u10d7\u10d1\u10d8\u10da\u10d8\u10e1\u10d8\u10d3\u10d0\u10dc",
+      "\u10e1\u10d0\u10d3\u10d8\u10da\u10d8 \u10d3\u10d0 \u10d2\u10d0\u10db\u10d0\u10d2\u10e0\u10d8\u10da\u10d4\u10d1\u10d4\u10da\u10d8",
+      "\u10e7\u10d5\u10d4\u10da\u10d0 \u10e8\u10d4\u10e1\u10d0\u10e1\u10d5\u10da\u10d4\u10da\u10d8\u10e1 \u10d1\u10d8\u10da\u10d4\u10d7\u10d8",
+      "\u10db\u10ea\u10d8\u10e0\u10d4 \u10ef\u10d2\u10e3\u10e4\u10d4\u10d1\u10d8 (4-16 \u10d0\u10d3\u10d0\u10db\u10d8\u10d0\u10dc\u10d8)",
+      "\u10e3\u10e4\u10d0\u10e1\u10dd \u10d2\u10d0\u10e3\u10e5\u10db\u10d4\u10d1\u10d0 48 \u10e1\u10d0\u10d0\u10d7\u10d8\u10d7 \u10d0\u10d3\u10e0\u10d4"
+    ],
+    "features_en": [
+      "Professional English-speaking Guide",
+      "Transport from Tbilisi",
+      "Lunch and Refreshments",
+      "All Entrance Tickets",
+      "Small Groups (4-16 people)",
+      "Free Cancellation 48 Hours in Advance"
     ],
     "highlighted": false,
-    "cta": "ერთდღიანი ლაშქრობები"
+    "cta": "\u10d4\u10e0\u10d7\u10d3\u10e6\u10d8\u10d0\u10dc\u10d8 \u10da\u10d0\u10e8\u10e5\u10e0\u10dd\u10d1\u10d4\u10d1\u10d8",
+    "cta_en": "Day Hikes"
   },
   {
     "id": 2,
-    "tier": "მრავალდღიანი ლაშქრობა",
+    "tier": "\u10db\u10e0\u10d0\u10d5\u10d0\u10da\u10d3\u10e6\u10d8\u10d0\u10dc\u10d8 \u10da\u10d0\u10e8\u10e5\u10e0\u10dd\u10d1\u10d0",
+    "tier_en": "Multi-Day Hike",
     "price": 450,
-    "priceLabel": "₾450-დან",
-    "unit": "თითო ადამიანზე",
-    "description": "ჩვენი საფირმო მრავალდღიანი ლაშქრობები კავკასიონის ყველაზე თვალწარმტაც ლანდშაფტებში.",
+    "priceLabel": "\u20be450-\u10d3\u10d0\u10dc",
+    "priceLabel_en": "From \u20be450",
+    "unit": "\u10d7\u10d8\u10d7\u10dd \u10d0\u10d3\u10d0\u10db\u10d8\u10d0\u10dc\u10d6\u10d4",
+    "unit_en": "per person",
+    "description": "\u10e9\u10d5\u10d4\u10dc\u10d8 \u10e1\u10d0\u10e4\u10d8\u10e0\u10db\u10dd \u10db\u10e0\u10d0\u10d5\u10d0\u10da\u10d3\u10e6\u10d8\u10d0\u10dc\u10d8 \u10da\u10d0\u10e8\u10e5\u10e0\u10dd\u10d1\u10d4\u10d1\u10d8 \u10d9\u10d0\u10d5\u10d9\u10d0\u10e1\u10d8\u10dd\u10dc\u10d8\u10e1 \u10e7\u10d5\u10d4\u10da\u10d0\u10d6\u10d4 \u10d7\u10d5\u10d0\u10da\u10ec\u10d0\u10e0\u10db\u10e2\u10d0\u10ea \u10da\u10d0\u10dc\u10d3\u10e8\u10d0\u10e4\u10e2\u10d4\u10d1\u10e8\u10d8.",
+    "description_en": "Our signature multi-day hikes in the Caucasus's most stunning landscapes.",
     "features": [
-      "ექსპერტი მთის გიდი",
-      "სრული განთავსება",
-      "სრული კვება (ყველა კერძი)",
-      "ბარგის/აღჭურვილობის გადატანა",
-      "მცირე ჯგუფები (4-8 ადამიანი)",
-      "მოქნილი ჯავშანი და გაუქმება",
-      "საგანგებო სატელიტური ტელეფონი"
+      "\u10d4\u10e5\u10e1\u10de\u10d4\u10e0\u10e2\u10d8 \u10db\u10d7\u10d8\u10e1 \u10d2\u10d8\u10d3\u10d8",
+      "\u10e1\u10e0\u10e3\u10da\u10d8 \u10d2\u10d0\u10dc\u10d7\u10d0\u10d5\u10e1\u10d4\u10d1\u10d0",
+      "\u10e1\u10e0\u10e3\u10da\u10d8 \u10d9\u10d5\u10d4\u10d1\u10d0 (\u10e7\u10d5\u10d4\u10da\u10d0 \u10d9\u10d4\u10e0\u10eb\u10d8)",
+      "\u10d1\u10d0\u10e0\u10d2\u10d8\u10e1/\u10d0\u10e6\u10ed\u10e3\u10e0\u10d5\u10d8\u10da\u10dd\u10d1\u10d8\u10e1 \u10d2\u10d0\u10d3\u10d0\u10e2\u10d0\u10dc\u10d0",
+      "\u10db\u10ea\u10d8\u10e0\u10d4 \u10ef\u10d2\u10e3\u10e4\u10d4\u10d1\u10d8 (4-8 \u10d0\u10d3\u10d0\u10db\u10d8\u10d0\u10dc\u10d8)",
+      "\u10db\u10dd\u10e5\u10dc\u10d8\u10da\u10d8 \u10ef\u10d0\u10d5\u10e8\u10d0\u10dc\u10d8 \u10d3\u10d0 \u10d2\u10d0\u10e3\u10e5\u10db\u10d4\u10d1\u10d0",
+      "\u10e1\u10d0\u10d2\u10d0\u10dc\u10d2\u10d4\u10d1\u10dd \u10e1\u10d0\u10e2\u10d4\u10da\u10d8\u10e2\u10e3\u10e0\u10d8 \u10e2\u10d4\u10da\u10d4\u10e4\u10dd\u10dc\u10d8"
+    ],
+    "features_en": [
+      "Expert Mountain Guide",
+      "Full Accommodation",
+      "Full Meals (all courses)",
+      "Luggage/Equipment Transport",
+      "Small Groups (4-8 people)",
+      "Flexible Booking and Cancellation",
+      "Emergency Satellite Phone"
     ],
     "highlighted": true,
-    "cta": "მრავალდღიანი ლაშქრობები"
+    "cta": "\u10db\u10e0\u10d0\u10d5\u10d0\u10da\u10d3\u10e6\u10d8\u10d0\u10dc\u10d8 \u10da\u10d0\u10e8\u10e5\u10e0\u10dd\u10d1\u10d4\u10d1\u10d8",
+    "cta_en": "Multi-Day Hikes"
   },
   {
     "id": 3,
-    "tier": "ინდივიდუალური თავგადასავალი",
+    "tier": "\u10d8\u10dc\u10d3\u10d8\u10d5\u10d8\u10d3\u10e3\u10d0\u10da\u10e3\u10e0\u10d8 \u10d7\u10d0\u10d5\u10d2\u10d0\u10d3\u10d0\u10e1\u10d0\u10d5\u10d0\u10da\u10d8",
+    "tier_en": "Custom Adventure",
     "price": null,
     "priceLabel": "Custom",
-    "unit": "ინდივიდუალური შეთავაზება",
-    "description": "შექმენით თქვენი ოცნების ქართული თავგადასავალი. ჩვენ თქვენს ინტერესებსა და გრაფიკზე მორგებულ ინდივიდუალურ მარშრუტს შევადგენთ.",
+    "priceLabel_en": "Custom",
+    "unit": "\u10d8\u10dc\u10d3\u10d8\u10d5\u10d8\u10d3\u10e3\u10d0\u10da\u10e3\u10e0\u10d8 \u10e8\u10d4\u10d7\u10d0\u10d5\u10d0\u10d6\u10d4\u10d1\u10d0",
+    "unit_en": "custom offer",
+    "description": "\u10e8\u10d4\u10e5\u10db\u10d4\u10dc\u10d8\u10d7 \u10d7\u10e5\u10d5\u10d4\u10dc\u10d8 \u10dd\u10ea\u10dc\u10d4\u10d1\u10d8\u10e1 \u10e5\u10d0\u10e0\u10d7\u10e3\u10da\u10d8 \u10d7\u10d0\u10d5\u10d2\u10d0\u10d3\u10d0\u10e1\u10d0\u10d5\u10d0\u10da\u10d8. \u10e9\u10d5\u10d4\u10dc \u10d7\u10e5\u10d5\u10d4\u10dc\u10e1 \u10d8\u10dc\u10e2\u10d4\u10e0\u10d4\u10e1\u10d4\u10d1\u10e1\u10d0 \u10d3\u10d0 \u10d2\u10e0\u10d0\u10e4\u10d8\u10d9\u10d6\u10d4 \u10db\u10dd\u10e0\u10d2\u10d4\u10d1\u10e3\u10da \u10d8\u10dc\u10d3\u10d8\u10d5\u10d8\u10d3\u10e3\u10d0\u10da\u10e3\u10e0 \u10db\u10d0\u10e0\u10e8\u10e0\u10e3\u10e2\u10e1 \u10e8\u10d4\u10d5\u10d0\u10d3\u10d2\u10d4\u10dc\u10d7.",
+    "description_en": "Create your dream Georgian adventure. We'll build a custom route tailored to your interests and schedule.",
     "features": [
-      "სრულად მორგებადი მარშრუტი",
-      "პირადი გიდი მხოლოდ თქვენთვის",
-      "შერჩეული განთავსება",
-      "ნებისმიერი ხანგრძლივობა და სირთულე",
-      "აეროპორტის ტრანსფერი",
-      "24/7 მხარდაჭერა",
-      "ოჯახებისა და ჯგუფებისთვის"
+      "\u10e1\u10e0\u10e3\u10da\u10d0\u10d3 \u10db\u10dd\u10e0\u10d2\u10d4\u10d1\u10d0\u10d3\u10d8 \u10db\u10d0\u10e0\u10e8\u10e0\u10e3\u10e2\u10d8",
+      "\u10de\u10d8\u10e0\u10d0\u10d3\u10d8 \u10d2\u10d8\u10d3\u10d8 \u10db\u10ee\u10dd\u10da\u10dd\u10d3 \u10d7\u10e5\u10d5\u10d4\u10dc\u10d7\u10d5\u10d8\u10e1",
+      "\u10e8\u10d4\u10e0\u10e9\u10d4\u10e3\u10da\u10d8 \u10d2\u10d0\u10dc\u10d7\u10d0\u10d5\u10e1\u10d4\u10d1\u10d0",
+      "\u10dc\u10d4\u10d1\u10d8\u10e1\u10db\u10d8\u10d4\u10e0\u10d8 \u10ee\u10d0\u10dc\u10d2\u10e0\u10eb\u10da\u10d8\u10d5\u10dd\u10d1\u10d0 \u10d3\u10d0 \u10e1\u10d8\u10e0\u10d7\u10e3\u10da\u10d4",
+      "\u10d0\u10d4\u10e0\u10dd\u10de\u10dd\u10e0\u10e2\u10d8\u10e1 \u10e2\u10e0\u10d0\u10dc\u10e1\u10e4\u10d4\u10e0\u10d8",
+      "24/7 \u10db\u10ee\u10d0\u10e0\u10d3\u10d0\u10ed\u10d4\u10e0\u10d0",
+      "\u10dd\u10ef\u10d0\u10ee\u10d4\u10d1\u10d8\u10e1\u10d0 \u10d3\u10d0 \u10ef\u10d2\u10e3\u10e4\u10d4\u10d1\u10d8\u10e1\u10d7\u10d5\u10d8\u10e1"
+    ],
+    "features_en": [
+      "Fully Customizable Route",
+      "Private Guide Just For You",
+      "Selected Accommodation",
+      "Any Duration and Difficulty",
+      "Airport Transfer",
+      "24/7 Support",
+      "For Families and Groups"
     ],
     "highlighted": false,
-    "cta": "მოითხოვე შეთავაზება"
+    "cta": "\u10db\u10dd\u10d8\u10d7\u10ee\u10dd\u10d5\u10d4 \u10e8\u10d4\u10d7\u10d0\u10d5\u10d0\u10d6\u10d4\u10d1\u10d0",
+    "cta_en": "Request a Quote"
   }
 ]

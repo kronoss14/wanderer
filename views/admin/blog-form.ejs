@@ -1,0 +1,79 @@
+<div class="admin-header">
+  <h1><%= editing ? 'Edit Blog Post' : 'New Blog Post' %></h1>
+</div>
+
+<form class="admin-form" method="POST" action="<%= editing ? '/admin/blog/edit/' + post.id : '/admin/blog' %>">
+  <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+
+  <div class="form-lang-row">
+    <div class="form-group">
+      <label for="title">Title (KA)</label>
+      <input type="text" id="title" name="title" value="<%= post.title || '' %>" required>
+    </div>
+    <div class="form-group">
+      <label for="title_en">Title (EN)</label>
+      <input type="text" id="title_en" name="title_en" value="<%= post.title_en || '' %>">
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="slug">Slug</label>
+    <div class="hint">Auto-generated from title if left empty</div>
+    <input type="text" id="slug" name="slug" value="<%= post.slug || '' %>">
+  </div>
+
+  <div class="form-lang-row">
+    <div class="form-group">
+      <label for="content">Content (KA) — Markdown</label>
+      <textarea id="content" name="content" rows="12"><%= post.content || '' %></textarea>
+    </div>
+    <div class="form-group">
+      <label for="content_en">Content (EN) — Markdown</label>
+      <textarea id="content_en" name="content_en" rows="12"><%= post.content_en || '' %></textarea>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="coverImage">Cover Image URL</label>
+    <input type="text" id="coverImage" name="coverImage" value="<%= post.coverImage || '' %>" data-upload="single">
+  </div>
+
+  <div class="form-group">
+    <label for="tags">Tags</label>
+    <div class="hint">One per line</div>
+    <textarea id="tags" name="tags" rows="3"><%= (post.tags || []).join('\n') %></textarea>
+  </div>
+
+  <div class="form-group">
+    <label for="author">Author (Guide ID)</label>
+    <select id="author" name="author">
+      <option value="">— None —</option>
+      <% (typeof guides !== 'undefined' ? guides : []).forEach(g => { %>
+        <option value="<%= g.id %>" <%= String(post.author) === String(g.id) ? 'selected' : '' %>><%= g.name %></option>
+      <% }) %>
+    </select>
+  </div>
+
+  <div class="form-group">
+    <label for="relatedHikeIds">Related Hikes</label>
+    <div class="hint">One hike ID per line</div>
+    <textarea id="relatedHikeIds" name="relatedHikeIds" rows="3"><%= (post.relatedHikeIds || []).join('\n') %></textarea>
+  </div>
+
+  <div class="form-group">
+    <label for="publishedAt">Published Date</label>
+    <input type="date" id="publishedAt" name="publishedAt" value="<%= post.publishedAt || '' %>">
+  </div>
+
+  <div class="form-group">
+    <label class="checkbox-label">
+      <input type="checkbox" name="published" value="true" <%= post.published ? 'checked' : '' %>>
+      Published
+    </label>
+  </div>
+
+  <div class="form-actions">
+    <button type="submit" class="btn btn-primary"><%= editing ? 'Update Post' : 'Create Post' %></button>
+    <a href="/admin/blog" class="btn btn-secondary">Cancel</a>
+  </div>
+</form>

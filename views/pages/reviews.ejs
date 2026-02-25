@@ -3,8 +3,8 @@
   <div class="page-hero-bg" style="background-image: url('/images/reviews-hero.jpeg'); background-position: center 80%"></div>
   <div class="page-hero-overlay" style="background: linear-gradient(135deg, rgba(13,13,13,0.45) 0%, rgba(26,26,46,0.35) 100%)"></div>
   <div class="page-hero-content container">
-    <h1>მოლაშქრეთა <span class="text-accent">შეფასებები</span></h1>
-    <p>ნამდვილი ისტორიები ნამდვილი მოგზაურებისგან, რომლებმაც საქართველო Wanderer-ით აღმოაჩინეს.</p>
+    <h1><%- t('reviews.title') %></h1>
+    <p><%= t('reviews.subtitle') %></p>
   </div>
 </section>
 
@@ -19,14 +19,14 @@
             <svg class="star" width="24" height="24" viewBox="0 0 24 24" fill="<%= i < Math.round(avgRating) ? '#F59E0B' : 'none' %>" stroke="<%= i < Math.round(avgRating) ? '#F59E0B' : '#718096' %>" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
           <% } %>
         </div>
-        <p class="rating-count"><%= reviews.length %> შეფასების საფუძველზე</p>
+        <p class="rating-count"><%= reviews.length %> <%= t('reviews.based_on') %></p>
       </div>
       <div class="rating-breakdown">
         <% for (let stars = 5; stars >= 1; stars--) { %>
           <% const count = reviews.filter(r => r.rating === stars).length; %>
           <% const pct = reviews.length ? (count / reviews.length * 100) : 0; %>
           <div class="rating-bar-row">
-            <span class="rating-bar-label"><%= stars %> ვარსკვლავი</span>
+            <span class="rating-bar-label"><%= stars %> <%= t('reviews.stars') %></span>
             <div class="rating-bar">
               <div class="rating-bar-fill" style="width: <%= pct %>%"></div>
             </div>
@@ -41,11 +41,11 @@
       <div class="review-grid">
         <% reviews.forEach(review => { %>
           <% const hike = hikes.find(h => h.id === review.hikeId); %>
-          <%- include('../partials/_review-card', { review, hikeName: hike ? hike.name : '' }) %>
+          <%- include('../partials/_review-card', { review, hikeName: hike ? l(hike, 'name') : '' }) %>
         <% }) %>
       </div>
     <% } else { %>
-      <p style="text-align:center;color:var(--text-muted);padding:2rem 0;">ჯერ არ არის შეფასებები. იყავით პირველი!</p>
+      <p style="text-align:center;color:var(--text-muted);padding:2rem 0;"><%= t('reviews.empty') %></p>
     <% } %>
   </div>
 </section>

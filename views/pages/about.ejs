@@ -3,8 +3,8 @@
   <div class="page-hero-bg" style="background-image: url('/images/about-hero.jpeg'); background-position: center 55%"></div>
   <div class="page-hero-overlay"></div>
   <div class="page-hero-content container">
-    <h1><span class="text-accent">Wanderer</span>-ის შესახებ</h1>
-    <p>ჩვენი ისტორია, ღირებულებები და გუნდი, რომელიც თქვენი თავგადასავლების უკან დგას.</p>
+    <h1><%- t('about.hero_title') %></h1>
+    <p><%= t('about.hero_sub') %></p>
   </div>
 </section>
 
@@ -13,14 +13,14 @@
   <div class="container">
     <div class="about-story">
       <div class="about-story-text">
-        <h2 class="section-title">ჩვენი <span class="text-accent">ისტორია</span></h2>
-        <p>Wanderer (მოხეტიალე) დაიბადა მარტივი იდეიდან — საქართველოს ბუნება უნდა შეიცნო ფეხით, ნელა და გააზრებულად. ქვეყანა, სადაც მთები, ტყეები და ხეობები ერთმანეთის გვერდით არსებობს, არ საჭიროებს ხმაურს — მხოლოდ სწორ მარშრუტს და ადამიანს, ვინც გზას გიჩვენებს.</p>
-        <p>ყველაფერი დაიწყო ჩვეულებრივი ლაშქრობებით: მეგობრებთან ერთად, მცირე ჯგუფებით, რუკებითა და შეცდომებით. დროთა განმავლობაში ეს გზები გადაიქცა გამოცდილებად, გამოცდილება — პასუხისმგებლობად, ხოლო პასუხისმგებლობა — სურვილად, რომ ეს ყველაფერი სხვებისთვისაც გაგვეზიარებინა.</p>
-        <p>Wanderer არ არის მხოლოდ ტურები. ეს არის უსაფრთხოება, სწორად შერჩეული ტემპი, ბუნების პატივისცემა და სივრცე, სადაც ადამიანს შეუძლია მოწყდეს ყოველდღიურობას და საკუთარ ნაბიჯებს დაუბრუნდეს.</p>
-        <p>ჩვენი მიზანია, ლაშქრობა საქართველოში იყოს არა უბრალოდ დანიშნულების მიღწევა, არამედ პროცესი — მშვიდი, ორგანიზებული და შინაარსიანი. იმ ადამიანებისთვის, ვისაც სურს არა უბრალოდ „წასვლა", არამედ მოხეტიალე გახდეს.</p>
+        <h2 class="section-title"><%- t('about.story_title') %></h2>
+        <p><%= t('about.story_p1') %></p>
+        <p><%= t('about.story_p2') %></p>
+        <p><%= t('about.story_p3') %></p>
+        <p><%= t('about.story_p4') %></p>
       </div>
       <div class="about-story-image">
-        <img src="/images/logo.jpg" alt="Wanderer - მოხეტიალე">
+        <img src="/images/logo.jpg" alt="Wanderer">
       </div>
     </div>
   </div>
@@ -30,36 +30,36 @@
 <section class="section section-dark">
   <div class="container">
     <div class="text-center" style="margin-bottom: 3rem;">
-      <h2 class="section-title">ჩვენი <span class="text-accent">ღირებულებები</span></h2>
+      <h2 class="section-title"><%- t('about.values_title') %></h2>
     </div>
     <div class="values-grid">
       <div class="value-card">
         <div class="value-icon">
           <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="var(--accent-emerald)" stroke-width="1.5"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg>
         </div>
-        <h3>ავთენტური გამოცდილება</h3>
-        <p>ტურისტულ ბილიკს მიღმა მივდივართ, რომ ნამდვილი საქართველო გაჩვენოთ — მისი ხალხი, ტრადიციები და დამალული კუთხეები.</p>
+        <h3><%= t('about.value1_title') %></h3>
+        <p><%= t('about.value1_text') %></p>
       </div>
       <div class="value-card">
         <div class="value-icon">
           <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="var(--accent-emerald)" stroke-width="1.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
         </div>
-        <h3>უსაფრთხოება და ნდობა</h3>
-        <p>გამოცდილი გამყოლები, სათანადო აღჭურვილობა, საგანგებო პროტოკოლები. მთებში თქვენი უსაფრთხოებისთვის ვღებულობთ ყველა საჭირო გადაწყვეტილებას და კომპრომისს</p>
+        <h3><%= t('about.value2_title') %></h3>
+        <p><%= t('about.value2_text') %></p>
       </div>
       <div class="value-card">
         <div class="value-icon">
           <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="var(--accent-emerald)" stroke-width="1.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
         </div>
-        <h3>მდგრადი ტურიზმი</h3>
-        <p>ვუჭერთ მხარს ადგილობრივ თემებს, ვამცირებთ გარემოზე ზემოქმედებას და ვზრუნავთ, რომ ჩვენი ბილიკები თაობების მანძილზე ხელუხლებელი დარჩეს.</p>
+        <h3><%= t('about.value3_title') %></h3>
+        <p><%= t('about.value3_text') %></p>
       </div>
       <div class="value-card">
         <div class="value-icon">
           <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="var(--accent-emerald)" stroke-width="1.5"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
         </div>
-        <h3>პირადი კავშირი</h3>
-        <p>მცირე ჯგუფები პირად ყურადღებას ნიშნავს. ჩვენ გვახსოვს თქვენი სახელი, თქვენი პრეფერენციები და თქვენი თავგადასავლის სული.</p>
+        <h3><%= t('about.value4_title') %></h3>
+        <p><%= t('about.value4_text') %></p>
       </div>
     </div>
   </div>
@@ -69,19 +69,19 @@
 <section class="section">
   <div class="container">
     <div class="text-center" style="margin-bottom: 3rem;">
-      <h2 class="section-title">გაიცანით ჩვენი <span class="text-accent">გიდები</span></h2>
-      <p class="section-subtitle centered">ყველა Wanderer თავგადასავლის გული და სული.</p>
+      <h2 class="section-title"><%- t('about.guides_title') %></h2>
+      <p class="section-subtitle centered"><%= t('about.guides_sub') %></p>
     </div>
     <div class="guides-grid">
       <% guides.forEach(guide => { %>
         <div class="guide-card">
           <div class="guide-image">
-            <img src="<%= guide.image %>" alt="<%= guide.name %>">
+            <img src="<%= guide.image %>" alt="<%= l(guide, 'name') %>">
           </div>
           <div class="guide-info">
-            <h3><%= guide.name %></h3>
-            <p class="guide-role"><%= guide.role %></p>
-            <p class="guide-bio"><%= guide.bio %></p>
+            <h3><%= l(guide, 'name') %></h3>
+            <p class="guide-role"><%= l(guide, 'role') %></p>
+            <p class="guide-bio"><%= l(guide, 'bio') %></p>
             <div class="guide-specialties">
               <% guide.specialties.forEach(s => { %>
                 <span class="specialty-tag"><%= s %></span>

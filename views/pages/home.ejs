@@ -3,12 +3,12 @@
   <div class="hero-bg" style="background-image: url('/images/hero-home.jpeg')"></div>
   <div class="hero-overlay"></div>
   <div class="hero-content container">
-    <p class="hero-pre">აღმოაჩინე საქართველო</p>
-    <h1 class="hero-title">იხეტიალე<br>ჩვენთან ერთად</h1>
-    <p class="hero-sub">ლაშქრობები, კემპინგი, ექსკურსიები, მსოფლიოს ერთ-ერთ ყველაზე თვალწარმტაც მთიან ლანდშაფტში.</p>
+    <p class="hero-pre"><%= t('hero.pre') %></p>
+    <h1 class="hero-title"><%- t('hero.title') %></h1>
+    <p class="hero-sub"><%= t('hero.sub') %></p>
     <div class="hero-actions">
-      <a href="/hikes" class="btn btn-primary">ლაშქრობების ნახვა</a>
-      <a href="/hikes" class="btn btn-secondary">აირჩიე ლაშქრობა</a>
+      <a href="<%= langPrefix %>/hikes" class="btn btn-primary"><%= t('hero.btn_view') %></a>
+      <a href="<%= langPrefix %>/hikes" class="btn btn-secondary"><%= t('hero.btn_choose') %></a>
     </div>
   </div>
   <div class="hero-scroll">
@@ -20,8 +20,8 @@
 <section class="section">
   <div class="container">
     <div class="text-center" style="margin-bottom: 3rem;">
-      <h2 class="section-title">რჩეული <span class="text-accent">თავგადასავლები</span></h2>
-      <p class="section-subtitle centered">ერთდღიანი ლაშქრობებიდან მრავალდღიან ველურ ტრეკინგამდე — აღმოაჩინეთ ჩვენი ყველაზე პოპულარული ქართული თავგადასავლები.</p>
+      <h2 class="section-title"><%- t('home.featured_title') %></h2>
+      <p class="section-subtitle centered"><%= t('home.featured_sub') %></p>
     </div>
     <div class="hike-grid">
       <% featured.forEach(hike => { %>
@@ -29,7 +29,7 @@
       <% }) %>
     </div>
     <div class="text-center" style="margin-top: 2.5rem;">
-      <a href="/hikes" class="btn btn-secondary">ყველა ლაშქრობის ნახვა</a>
+      <a href="<%= langPrefix %>/hikes" class="btn btn-secondary"><%= t('home.view_all_hikes') %></a>
     </div>
   </div>
 </section>
@@ -38,30 +38,30 @@
 <section class="section section-dark">
   <div class="container">
     <div class="text-center" style="margin-bottom: 3rem;">
-      <h2 class="section-title">რატომ <span class="text-accent">Wanderer</span>?</h2>
-      <p class="section-subtitle centered">ჩვენ არ გიჩვენებთ მხოლოდ საქართველოს — გეხმარებით, რომ იგრძნოთ იგი.</p>
+      <h2 class="section-title"><%- t('home.why_title') %></h2>
+      <p class="section-subtitle centered"><%= t('home.why_sub') %></p>
     </div>
     <div class="why-grid">
       <div class="why-card">
         <div class="why-icon">
           <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="var(--accent-orange)" stroke-width="1.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
         </div>
-        <h3>უსაფრთხოება პირველ რიგში</h3>
-        <p>გამოცდილი გიდები, აუცილებელი პროტოკოლრბი, რაციები ყველა ლაშქრობაზე. თქვენი უსაფრთხოება ჩვენი მთავარი პრიორიტეტია.</p>
+        <h3><%= t('home.why_safety_title') %></h3>
+        <p><%= t('home.why_safety_text') %></p>
       </div>
       <div class="why-card">
         <div class="why-icon">
           <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="var(--accent-orange)" stroke-width="1.5"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
         </div>
-        <h3>ადგილობრივი ექსპერტები</h3>
-        <p>კავკასიაში დაბადებული და გაზრდილი, ჩვენი გიდები ყველა ბილიკს, სოფელსა და დამალულ საგანძურს იცნობენ. ავთენტური ადგილობრივი ცოდნა, რომელსაც გზამკვლევებში ვერ იპოვით.</p>
+        <h3><%= t('home.why_local_title') %></h3>
+        <p><%= t('home.why_local_text') %></p>
       </div>
       <div class="why-card">
         <div class="why-icon">
           <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="var(--accent-orange)" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
         </div>
-        <h3>თითქმის ყველაფერი ჩართულია</h3>
-        <p>ტრანსპორტი, განთავსება, საძილე ტომრები, კარვები, პარალონები, გამყოლი</p>
+        <h3><%= t('home.why_included_title') %></h3>
+        <p><%= t('home.why_included_text') %></p>
       </div>
     </div>
   </div>
@@ -71,16 +71,16 @@
 <section class="section testimonial-strip">
   <div class="container">
     <div class="text-center" style="margin-bottom: 3rem;">
-      <h2 class="section-title">რას <span class="text-accent">ამბობენ</span> მოლაშქრეები</h2>
+      <h2 class="section-title"><%- t('home.testimonials_title') %></h2>
     </div>
     <div class="testimonial-grid">
       <% topReviews.forEach(review => { %>
         <% const hike = hikes.find(h => h.id === review.hikeId); %>
-        <%- include('../partials/_review-card', { review, hikeName: hike ? hike.name : '' }) %>
+        <%- include('../partials/_review-card', { review, hikeName: hike ? l(hike, 'name') : '' }) %>
       <% }) %>
     </div>
     <div class="text-center" style="margin-top: 2.5rem;">
-      <a href="/reviews" class="btn btn-secondary">ყველა შეფასების წაკითხვა</a>
+      <a href="<%= langPrefix %>/reviews" class="btn btn-secondary"><%= t('home.view_all_reviews') %></a>
     </div>
   </div>
 </section>
@@ -90,8 +90,8 @@
   <div class="cta-bg" style="background-image: url('https://picsum.photos/seed/wanderer-cta/1920/600')"></div>
   <div class="cta-overlay"></div>
   <div class="cta-content container">
-    <h2>მზად ხართ ქართული თავგადასავლისთვის?</h2>
-    <p>შემოგვიერთდით ბილიკზე და აღმოაჩინეთ, რატომ არის კავკასია მსოფლიოს შემდეგი დიდი სალაშქრო მიმართულება.</p>
-    <a href="/contact" class="btn btn-primary">დაგვიკავშირდით</a>
+    <h2><%= t('home.cta_title') %></h2>
+    <p><%= t('home.cta_text') %></p>
+    <a href="<%= langPrefix %>/contact" class="btn btn-primary"><%= t('home.cta_btn') %></a>
   </div>
 </section>

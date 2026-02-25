@@ -464,3 +464,7 @@ body.admin-body {
   .admin-main { margin-left: 0; }
   .analytics-grid-2 { grid-template-columns: 1fr; }
 }
+
+/* Dual-language form rows */
+.form-lang-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+@media (max-width: 768px) { .form-lang-row { grid-template-columns: 1fr; } }

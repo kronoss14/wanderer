@@ -2,11 +2,11 @@
   <div class="container">
     <div class="footer-grid">
       <div class="footer-brand">
-        <a href="/" class="logo">
+        <a href="<%= langPrefix %>/" class="logo">
           <span class="logo-name">Wanderer</span>
           <span class="logo-name-geo">მოხეტიალე</span>
         </a>
-        <p class="footer-tagline">აღმოაჩინეთ საქართველოს მთების ველური სილამაზე ადგილობრივ ექსპერტ გიდებთან ერთად.</p>
+        <p class="footer-tagline"><%= t('footer.tagline') %></p>
         <div class="footer-social">
           <a href="<%= socialLinks.facebook %>" target="_blank" rel="noopener" aria-label="Facebook" class="social-link">
             <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
@@ -17,32 +17,34 @@
         </div>
       </div>
       <div class="footer-links">
-        <h4>აღმოაჩინე</h4>
+        <h4><%= t('footer.discover') %></h4>
         <ul>
-          <li><a href="/hikes">ყველა ლაშქრობა</a></li>
-          <li><a href="/hikes?type=day">ერთდღიანი ლაშქრობები</a></li>
-          <li><a href="/hikes?type=multi-day">მრავალდღიანი ლაშქრობები</a></li>
-          <li><a href="/hikes?type=cultural">კულტურული ტურები</a></li>
-          <li><a href="/gallery">თავგადასავლები</a></li>
+          <li><a href="<%= langPrefix %>/hikes"><%= t('footer.all_hikes') %></a></li>
+          <li><a href="<%= langPrefix %>/hikes?type=day"><%= t('footer.day_hikes') %></a></li>
+          <li><a href="<%= langPrefix %>/hikes?type=multi-day"><%= t('footer.multi_day') %></a></li>
+          <li><a href="<%= langPrefix %>/hikes?type=cultural"><%= t('footer.cultural') %></a></li>
+          <li><a href="<%= langPrefix %>/gallery"><%= t('footer.adventures') %></a></li>
+          <li><a href="<%= langPrefix %>/map"><%= t('nav.map') %></a></li>
         </ul>
       </div>
       <div class="footer-links">
-        <h4>კომპანია</h4>
+        <h4><%= t('footer.company') %></h4>
         <ul>
-          <li><a href="/about">ჩვენს შესახებ</a></li>
-          <li><a href="/reviews">შეფასებები</a></li>
-          <li><a href="/contact">კონტაქტი</a></li>
+          <li><a href="<%= langPrefix %>/about"><%= t('footer.about') %></a></li>
+          <li><a href="<%= langPrefix %>/reviews"><%= t('footer.reviews') %></a></li>
+          <li><a href="<%= langPrefix %>/blog"><%= t('nav.blog') %></a></li>
+          <li><a href="<%= langPrefix %>/contact"><%= t('footer.contact') %></a></li>
         </ul>
       </div>
       <div class="footer-contact">
-        <h4>დაგვიკავშირდით</h4>
-        <p>თბილისი, საქართველო</p>
+        <h4><%= t('footer.get_in_touch') %></h4>
+        <p><%= t('footer.location') %></p>
         <p><a href="mailto:Wandererinfo24@gmail.com">Wandererinfo24@gmail.com</a></p>
         <p><a href="tel:568730184">568-73-01-84</a></p>
       </div>
     </div>
     <div class="footer-bottom">
-      <p>&copy; 2025 Wanderer (მოხეტიალე). ყველა უფლება დაცულია.</p>
+      <p>&copy; 2025 Wanderer (მოხეტიალე). <%= t('footer.rights') %></p>
     </div>
   </div>
 </footer>

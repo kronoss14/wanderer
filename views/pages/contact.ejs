@@ -3,8 +3,8 @@
   <div class="page-hero-bg" style="background-image: url('/images/contact-hero.jpeg'); background-position: center 55%"></div>
   <div class="page-hero-overlay" style="background: linear-gradient(135deg, rgba(13,13,13,0.45) 0%, rgba(26,26,46,0.35) 100%)"></div>
   <div class="page-hero-content container">
-    <h1>დაგვიკავშირდით</h1>
-    <p>გაქვთ შეკითხვები? სიამოვნებით მოგისმენთ. დაგვიკავშირდით და ერთად დავგეგმოთ თქვენი თავგადასავალი.</p>
+    <h1><%= t('contact.title') %></h1>
+    <p><%= t('contact.hero_sub') %></p>
   </div>
 </section>
 
@@ -15,72 +15,72 @@
       <div class="contact-form-wrap">
         <% if (success) { %>
           <div class="success-message">
-            <h3>შეტყობინება გაიგზავნა!</h3>
-            <p>გმადლობთ, რომ დაგვიკავშირდით. 24 საათის განმავლობაში გიპასუხებთ.</p>
+            <h3><%= t('contact.success_title') %></h3>
+            <p><%= t('contact.success_text') %></p>
           </div>
         <% } %>
-        <h2 class="section-title">გამოგვიგზავნეთ <span class="text-accent">შეტყობინება</span></h2>
-        <form action="/contact" method="POST" class="contact-form" id="contact-form" novalidate>
+        <h2 class="section-title"><%- t('contact.form_title') %></h2>
+        <form action="<%= langPrefix %>/contact" method="POST" class="contact-form" id="contact-form" novalidate>
           <input type="hidden" name="_csrf" value="<%= csrfToken %>">
           <div class="form-row">
             <div class="form-group">
-              <label class="form-label" for="name">თქვენი სახელი *</label>
+              <label class="form-label" for="name"><%= t('contact.name_label') %></label>
               <input type="text" id="name" name="name" class="form-input" required>
-              <p class="form-error">გთხოვთ, შეიყვანოთ სახელი.</p>
+              <p class="form-error"><%= t('contact.name_error') %></p>
             </div>
             <div class="form-group">
-              <label class="form-label" for="email">ელ. ფოსტა *</label>
+              <label class="form-label" for="email"><%= t('contact.email_label') %></label>
               <input type="email" id="email" name="email" class="form-input" required>
-              <p class="form-error">გთხოვთ, შეიყვანოთ სწორი ელ. ფოსტის მისამართი.</p>
+              <p class="form-error"><%= t('contact.email_error') %></p>
             </div>
           </div>
           <div class="form-group">
-            <label class="form-label" for="subject">თემა *</label>
+            <label class="form-label" for="subject"><%= t('contact.subject_label') %></label>
             <input type="text" id="subject" name="subject" class="form-input" required>
-            <p class="form-error">გთხოვთ, შეიყვანოთ თემა.</p>
+            <p class="form-error"><%= t('contact.subject_error') %></p>
           </div>
           <div class="form-group">
-            <label class="form-label" for="message">შეტყობინება *</label>
+            <label class="form-label" for="message"><%= t('contact.message_label') %></label>
             <textarea id="message" name="message" class="form-textarea" rows="6" required></textarea>
-            <p class="form-error">გთხოვთ, შეიყვანოთ შეტყობინება.</p>
+            <p class="form-error"><%= t('contact.message_error') %></p>
           </div>
-          <button type="submit" class="btn btn-primary">შეტყობინების გაგზავნა</button>
+          <button type="submit" class="btn btn-primary"><%= t('contact.send_btn') %></button>
         </form>
       </div>
       <aside class="contact-sidebar">
         <div class="contact-info-card">
-          <h3>საკონტაქტო ინფორმაცია</h3>
+          <h3><%= t('contact.info_title') %></h3>
           <div class="contact-info-item">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--accent-orange)" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
             <div>
-              <strong>მისამართი</strong>
-              <p>თბილისი, საქართველო</p>
+              <strong><%= t('contact.address_label') %></strong>
+              <p><%= t('footer.location') %></p>
             </div>
           </div>
           <div class="contact-info-item">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--accent-orange)" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
             <div>
-              <strong>ელ. ფოსტა</strong>
+              <strong><%= t('contact.email_info_label') %></strong>
               <p><a href="mailto:Wandererinfo24@gmail.com">Wandererinfo24@gmail.com</a></p>
             </div>
           </div>
           <div class="contact-info-item">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--accent-orange)" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/></svg>
             <div>
-              <strong>ტელეფონი</strong>
+              <strong><%= t('contact.phone_label') %></strong>
               <p><a href="tel:568730184">568-73-01-84</a></p>
             </div>
           </div>
           <div class="contact-info-item">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--accent-orange)" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
             <div>
-              <strong>პასუხის დრო</strong>
-              <p>24 საათის განმავლობაში</p>
+              <strong><%= t('contact.response_label') %></strong>
+              <p><%= t('contact.response_text') %></p>
             </div>
           </div>
         </div>
         <div class="contact-info-card">
-          <h3>გამოგვყევით</h3>
+          <h3><%= t('contact.follow_title') %></h3>
           <div class="contact-social-links">
             <a href="<%= socialLinks.facebook %>" target="_blank" rel="noopener" class="contact-social-btn">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>

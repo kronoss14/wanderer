@@ -1,11 +1,11 @@
 <section class="error-page">
   <div class="container text-center">
     <h1 class="error-code">404</h1>
-    <h2 class="error-title">ბილიკი ვერ მოიძებნა</h2>
-    <p class="error-text">როგორც ჩანს, ბილიკიდან გადაუხვიეთ. გვერდი, რომელსაც ეძებთ, არ არსებობს ან გადატანილია.</p>
+    <h2 class="error-title"><%= t('page.not_found') %></h2>
+    <p class="error-text"><%= t('page.not_found_text') %></p>
     <div class="error-actions">
-      <a href="/" class="btn btn-primary">მთავარ გვერდზე დაბრუნება</a>
-      <a href="/hikes" class="btn btn-secondary">ლაშქრობების ნახვა</a>
+      <a href="<%= langPrefix %>/" class="btn btn-primary"><%= t('page.back_home') %></a>
+      <a href="<%= langPrefix %>/hikes" class="btn btn-secondary"><%= t('page.view_hikes') %></a>
     </div>
   </div>
 </section>

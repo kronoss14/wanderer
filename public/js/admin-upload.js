@@ -159,4 +159,67 @@
         statusEl.className = 'upload-status upload-error';
       });
   }
+  // ── Route file upload (KML/GPX — base64 JSON, not multer) ──
+  var routeInput = document.getElementById('routeFileInput');
+  var routeData = document.getElementById('routeData');
+  var routeStatus = document.getElementById('routeStatus');
+  var routePreviewMap = document.getElementById('routePreviewMap');
+
+  if (routeInput && routeData) {
+    // Show existing route on map if data exists
+    if (routeData.value && window.initTrailMap) {
+      try {
+        var existing = JSON.parse(routeData.value);
+        if (existing.coordinates && existing.coordinates.length) {
+          routePreviewMap.style.display = '';
+          setTimeout(function() { initTrailMap('routePreviewMap', existing); }, 100);
+        }
+      } catch (e) { /* ignore */ }
+    }
+
+    routeInput.addEventListener('change', function () {
+      if (!this.files.length) return;
+      var file = this.files[0];
+      var ext = file.name.split('.').pop().toLowerCase();
+      if (['kml', 'gpx', 'kmz'].indexOf(ext) === -1) {
+        routeStatus.textContent = 'Only KML/GPX/KMZ files supported';
+        routeStatus.className = 'upload-status upload-error';
+        return;
+      }
+
+      routeStatus.textContent = 'Parsing route...';
+      routeStatus.className = 'upload-status';
+
+      var reader = new FileReader();
+      reader.onload = function (e) {
+        var csrfToken = document.querySelector('input[name="_csrf"]')?.value || '';
+        fetch('/admin/upload-route', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'X-CSRF-Token': csrfToken },
+          body: JSON.stringify({ filename: file.name, data: e.target.result })
+        })
+          .then(function (res) { return res.json(); })
+          .then(function (json) {
+            if (json.route) {
+              routeData.value = JSON.stringify(json.route);
+              routeStatus.textContent = json.route.coordinates.length + ' points parsed';
+              routeStatus.className = 'upload-status upload-success';
+              if (window.initTrailMap && routePreviewMap) {
+                routePreviewMap.style.display = '';
+                routePreviewMap.innerHTML = '';
+                setTimeout(function() { initTrailMap('routePreviewMap', json.route); }, 100);
+              }
+            } else {
+              routeStatus.textContent = json.error || 'Parse failed';
+              routeStatus.className = 'upload-status upload-error';
+            }
+          })
+          .catch(function () {
+            routeStatus.textContent = 'Route upload failed';
+            routeStatus.className = 'upload-status upload-error';
+          });
+      };
+      reader.readAsDataURL(file);
+    });
+  }
 })();

@@ -1,18 +1,22 @@
 [
   {
     "id": "juta-chaukhi",
-    "title": "ჯუთა-ჭაუხები",
+    "title": "\u10ef\u10e3\u10d7\u10d0-\u10ed\u10d0\u10e3\u10ee\u10d4\u10d1\u10d8",
+    "title_en": "Juta-Chaukhi",
     "date": "2025-07-10",
-    "description": "აქ აღწერა",
+    "description": "\u10d0\u10e5 \u10d0\u10e6\u10ec\u10d4\u10e0\u10d0",
+    "description_en": "",
     "mainImage": "/images/uploads/1771973905827-a653ae92-image00003.jpeg",
     "images": [],
     "hikeId": ""
   },
   {
     "id": "batetis-tba",
-    "title": "ბატეთის ტბა",
+    "title": "\u10d1\u10d0\u10e2\u10d4\u10d7\u10d8\u10e1 \u10e2\u10d1\u10d0",
+    "title_en": "Bateti Lake",
     "date": "2025-09-28",
-    "description": "აღწერა მერე",
+    "description": "\u10d0\u10e6\u10ec\u10d4\u10e0\u10d0 \u10db\u10d4\u10e0\u10d4",
+    "description_en": "",
     "mainImage": "/images/uploads/1771974151156-3022a31d-image00026.jpeg",
     "images": [
       "/images/uploads/1771974161642-464a0d75-image00026.jpeg",
@@ -24,9 +28,11 @@
   },
   {
     "id": "svaneti",
-    "title": "სვანეთი",
+    "title": "\u10e1\u10d5\u10d0\u10dc\u10d4\u10d7\u10d8",
+    "title_en": "Svaneti",
     "date": "2025-06-12",
-    "description": "აღწერა იქნება აქაც",
+    "description": "\u10d0\u10e6\u10ec\u10d4\u10e0\u10d0 \u10d8\u10e5\u10dc\u10d4\u10d1\u10d0 \u10d0\u10e5\u10d0\u10ea",
+    "description_en": "",
     "mainImage": "/images/uploads/1771974273948-f13fef74-image00001.jpeg",
     "images": [
       "/images/uploads/1771974309342-32240e91-image00006.jpeg",

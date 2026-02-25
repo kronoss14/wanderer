@@ -11,6 +11,7 @@ import rateLimit from 'express-rate-limit';
 import { asyncHandler } from '../helpers/async-handler.js';
 import { body, validationResult } from 'express-validator';
 import { audit, log } from '../helpers/logger.js';
+import { parseRouteFile } from '../helpers/geo.js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const router = Router();
@@ -69,8 +70,10 @@ function parseHikeBody(b, id) {
   return {
     id,
     name: b.name,
+    name_en: b.name_en || '',
     type: b.type,
     duration: b.duration,
+    duration_en: b.duration_en || '',
     distance: b.distance,
     difficulty: b.difficulty,
     elevation: b.elevation,
@@ -78,17 +81,24 @@ function parseHikeBody(b, id) {
     price: b.price ? Math.max(0, Number(b.price)) : 0,
     featured: b.featured === 'true',
     summary: b.summary,
+    summary_en: b.summary_en || '',
     description: b.description,
+    description_en: b.description_en || '',
     highlights: textToArray(b.highlights),
+    highlights_en: textToArray(b.highlights_en),
     included: textToArray(b.included),
+    included_en: textToArray(b.included_en),
     notIncluded: textToArray(b.notIncluded),
+    notIncluded_en: textToArray(b.notIncluded_en),
     images: textToArray(b.images).filter(isValidImageUrl),
     heroImage: b.heroImage,
     cardImage: b.cardImage,
     region: b.region,
+    region_en: b.region_en || '',
     dates: textToArray(b.dates),
     messengerLink: b.messengerLink || '',
-    whatsappLink: b.whatsappLink || ''
+    whatsappLink: b.whatsappLink || '',
+    route: b.routeData ? JSON.parse(b.routeData) : {}
   };
 }
 
@@ -96,9 +106,13 @@ function parseGuideBody(b, id) {
   return {
     id,
     name: b.name,
+    name_en: b.name_en || '',
     role: b.role,
+    role_en: b.role_en || '',
     bio: b.bio,
+    bio_en: b.bio_en || '',
     specialties: textToArray(b.specialties),
+    specialties_en: textToArray(b.specialties_en),
     image: b.image
   };
 }
@@ -107,13 +121,19 @@ function parsePricingBody(b, id) {
   return {
     id,
     tier: b.tier,
+    tier_en: b.tier_en || '',
     price: b.price !== '' ? Math.max(0, Number(b.price)) : null,
     priceLabel: b.priceLabel,
+    priceLabel_en: b.priceLabel_en || '',
     unit: b.unit,
+    unit_en: b.unit_en || '',
     description: b.description,
+    description_en: b.description_en || '',
     features: textToArray(b.features),
+    features_en: textToArray(b.features_en),
     highlighted: b.highlighted === 'true',
-    cta: b.cta
+    cta: b.cta,
+    cta_en: b.cta_en || ''
   };
 }
 
@@ -121,11 +141,30 @@ function parseGalleryBody(b, id) {
   return {
     id,
     title: b.title,
+    title_en: b.title_en || '',
     date: b.date,
     description: b.description,
+    description_en: b.description_en || '',
     mainImage: b.mainImage,
     images: textToArray(b.images).filter(isValidImageUrl),
     hikeId: b.hikeId || ''
+  };
+}
+
+function parseBlogBody(b, id, slug) {
+  return {
+    id,
+    slug: b.slug || slug || b.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, ''),
+    title: b.title,
+    title_en: b.title_en || '',
+    content: b.content,
+    content_en: b.content_en || '',
+    coverImage: b.coverImage || '',
+    tags: textToArray(b.tags),
+    author: b.author || '',
+    relatedHikeIds: textToArray(b.relatedHikeIds),
+    publishedAt: b.publishedAt || new Date().toISOString().split('T')[0],
+    published: b.published === 'true'
   };
 }
 
@@ -213,6 +252,22 @@ router.use((err, req, res, next) => {
   next(err);
 });
 
+// ─── Route Upload (base64 JSON for KML/GPX text files) ───
+router.post('/upload-route', asyncHandler(async (req, res) => {
+  const { filename, data } = req.body;
+  if (!filename || !data) return res.status(400).json({ error: 'Missing filename or data' });
+
+  const ext = filename.split('.').pop().toLowerCase();
+  if (!['kml', 'gpx', 'kmz'].includes(ext)) return res.status(400).json({ error: 'Only KML/GPX/KMZ supported' });
+
+  const match = data.match(/^data:[^;]+;base64,(.+)$/);
+  if (!match) return res.status(400).json({ error: 'Invalid data format' });
+
+  const content = Buffer.from(match[1], 'base64').toString('utf-8');
+  const route = parseRouteFile(content, ext === 'kmz' ? 'kml' : ext);
+  res.json({ route });
+}));
+
 // ─── Logout ───
 router.get('/logout', (req, res) => {
   req.session.destroy(() => {
@@ -222,15 +277,16 @@ router.get('/logout', (req, res) => {
 
 // ─── Dashboard ───
 router.get('/', asyncHandler(async (req, res) => {
-  const [hikes, guides, pricing, gallery] = await Promise.all([
+  const [hikes, guides, pricing, gallery, blog] = await Promise.all([
     readJSON('hikes.json'),
     readJSON('guides.json'),
     readJSON('pricing.json'),
-    readJSON('gallery.json')
+    readJSON('gallery.json'),
+    readJSON('blog.json')
   ]);
   renderAdmin(res, join(__dirname, '..', 'views', 'admin', 'dashboard.ejs'), {
     title: 'Dashboard',
-    counts: { hikes: hikes.length, guides: guides.length, pricing: pricing.length, gallery: gallery.length }
+    counts: { hikes: hikes.length, guides: guides.length, pricing: pricing.length, gallery: gallery.length, blog: blog.length }
   });
 }));
 
@@ -469,6 +525,68 @@ router.post('/gallery/delete/:id', asyncHandler(async (req, res) => {
   await writeJSON('gallery.json', filtered);
   await audit('gallery.delete', { id: req.params.id });
   res.redirect('/admin/gallery');
+}));
+
+// ═══════════════════════════════════════════
+//  BLOG CRUD
+// ═══════════════════════════════════════════
+
+router.get('/blog', asyncHandler(async (req, res) => {
+  const blog = await readJSON('blog.json');
+  renderAdmin(res, join(__dirname, '..', 'views', 'admin', 'blog-list.ejs'), { title: 'Blog', posts: blog });
+}));
+
+router.get('/blog/new', asyncHandler(async (req, res) => {
+  const [guides, hikes] = await Promise.all([
+    readJSON('guides.json'),
+    readJSON('hikes.json')
+  ]);
+  renderAdmin(res, join(__dirname, '..', 'views', 'admin', 'blog-form.ejs'), {
+    title: 'New Blog Post', editing: false, post: {}, guides, hikes
+  });
+}));
+
+router.post('/blog', asyncHandler(async (req, res) => {
+  const blog = await readJSON('blog.json');
+  const b = req.body;
+  const nextId = blog.length ? Math.max(...blog.map(p => p.id)) + 1 : 1;
+  const slug = toSlug(b.title);
+  const post = parseBlogBody(b, nextId, slug);
+  blog.push(post);
+  await writeJSON('blog.json', blog);
+  await audit('blog.create', { id: nextId, title: b.title });
+  res.redirect('/admin/blog');
+}));
+
+router.get('/blog/edit/:id', asyncHandler(async (req, res) => {
+  const [blog, guides, hikes] = await Promise.all([
+    readJSON('blog.json'),
+    readJSON('guides.json'),
+    readJSON('hikes.json')
+  ]);
+  const post = blog.find(p => p.id === Number(req.params.id));
+  if (!post) return res.redirect('/admin/blog');
+  renderAdmin(res, join(__dirname, '..', 'views', 'admin', 'blog-form.ejs'), {
+    title: 'Edit Blog Post', editing: true, post, guides, hikes
+  });
+}));
+
+router.post('/blog/edit/:id', asyncHandler(async (req, res) => {
+  const blog = await readJSON('blog.json');
+  const idx = blog.findIndex(p => p.id === Number(req.params.id));
+  if (idx === -1) return res.redirect('/admin/blog');
+  blog[idx] = parseBlogBody(req.body, Number(req.params.id), blog[idx].slug);
+  await writeJSON('blog.json', blog);
+  await audit('blog.edit', { id: Number(req.params.id) });
+  res.redirect('/admin/blog');
+}));
+
+router.post('/blog/delete/:id', asyncHandler(async (req, res) => {
+  const blog = await readJSON('blog.json');
+  const filtered = blog.filter(p => p.id !== Number(req.params.id));
+  await writeJSON('blog.json', filtered);
+  await audit('blog.delete', { id: Number(req.params.id) });
+  res.redirect('/admin/blog');
 }));
 
 export default router;

@@ -1,0 +1,36 @@
+<div class="admin-header">
+  <h1>Blog Posts</h1>
+  <a href="/admin/blog/new" class="btn btn-primary">+ New Post</a>
+</div>
+
+<table class="admin-table">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Title</th>
+      <th>Published</th>
+      <th>Date</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% if (posts.length === 0) { %>
+      <tr><td colspan="5" style="text-align:center;padding:2rem;">No blog posts yet.</td></tr>
+    <% } %>
+    <% posts.forEach(post => { %>
+      <tr>
+        <td><%= post.id %></td>
+        <td><%= post.title %></td>
+        <td><%= post.published ? 'Yes' : 'Draft' %></td>
+        <td><%= post.publishedAt %></td>
+        <td>
+          <a href="/admin/blog/edit/<%= post.id %>" class="btn btn-secondary btn-sm">Edit</a>
+          <form method="POST" action="/admin/blog/delete/<%= post.id %>" style="display:inline" onsubmit="return confirm('Delete this post?')">
+            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+            <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+          </form>
+        </td>
+      </tr>
+    <% }) %>
+  </tbody>
+</table>

@@ -4,9 +4,16 @@
 
 <form class="admin-form" method="POST" action="<%= editing ? '/admin/gallery/edit/' + item.id : '/admin/gallery' %>">
   <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-  <div class="form-group">
-    <label for="title">Title</label>
-    <input type="text" id="title" name="title" value="<%= item.title || '' %>" required>
+
+  <div class="form-lang-row">
+    <div class="form-group">
+      <label for="title">Title (KA)</label>
+      <input type="text" id="title" name="title" value="<%= item.title || '' %>" required>
+    </div>
+    <div class="form-group">
+      <label for="title_en">Title (EN)</label>
+      <input type="text" id="title_en" name="title_en" value="<%= item.title_en || '' %>">
+    </div>
   </div>
 
   <div class="form-group">
@@ -14,9 +21,15 @@
     <input type="date" id="date" name="date" value="<%= item.date || '' %>" required>
   </div>
 
-  <div class="form-group">
-    <label for="description">Description</label>
-    <textarea id="description" name="description" rows="4"><%= item.description || '' %></textarea>
+  <div class="form-lang-row">
+    <div class="form-group">
+      <label for="description">Description (KA)</label>
+      <textarea id="description" name="description" rows="4"><%= item.description || '' %></textarea>
+    </div>
+    <div class="form-group">
+      <label for="description_en">Description (EN)</label>
+      <textarea id="description_en" name="description_en" rows="4"><%= item.description_en || '' %></textarea>
+    </div>
   </div>
 
   <div class="form-group">

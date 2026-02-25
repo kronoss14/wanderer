@@ -1,30 +1,48 @@
 [
   {
     "id": "kazbegi-gergeti",
-    "name": "ჩითახევის თავშესაფარი",
+    "name": "\u10e9\u10d8\u10d7\u10d0\u10ee\u10d4\u10d5\u10d8\u10e1 \u10d7\u10d0\u10d5\u10e8\u10d4\u10e1\u10d0\u10e4\u10d0\u10e0\u10d8",
+    "name_en": "Chitakhevi Shelter",
     "type": "multi-day",
-    "duration": "2 დღე",
-    "distance": "9.7-9.7კმ",
-    "difficulty": "საშუალო",
-    "elevation": "1002მ",
+    "duration": "2 \u10d3\u10e6\u10d4",
+    "duration_en": "2 Days",
+    "distance": "9.7-9.7\u10d9\u10db",
+    "difficulty": "medium",
+    "elevation": "1002\u10db",
     "groupSize": "15-20",
     "price": 85,
     "featured": true,
-    "summary": "ჩითახევის თავშესაფარი",
-    "description": "ჩითახევის თავშესაფრამდე ლაშქრობა არის საშუალო სირთულის, ძალიან სასიამოვნო მარშრუტი, რომელიც გადის ტყიან ბილიკებსა და ღია ხედებიან მონაკვეთებზე. გზად ბუნება მშვიდი და მრავალფეროვანია, ხოლო თავშესაფართან მისვლისას იშლება ლამაზი პანორამები, რაც იდეალურ გარემოს ქმნის დასვენებისა და ფოტოებისათვის. ეს ლაშქრობა კარგი არჩევანია როგორც გამოცდილებისთვის, ისე ქალაქის ხმაურისგან გასაქცევად.\r\n",
+    "summary": "\u10e9\u10d8\u10d7\u10d0\u10ee\u10d4\u10d5\u10d8\u10e1 \u10d7\u10d0\u10d5\u10e8\u10d4\u10e1\u10d0\u10e4\u10d0\u10e0\u10d8",
+    "summary_en": "Chitakhevi Shelter Hike",
+    "description": "\u10e9\u10d8\u10d7\u10d0\u10ee\u10d4\u10d5\u10d8\u10e1 \u10d7\u10d0\u10d5\u10e8\u10d4\u10e1\u10d0\u10e4\u10e0\u10d0\u10db\u10d3\u10d4 \u10da\u10d0\u10e8\u10e5\u10e0\u10dd\u10d1\u10d0 \u10d0\u10e0\u10d8\u10e1 \u10e1\u10d0\u10e8\u10e3\u10d0\u10da\u10dd \u10e1\u10d8\u10e0\u10d7\u10e3\u10da\u10d8\u10e1, \u10eb\u10d0\u10da\u10d8\u10d0\u10dc \u10e1\u10d0\u10e1\u10d8\u10d0\u10db\u10dd\u10d5\u10dc\u10dd \u10db\u10d0\u10e0\u10e8\u10e0\u10e3\u10e2\u10d8, \u10e0\u10dd\u10db\u10d4\u10da\u10d8\u10ea \u10d2\u10d0\u10d3\u10d8\u10e1 \u10e2\u10e7\u10d8\u10d0\u10dc \u10d1\u10d8\u10da\u10d8\u10d9\u10d4\u10d1\u10e1\u10d0 \u10d3\u10d0 \u10e6\u10d8\u10d0 \u10ee\u10d4\u10d3\u10d4\u10d1\u10d8\u10d0\u10dc \u10db\u10dd\u10dc\u10d0\u10d9\u10d5\u10d4\u10d7\u10d4\u10d1\u10e1\u10d6\u10d4. \u10d2\u10d6\u10d0\u10d3 \u10d1\u10e3\u10dc\u10d4\u10d1\u10d0 \u10db\u10e8\u10d5\u10d8\u10d3\u10d8 \u10d3\u10d0 \u10db\u10e0\u10d0\u10d5\u10d0\u10da\u10e4\u10d4\u10e0\u10dd\u10d5\u10d0\u10dc\u10d8\u10d0, \u10ee\u10dd\u10da\u10dd \u10d7\u10d0\u10d5\u10e8\u10d4\u10e1\u10d0\u10e4\u10d0\u10e0\u10d7\u10d0\u10dc \u10db\u10d8\u10e1\u10d5\u10da\u10d8\u10e1\u10d0\u10e1 \u10d8\u10e8\u10da\u10d4\u10d1\u10d0 \u10da\u10d0\u10db\u10d0\u10d6\u10d8 \u10de\u10d0\u10dc\u10dd\u10e0\u10d0\u10db\u10d4\u10d1\u10d8, \u10e0\u10d0\u10ea \u10d8\u10d3\u10d4\u10d0\u10da\u10e3\u10e0 \u10d2\u10d0\u10e0\u10d4\u10db\u10dd\u10e1 \u10e5\u10db\u10dc\u10d8\u10e1 \u10d3\u10d0\u10e1\u10d5\u10d4\u10dc\u10d4\u10d1\u10d8\u10e1\u10d0 \u10d3\u10d0 \u10e4\u10dd\u10e2\u10dd\u10d4\u10d1\u10d8\u10e1\u10d0\u10d7\u10d5\u10d8\u10e1. \u10d4\u10e1 \u10da\u10d0\u10e8\u10e5\u10e0\u10dd\u10d1\u10d0 \u10d9\u10d0\u10e0\u10d2\u10d8 \u10d0\u10e0\u10e9\u10d4\u10d5\u10d0\u10dc\u10d8\u10d0 \u10e0\u10dd\u10d2\u10dd\u10e0\u10ea \u10d2\u10d0\u10db\u10dd\u10ea\u10d3\u10d8\u10da\u10d4\u10d1\u10d8\u10e1\u10d7\u10d5\u10d8\u10e1, \u10d8\u10e1\u10d4 \u10e5\u10d0\u10da\u10d0\u10e5\u10d8\u10e1 \u10ee\u10db\u10d0\u10e3\u10e0\u10d8\u10e1\u10d2\u10d0\u10dc \u10d2\u10d0\u10e1\u10d0\u10e5\u10ea\u10d4\u10d5\u10d0\u10d3.\r\n",
+    "description_en": "The hike to Chitakhevi Shelter is a moderate difficulty, very pleasant route that passes through forested trails and open viewpoint sections. Nature along the way is calm and diverse, and upon arriving at the shelter, beautiful panoramas unfold, creating an ideal environment for rest and photography. This hike is a great choice both for experience and for escaping the city noise.",
     "highlights": [
-      "პანორამების ბილიკი",
-      "იდეალური სალაშქრო გარემო"
+      "\u10de\u10d0\u10dc\u10dd\u10e0\u10d0\u10db\u10d4\u10d1\u10d8\u10e1 \u10d1\u10d8\u10da\u10d8\u10d9\u10d8",
+      "\u10d8\u10d3\u10d4\u10d0\u10da\u10e3\u10e0\u10d8 \u10e1\u10d0\u10da\u10d0\u10e8\u10e5\u10e0\u10dd \u10d2\u10d0\u10e0\u10d4\u10db\u10dd"
+    ],
+    "highlights_en": [
+      "Panoramic Trail",
+      "Ideal Hiking Environment"
     ],
     "included": [
-      "გამყოლები",
-      "ტრანსპორტი თბილისიდან",
-      "კოტეჯში დარჩენა",
-      "საძილე ტომარა(საჭიროების შემთხვევაში)",
-      "პირველადი დახმარების ნაკრები"
+      "\u10d2\u10d0\u10db\u10e7\u10dd\u10da\u10d4\u10d1\u10d8",
+      "\u10e2\u10e0\u10d0\u10dc\u10e1\u10de\u10dd\u10e0\u10e2\u10d8 \u10d7\u10d1\u10d8\u10da\u10d8\u10e1\u10d8\u10d3\u10d0\u10dc",
+      "\u10d9\u10dd\u10e2\u10d4\u10ef\u10e8\u10d8 \u10d3\u10d0\u10e0\u10e9\u10d4\u10dc\u10d0",
+      "\u10e1\u10d0\u10eb\u10d8\u10da\u10d4 \u10e2\u10dd\u10db\u10d0\u10e0\u10d0(\u10e1\u10d0\u10ed\u10d8\u10e0\u10dd\u10d4\u10d1\u10d8\u10e1 \u10e8\u10d4\u10db\u10d7\u10ee\u10d5\u10d4\u10d5\u10d0\u10e8\u10d8)",
+      "\u10de\u10d8\u10e0\u10d5\u10d4\u10da\u10d0\u10d3\u10d8 \u10d3\u10d0\u10ee\u10db\u10d0\u10e0\u10d4\u10d1\u10d8\u10e1 \u10dc\u10d0\u10d9\u10e0\u10d4\u10d1\u10d8"
+    ],
+    "included_en": [
+      "Guides",
+      "Transport from Tbilisi",
+      "Cottage Stay",
+      "Sleeping Bag (if needed)",
+      "First Aid Kit"
     ],
     "notIncluded": [
-      "კვება"
+      "\u10d9\u10d5\u10d4\u10d1\u10d0"
+    ],
+    "notIncluded_en": [
+      "Food"
     ],
     "images": [
       "/images/uploads/1771937421533-7e97a841-e2QAjKf.jpeg",
@@ -39,8 +57,11 @@
     ],
     "heroImage": "/images/uploads/1771937639784-1c7f2570-IMG_6851.jpeg",
     "cardImage": "/images/uploads/1771937924472-a04680c1-IMG_2295.jpeg",
-    "region": "სამცხე-ჯავახეთი",
+    "region": "\u10e1\u10d0\u10db\u10ea\u10ee\u10d4-\u10ef\u10d0\u10d5\u10d0\u10ee\u10d4\u10d7\u10d8",
+    "region_en": "Samtskhe-Javakheti",
+    "dates": [],
     "messengerLink": "",
-    "whatsappLink": ""
+    "whatsappLink": "",
+    "route": {}
   }
 ]

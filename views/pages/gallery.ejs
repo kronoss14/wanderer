@@ -3,8 +3,8 @@
   <div class="page-hero-bg" style="background-image: url('/images/adventures-hero.jpeg'); background-position: center 70%"></div>
   <div class="page-hero-overlay"></div>
   <div class="page-hero-content container">
-    <h1>ჩვენი <span class="text-accent">თავგადასავლები</span></h1>
-    <p>მოგონებები, ისტორიები და ფოტოები ჩვენი გასული ლაშქრობებიდან.</p>
+    <h1><%- t('gallery.title') %></h1>
+    <p><%= t('gallery.subtitle') %></p>
   </div>
 </section>
 
@@ -14,19 +14,19 @@
     <% if (gallery.length) { %>
       <div class="adventures-grid">
         <% gallery.forEach(item => { %>
-          <a href="/gallery/<%= item.id %>" class="adventure-card">
+          <a href="<%= langPrefix %>/gallery/<%= item.id %>" class="adventure-card">
             <div class="adventure-card-img">
-              <img src="<%= item.mainImage %>" alt="<%= item.title %>" loading="lazy">
+              <img src="<%= item.mainImage %>" alt="<%= l(item, 'title') %>" loading="lazy">
             </div>
             <div class="adventure-card-overlay">
-              <h3><%= item.title %></h3>
+              <h3><%= l(item, 'title') %></h3>
               <span class="adventure-card-date"><%= item.date %></span>
             </div>
           </a>
         <% }) %>
       </div>
     <% } else { %>
-      <p style="text-align:center;color:var(--text-muted);padding:3rem 0;">ჯერ არ არის თავგადასავლები დამატებული.</p>
+      <p style="text-align:center;color:var(--text-muted);padding:3rem 0;"><%= t('gallery.empty') %></p>
     <% } %>
   </div>
 </section>

@@ -2,6 +2,14 @@
   <h1><%= editing ? 'Edit Hike' : 'New Hike' %></h1>
 </div>
 
+<% if (typeof errors !== 'undefined' && errors && errors.length) { %>
+  <div class="flash flash-error">
+    <ul style="margin:0;padding-left:1.5rem;">
+      <% errors.forEach(e => { %><li><%= e.msg %></li><% }) %>
+    </ul>
+  </div>
+<% } %>
+
 <form class="admin-form" method="POST" action="<%= editing ? '/admin/hikes/edit/' + hike.id : '/admin/hikes' %>">
   <input type="hidden" name="_csrf" value="<%= csrfToken %>">
   <div class="form-group">
@@ -9,9 +17,15 @@
     <input type="text" id="id" name="id" value="<%= hike.id || '' %>" required <%= editing ? 'readonly' : '' %>>
   </div>
 
-  <div class="form-group">
-    <label for="name">Name</label>
-    <input type="text" id="name" name="name" value="<%= hike.name || '' %>" required>
+  <div class="form-lang-row">
+    <div class="form-group">
+      <label for="name">Name (KA)</label>
+      <input type="text" id="name" name="name" value="<%= hike.name || '' %>" required>
+    </div>
+    <div class="form-group">
+      <label for="name_en">Name (EN)</label>
+      <input type="text" id="name_en" name="name_en" value="<%= hike.name_en || '' %>">
+    </div>
   </div>
 
   <div class="form-group">
@@ -23,9 +37,15 @@
     </select>
   </div>
 
-  <div class="form-group">
-    <label for="duration">Duration</label>
-    <input type="text" id="duration" name="duration" value="<%= hike.duration || '' %>">
+  <div class="form-lang-row">
+    <div class="form-group">
+      <label for="duration">Duration (KA)</label>
+      <input type="text" id="duration" name="duration" value="<%= hike.duration || '' %>">
+    </div>
+    <div class="form-group">
+      <label for="duration_en">Duration (EN)</label>
+      <input type="text" id="duration_en" name="duration_en" value="<%= hike.duration_en || '' %>">
+    </div>
   </div>
 
   <div class="form-group">
@@ -36,9 +56,9 @@
   <div class="form-group">
     <label for="difficulty">Difficulty</label>
     <select id="difficulty" name="difficulty">
-      <option value="მარტივი" <%= hike.difficulty === 'მარტივი' ? 'selected' : '' %>>მარტივი</option>
-      <option value="საშუალო" <%= hike.difficulty === 'საშუალო' ? 'selected' : '' %>>საშუალო</option>
-      <option value="რთული" <%= hike.difficulty === 'რთული' ? 'selected' : '' %>>რთული</option>
+      <option value="easy" <%= hike.difficulty === 'easy' ? 'selected' : '' %>>Easy</option>
+      <option value="medium" <%= hike.difficulty === 'medium' ? 'selected' : '' %>>Medium</option>
+      <option value="hard" <%= hike.difficulty === 'hard' ? 'selected' : '' %>>Hard</option>
     </select>
   </div>
 
@@ -53,13 +73,19 @@
   </div>
 
   <div class="form-group">
-    <label for="price">Price (₾)</label>
+    <label for="price">Price (&#8382;)</label>
     <input type="number" id="price" name="price" value="<%= hike.price || '' %>">
   </div>
 
-  <div class="form-group">
-    <label for="region">Region</label>
-    <input type="text" id="region" name="region" value="<%= hike.region || '' %>">
+  <div class="form-lang-row">
+    <div class="form-group">
+      <label for="region">Region (KA)</label>
+      <input type="text" id="region" name="region" value="<%= hike.region || '' %>">
+    </div>
+    <div class="form-group">
+      <label for="region_en">Region (EN)</label>
+      <input type="text" id="region_en" name="region_en" value="<%= hike.region_en || '' %>">
+    </div>
   </div>
 
   <div class="form-group">
@@ -75,32 +101,65 @@
     </label>
   </div>
 
-  <div class="form-group">
-    <label for="summary">Summary</label>
-    <textarea id="summary" name="summary" rows="2"><%= hike.summary || '' %></textarea>
+  <div class="form-lang-row">
+    <div class="form-group">
+      <label for="summary">Summary (KA)</label>
+      <textarea id="summary" name="summary" rows="2"><%= hike.summary || '' %></textarea>
+    </div>
+    <div class="form-group">
+      <label for="summary_en">Summary (EN)</label>
+      <textarea id="summary_en" name="summary_en" rows="2"><%= hike.summary_en || '' %></textarea>
+    </div>
   </div>
 
-  <div class="form-group">
-    <label for="description">Description</label>
-    <textarea id="description" name="description" rows="5"><%= hike.description || '' %></textarea>
+  <div class="form-lang-row">
+    <div class="form-group">
+      <label for="description">Description (KA)</label>
+      <textarea id="description" name="description" rows="5"><%= hike.description || '' %></textarea>
+    </div>
+    <div class="form-group">
+      <label for="description_en">Description (EN)</label>
+      <textarea id="description_en" name="description_en" rows="5"><%= hike.description_en || '' %></textarea>
+    </div>
   </div>
 
-  <div class="form-group">
-    <label for="highlights">Highlights</label>
-    <div class="hint">One per line</div>
-    <textarea id="highlights" name="highlights" rows="4"><%= (hike.highlights || []).join('\n') %></textarea>
+  <div class="form-lang-row">
+    <div class="form-group">
+      <label for="highlights">Highlights (KA)</label>
+      <div class="hint">One per line</div>
+      <textarea id="highlights" name="highlights" rows="4"><%= (hike.highlights || []).join('\n') %></textarea>
+    </div>
+    <div class="form-group">
+      <label for="highlights_en">Highlights (EN)</label>
+      <div class="hint">One per line</div>
+      <textarea id="highlights_en" name="highlights_en" rows="4"><%= (hike.highlights_en || []).join('\n') %></textarea>
+    </div>
   </div>
 
-  <div class="form-group">
-    <label for="included">Included</label>
-    <div class="hint">One per line</div>
-    <textarea id="included" name="included" rows="4"><%= (hike.included || []).join('\n') %></textarea>
+  <div class="form-lang-row">
+    <div class="form-group">
+      <label for="included">Included (KA)</label>
+      <div class="hint">One per line</div>
+      <textarea id="included" name="included" rows="4"><%= (hike.included || []).join('\n') %></textarea>
+    </div>
+    <div class="form-group">
+      <label for="included_en">Included (EN)</label>
+      <div class="hint">One per line</div>
+      <textarea id="included_en" name="included_en" rows="4"><%= (hike.included_en || []).join('\n') %></textarea>
+    </div>
   </div>
 
-  <div class="form-group">
-    <label for="notIncluded">Not Included</label>
-    <div class="hint">One per line</div>
-    <textarea id="notIncluded" name="notIncluded" rows="4"><%= (hike.notIncluded || []).join('\n') %></textarea>
+  <div class="form-lang-row">
+    <div class="form-group">
+      <label for="notIncluded">Not Included (KA)</label>
+      <div class="hint">One per line</div>
+      <textarea id="notIncluded" name="notIncluded" rows="4"><%= (hike.notIncluded || []).join('\n') %></textarea>
+    </div>
+    <div class="form-group">
+      <label for="notIncluded_en">Not Included (EN)</label>
+      <div class="hint">One per line</div>
+      <textarea id="notIncluded_en" name="notIncluded_en" rows="4"><%= (hike.notIncluded_en || []).join('\n') %></textarea>
+    </div>
   </div>
 
   <div class="form-group">
@@ -127,6 +186,16 @@
   <div class="form-group">
     <label for="whatsappLink">WhatsApp Group Chat Link</label>
     <input type="url" id="whatsappLink" name="whatsappLink" value="<%= hike.whatsappLink || '' %>" placeholder="https://chat.whatsapp.com/...">
+  </div>
+
+  <!-- Route file upload -->
+  <div class="form-group">
+    <label>Route File (KML/GPX)</label>
+    <div class="hint">Upload a .kml or .gpx file to add trail data to the map</div>
+    <input type="file" id="routeFileInput" accept=".kml,.gpx,.kmz">
+    <span id="routeStatus" class="upload-status"></span>
+    <input type="hidden" id="routeData" name="routeData" value='<%= hike.route ? JSON.stringify(hike.route) : "" %>'>
+    <div id="routePreviewMap" class="trail-map" style="margin-top:1rem;<%= (hike.route && hike.route.coordinates && hike.route.coordinates.length) ? '' : 'display:none;' %>"></div>
   </div>
 
   <div class="form-actions">

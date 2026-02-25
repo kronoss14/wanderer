@@ -4,25 +4,51 @@
 
 <form class="admin-form" method="POST" action="<%= editing ? '/admin/guides/edit/' + guide.id : '/admin/guides' %>">
   <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-  <div class="form-group">
-    <label for="name">Name</label>
-    <input type="text" id="name" name="name" value="<%= guide.name || '' %>" required>
+
+  <div class="form-lang-row">
+    <div class="form-group">
+      <label for="name">Name (KA)</label>
+      <input type="text" id="name" name="name" value="<%= guide.name || '' %>" required>
+    </div>
+    <div class="form-group">
+      <label for="name_en">Name (EN)</label>
+      <input type="text" id="name_en" name="name_en" value="<%= guide.name_en || '' %>">
+    </div>
   </div>
 
-  <div class="form-group">
-    <label for="role">Role</label>
-    <input type="text" id="role" name="role" value="<%= guide.role || '' %>" required>
+  <div class="form-lang-row">
+    <div class="form-group">
+      <label for="role">Role (KA)</label>
+      <input type="text" id="role" name="role" value="<%= guide.role || '' %>" required>
+    </div>
+    <div class="form-group">
+      <label for="role_en">Role (EN)</label>
+      <input type="text" id="role_en" name="role_en" value="<%= guide.role_en || '' %>">
+    </div>
   </div>
 
-  <div class="form-group">
-    <label for="bio">Bio</label>
-    <textarea id="bio" name="bio" rows="5"><%= guide.bio || '' %></textarea>
+  <div class="form-lang-row">
+    <div class="form-group">
+      <label for="bio">Bio (KA)</label>
+      <textarea id="bio" name="bio" rows="5"><%= guide.bio || '' %></textarea>
+    </div>
+    <div class="form-group">
+      <label for="bio_en">Bio (EN)</label>
+      <textarea id="bio_en" name="bio_en" rows="5"><%= guide.bio_en || '' %></textarea>
+    </div>
   </div>
 
-  <div class="form-group">
-    <label for="specialties">Specialties</label>
-    <div class="hint">One per line</div>
-    <textarea id="specialties" name="specialties" rows="3"><%= (guide.specialties || []).join('\n') %></textarea>
+  <div class="form-lang-row">
+    <div class="form-group">
+      <label for="specialties">Specialties (KA)</label>
+      <div class="hint">One per line</div>
+      <textarea id="specialties" name="specialties" rows="3"><%= (guide.specialties || []).join('\n') %></textarea>
+    </div>
+    <div class="form-group">
+      <label for="specialties_en">Specialties (EN)</label>
+      <div class="hint">One per line</div>
+      <textarea id="specialties_en" name="specialties_en" rows="3"><%= (guide.specialties_en || []).join('\n') %></textarea>
+    </div>
   </div>
 
   <div class="form-group">

@@ -1,30 +1,46 @@
 [
   {
     "id": 1,
-    "name": "თამარ გელაშვილი",
-    "role": "თანადამფუძნებელი და გამყოლი",
+    "name": "\u10d7\u10d0\u10db\u10d0\u10e0 \u10d2\u10d4\u10da\u10d0\u10e8\u10d5\u10d8\u10da\u10d8",
+    "name_en": "Tamar Gelashvili",
+    "role": "\u10d7\u10d0\u10dc\u10d0\u10d3\u10d0\u10db\u10e4\u10e3\u10eb\u10dc\u10d4\u10d1\u10d4\u10da\u10d8 \u10d3\u10d0 \u10d2\u10d0\u10db\u10e7\u10dd\u10da\u10d8",
+    "role_en": "Co-founder & Guide",
     "bio": "",
+    "bio_en": "",
     "specialties": [
-      "მაღალმთიანი ტრეკინგი",
-      "მთის უსაფრთხოება",
-      "ფოტოგრაფია"
+      "\u10db\u10d0\u10e6\u10d0\u10da\u10db\u10d7\u10d8\u10d0\u10dc\u10d8 \u10e2\u10e0\u10d4\u10d9\u10d8\u10dc\u10d2\u10d8",
+      "\u10db\u10d7\u10d8\u10e1 \u10e3\u10e1\u10d0\u10e4\u10e0\u10d7\u10ee\u10dd\u10d4\u10d1\u10d0",
+      "\u10e4\u10dd\u10e2\u10dd\u10d2\u10e0\u10d0\u10e4\u10d8\u10d0"
+    ],
+    "specialties_en": [
+      "High Mountain Trekking",
+      "Mountain Safety",
+      "Photography"
     ],
     "image": "/images/uploads/1771970150029-6374b2e1-518206137_4040486126218106_6545852050949425463_n.jpg"
   },
   {
     "id": 2,
-    "name": "ვასკა კაპანაძე",
-    "role": "თანადამფუძნებელი და გამყოლი",
+    "name": "\u10d5\u10d0\u10e1\u10d9\u10d0 \u10d9\u10d0\u10de\u10d0\u10dc\u10d0\u10eb\u10d4",
+    "name_en": "Vaska Kapanadze",
+    "role": "\u10d7\u10d0\u10dc\u10d0\u10d3\u10d0\u10db\u10e4\u10e3\u10eb\u10dc\u10d4\u10d1\u10d4\u10da\u10d8 \u10d3\u10d0 \u10d2\u10d0\u10db\u10e7\u10dd\u10da\u10d8",
+    "role_en": "Co-founder & Guide",
     "bio": "",
+    "bio_en": "",
     "specialties": [],
+    "specialties_en": [],
     "image": "/images/uploads/1771970264385-95a1282d-605186732_2254573758367221_2189676465394957750_n.jpg"
   },
   {
     "id": 3,
-    "name": "ბაქარი ლურსმანაშვილი",
-    "role": "თანადამფუძნებელი და გამყოლი",
+    "name": "\u10d1\u10d0\u10e5\u10d0\u10e0\u10d8 \u10da\u10e3\u10e0\u10e1\u10db\u10d0\u10dc\u10d0\u10e8\u10d5\u10d8\u10da\u10d8",
+    "name_en": "Bakari Lursmanashvili",
+    "role": "\u10d7\u10d0\u10dc\u10d0\u10d3\u10d0\u10db\u10e4\u10e3\u10eb\u10dc\u10d4\u10d1\u10d4\u10da\u10d8 \u10d3\u10d0 \u10d2\u10d0\u10db\u10e7\u10dd\u10da\u10d8",
+    "role_en": "Co-founder & Guide",
     "bio": "",
+    "bio_en": "",
     "specialties": [],
+    "specialties_en": [],
     "image": "/images/uploads/1771970246306-08da9769-511116860_3791886064434771_4548255454007853009_n.jpg"
   }
 ]
