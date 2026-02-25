@@ -1,7 +1,8 @@
 /* === HERO SECTION (HOME) === */
 .hero {
   position: relative;
-  min-height: 100vh;
+  min-height: calc(100vh - 70px);
+  margin-top: 70px;
   display: flex;
   align-items: center;
   justify-content: center;

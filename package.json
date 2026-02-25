@@ -7,7 +7,8 @@
   "scripts": {
     "start": "node server.js",
     "dev": "node --env-file=.env --watch server.js",
-    "seed": "node --env-file=.env scripts/seed.js"
+    "seed": "node --env-file=.env scripts/seed.js",
+    "build": "mkdir -p public/dist/js public/dist/css && terser public/js/main.js -c -m -o public/dist/js/main.js && terser public/js/gallery.js -c -m -o public/dist/js/gallery.js && terser public/js/forms.js -c -m -o public/dist/js/forms.js && terser public/js/analytics.js -c -m -o public/dist/js/analytics.js && terser public/js/map.js -c -m -o public/dist/js/map.js && cleancss -o public/dist/css/main.css public/css/main.css && cleancss -o public/dist/css/components.css public/css/components.css && cleancss -o public/dist/css/pages.css public/css/pages.css"
   },
   "engines": {
     "node": ">=20.0.0"
@@ -29,5 +30,9 @@
     "multer": "^2.0.2",
     "nodemailer": "^8.0.1",
     "sharp": "^0.34.5"
+  },
+  "devDependencies": {
+    "clean-css-cli": "^5.6.3",
+    "terser": "^5.46.0"
   }
 }
