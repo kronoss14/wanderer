@@ -22,7 +22,7 @@ const transporter = createTransport({
   socketTimeout: 10000
 });
 
-export async function sendRegistrationEmail({ name, email, phone, hikeName, price, reference, qrDataUri }) {
+export async function sendRegistrationEmail({ name, email, phone, hikeName, price, reference }) {
   const banks = getBankDetails();
   const paymentHtml = price && reference ? `
       <hr>
@@ -32,7 +32,6 @@ export async function sendRegistrationEmail({ name, email, phone, hikeName, pric
       <p><strong>IBAN (BOG):</strong> ${escapeHtml(banks.bog.iban)}</p>
       <p><strong>IBAN (TBC):</strong> ${escapeHtml(banks.tbc.iban)}</p>
       <p><strong>Recipient:</strong> ${escapeHtml(banks.bog.holder)}</p>
-      ${qrDataUri ? `<p>Scan QR to pay:</p><img src="${qrDataUri}" alt="Payment QR" width="250">` : ''}
   ` : '';
 
   // Email to admin
@@ -70,7 +69,7 @@ export async function sendRegistrationEmail({ name, email, phone, hikeName, pric
   }
 }
 
-export async function sendOrderEmails({ order, qrDataUri }) {
+export async function sendOrderEmails({ order }) {
   const banks = getBankDetails();
   const itemRows = order.items.map(item =>
     `<tr><td>${escapeHtml(item.name)}</td><td>${item.quantity}</td><td>&#8382;${(item.price * item.quantity).toFixed(2)}</td></tr>`
@@ -83,7 +82,6 @@ export async function sendOrderEmails({ order, qrDataUri }) {
     <p><strong>IBAN (BOG):</strong> ${escapeHtml(banks.bog.iban)}</p>
     <p><strong>IBAN (TBC):</strong> ${escapeHtml(banks.tbc.iban)}</p>
     <p><strong>Recipient:</strong> ${escapeHtml(banks.bog.holder)}</p>
-    ${qrDataUri ? `<p>Scan QR to pay:</p><img src="${qrDataUri}" alt="Payment QR" width="250">` : ''}
   ` : `<p><strong>Payment:</strong> ${escapeHtml(order.paymentMethod)}</p>`;
 
   const orderHtml = `

@@ -6,6 +6,7 @@ const router = Router();
 
 router.get('/', asyncHandler(async (req, res) => {
   const gallery = await readJSON('gallery.json');
+  gallery.sort((a, b) => (a.order ?? 999) - (b.order ?? 999));
   res.render('pages/gallery', { title: 'თავგადასავლები', gallery });
 }));
 

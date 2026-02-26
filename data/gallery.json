@@ -1,32 +1,5 @@
 [
   {
-    "id": "juta-chaukhi",
-    "title": "\u10ef\u10e3\u10d7\u10d0-\u10ed\u10d0\u10e3\u10ee\u10d4\u10d1\u10d8",
-    "title_en": "Juta-Chaukhi",
-    "date": "2025-07-10",
-    "description": "\u10d0\u10e5 \u10d0\u10e6\u10ec\u10d4\u10e0\u10d0",
-    "description_en": "",
-    "mainImage": "/images/uploads/1771973905827-a653ae92-image00003.jpeg",
-    "images": [],
-    "hikeId": ""
-  },
-  {
-    "id": "batetis-tba",
-    "title": "\u10d1\u10d0\u10e2\u10d4\u10d7\u10d8\u10e1 \u10e2\u10d1\u10d0",
-    "title_en": "Bateti Lake",
-    "date": "2025-09-28",
-    "description": "\u10d0\u10e6\u10ec\u10d4\u10e0\u10d0 \u10db\u10d4\u10e0\u10d4",
-    "description_en": "",
-    "mainImage": "/images/uploads/1771974151156-3022a31d-image00026.jpeg",
-    "images": [
-      "/images/uploads/1771974161642-464a0d75-image00026.jpeg",
-      "/images/uploads/1771974161753-b7b6d6bb-image00027.jpeg",
-      "/images/uploads/1771974324274-b8a6c430-image00028.jpeg",
-      "/images/uploads/1771974324534-9b1dc2b6-image00029.jpeg"
-    ],
-    "hikeId": ""
-  },
-  {
     "id": "svaneti",
     "title": "\u10e1\u10d5\u10d0\u10dc\u10d4\u10d7\u10d8",
     "title_en": "Svaneti",
@@ -44,6 +17,36 @@
       "/images/uploads/1771974309878-4fdbfeed-image00011.jpeg",
       "/images/uploads/1771974310085-7bee09da-image00001.jpeg"
     ],
-    "hikeId": ""
+    "hikeId": "",
+    "order": 0
+  },
+  {
+    "id": "juta-chaukhi",
+    "title": "\u10ef\u10e3\u10d7\u10d0-\u10ed\u10d0\u10e3\u10ee\u10d4\u10d1\u10d8",
+    "title_en": "Juta-Chaukhi",
+    "date": "2025-07-10",
+    "description": "\u10d0\u10e5 \u10d0\u10e6\u10ec\u10d4\u10e0\u10d0",
+    "description_en": "",
+    "mainImage": "/images/uploads/1771973905827-a653ae92-image00003.jpeg",
+    "images": [],
+    "hikeId": "",
+    "order": 1
+  },
+  {
+    "id": "batetis-tba",
+    "title": "\u10d1\u10d0\u10e2\u10d4\u10d7\u10d8\u10e1 \u10e2\u10d1\u10d0",
+    "title_en": "Bateti Lake",
+    "date": "2025-09-28",
+    "description": "\u10d0\u10e6\u10ec\u10d4\u10e0\u10d0 \u10db\u10d4\u10e0\u10d4",
+    "description_en": "",
+    "mainImage": "/images/uploads/1771974151156-3022a31d-image00026.jpeg",
+    "images": [
+      "/images/uploads/1771974161642-464a0d75-image00026.jpeg",
+      "/images/uploads/1771974161753-b7b6d6bb-image00027.jpeg",
+      "/images/uploads/1771974324274-b8a6c430-image00028.jpeg",
+      "/images/uploads/1771974324534-9b1dc2b6-image00029.jpeg"
+    ],
+    "hikeId": "",
+    "order": 2
   }
 ]

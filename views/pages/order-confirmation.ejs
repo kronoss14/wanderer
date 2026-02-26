@@ -38,14 +38,6 @@
       <% if (order.paymentMethod === 'bank_transfer') { %>
         <div class="qr-payment-section">
           <h3><%= t('payment.bank_transfer_title') %></h3>
-          <p style="color:var(--text-secondary);margin-bottom:1rem;"><%= t('payment.qr_instructions') %></p>
-
-          <% if (qrDataUri) { %>
-            <div class="qr-code-wrap">
-              <img src="<%= qrDataUri %>" alt="Payment QR Code" width="300" height="300">
-            </div>
-          <% } %>
-
           <div class="bank-details">
             <h4><%= t('payment.bank_details') %></h4>
             <div class="bank-detail-row">

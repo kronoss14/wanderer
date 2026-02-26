@@ -124,9 +124,9 @@
 </dialog>
 
 <style>
-  #terms-modal { max-width:650px;width:90vw;max-height:80vh;border-radius:var(--radius-lg);border:1px solid var(--border-color);background:var(--bg-card);color:var(--text-primary);padding:0; }
+  #terms-modal { max-width:650px;width:90vw;max-height:80vh;border-radius:var(--radius-lg);border:1px solid var(--border-color);background:var(--bg-card);color:var(--text-primary);padding:0;margin:auto;overflow:hidden; }
   #terms-modal::backdrop { background:rgba(0,0,0,0.7); }
-  .terms-modal-inner { padding:2rem;overflow-y:auto;max-height:80vh; }
+  .terms-modal-inner { padding:2rem;overflow-y:auto;max-height:calc(80vh - 4px); }
   .terms-close-btn { background:none;border:none;color:var(--text-muted);font-size:1.5rem;cursor:pointer;line-height:1; }
   .terms-link { color:var(--accent-orange) !important;text-decoration:underline !important; }
 </style>

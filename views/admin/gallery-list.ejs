@@ -7,20 +7,39 @@
   <table class="admin-table">
     <thead>
       <tr>
-        <th>ID</th>
+        <th>#</th>
         <th>Main Image</th>
         <th>Title</th>
         <th>Date</th>
+        <th>Order</th>
         <th>Actions</th>
       </tr>
     </thead>
     <tbody>
-      <% gallery.forEach(g => { %>
+      <% gallery.forEach((g, i) => { %>
         <tr>
-          <td><%= g.id %></td>
+          <td><%= i + 1 %></td>
           <td><img src="<%= g.mainImage %>" alt="" style="width:60px;height:40px;object-fit:cover;border-radius:4px"></td>
           <td><%= g.title %></td>
           <td><%= g.date %></td>
+          <td class="actions" style="white-space:nowrap;">
+            <% if (i > 0) { %>
+              <form method="POST" action="/admin/gallery/reorder/<%= g.id %>/up" style="display:inline;">
+                <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                <button type="submit" class="btn btn-secondary btn-sm" title="Move up">&#9650;</button>
+              </form>
+            <% } else { %>
+              <span class="btn btn-secondary btn-sm" style="opacity:0.3;cursor:default;">&#9650;</span>
+            <% } %>
+            <% if (i < gallery.length - 1) { %>
+              <form method="POST" action="/admin/gallery/reorder/<%= g.id %>/down" style="display:inline;">
+                <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                <button type="submit" class="btn btn-secondary btn-sm" title="Move down">&#9660;</button>
+              </form>
+            <% } else { %>
+              <span class="btn btn-secondary btn-sm" style="opacity:0.3;cursor:default;">&#9660;</span>
+            <% } %>
+          </td>
           <td class="actions">
             <a href="/admin/gallery/edit/<%= g.id %>" class="btn btn-secondary btn-sm">Edit</a>
             <form method="POST" action="/admin/gallery/delete/<%= g.id %>" onsubmit="return confirm('Delete this adventure?')">
@@ -31,7 +50,7 @@
         </tr>
       <% }) %>
       <% if (!gallery.length) { %>
-        <tr><td colspan="5" style="text-align:center;color:var(--admin-text-muted)">No adventures yet</td></tr>
+        <tr><td colspan="6" style="text-align:center;color:var(--admin-text-muted)">No adventures yet</td></tr>
       <% } %>
     </tbody>
   </table>

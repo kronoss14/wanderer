@@ -138,7 +138,7 @@ function parsePricingBody(b, id) {
   };
 }
 
-function parseGalleryBody(b, id) {
+function parseGalleryBody(b, id, order) {
   return {
     id,
     title: b.title,
@@ -148,7 +148,8 @@ function parseGalleryBody(b, id) {
     description_en: b.description_en || '',
     mainImage: b.mainImage,
     images: textToArray(b.images).filter(isValidImageUrl),
-    hikeId: b.hikeId || ''
+    hikeId: b.hikeId || '',
+    order: order ?? 999
   };
 }
 
@@ -516,6 +517,7 @@ router.post('/pricing/delete/:id', asyncHandler(async (req, res) => {
 
 router.get('/gallery', asyncHandler(async (req, res) => {
   const gallery = await readJSON('gallery.json');
+  gallery.sort((a, b) => (a.order ?? 999) - (b.order ?? 999));
   renderAdmin(res, join(__dirname, '..', 'views', 'admin', 'gallery-list.ejs'), { title: 'Adventures', gallery });
 }));
 
@@ -536,7 +538,8 @@ router.post('/gallery', asyncHandler(async (req, res) => {
   while (gallery.some(g => g.id === nextId)) {
     nextId = `${baseId}-${counter++}`;
   }
-  gallery.push(parseGalleryBody(b, nextId));
+  const maxOrder = gallery.reduce((max, g) => Math.max(max, g.order ?? 0), -1);
+  gallery.push(parseGalleryBody(b, nextId, maxOrder + 1));
   await writeJSON('gallery.json', gallery);
   await audit('gallery.create', { id: nextId, title: b.title });
   res.redirect('/admin/gallery');
@@ -558,7 +561,7 @@ router.post('/gallery/edit/:id', asyncHandler(async (req, res) => {
   const gallery = await readJSON('gallery.json');
   const idx = gallery.findIndex(g => g.id === req.params.id);
   if (idx === -1) return res.redirect('/admin/gallery');
-  gallery[idx] = parseGalleryBody(req.body, req.params.id);
+  gallery[idx] = parseGalleryBody(req.body, req.params.id, gallery[idx].order ?? idx);
   await writeJSON('gallery.json', gallery);
   await audit('gallery.edit', { id: req.params.id });
   res.redirect('/admin/gallery');
@@ -569,6 +572,21 @@ router.post('/gallery/delete/:id', asyncHandler(async (req, res) => {
   const filtered = gallery.filter(g => g.id !== req.params.id);
   await writeJSON('gallery.json', filtered);
   await audit('gallery.delete', { id: req.params.id });
+  res.redirect('/admin/gallery');
+}));
+
+router.post('/gallery/reorder/:id/:direction', asyncHandler(async (req, res) => {
+  const gallery = await readJSON('gallery.json');
+  gallery.sort((a, b) => (a.order ?? 999) - (b.order ?? 999));
+  const idx = gallery.findIndex(g => g.id === req.params.id);
+  if (idx === -1) return res.redirect('/admin/gallery');
+  const dir = req.params.direction;
+  const swapIdx = dir === 'up' ? idx - 1 : idx + 1;
+  if (swapIdx < 0 || swapIdx >= gallery.length) return res.redirect('/admin/gallery');
+  const tmpOrder = gallery[idx].order ?? idx;
+  gallery[idx].order = gallery[swapIdx].order ?? swapIdx;
+  gallery[swapIdx].order = tmpOrder;
+  await writeJSON('gallery.json', gallery);
   res.redirect('/admin/gallery');
 }));
 

@@ -100,21 +100,13 @@
             <h3><%= t('reg.success_title') %></h3>
             <p><%= t('reg.success_text') %></p>
 
-            <% if (hike.price && typeof qrDataUri !== 'undefined' && qrDataUri) { %>
+            <% if (hike.price && typeof bankDetails !== 'undefined') { %>
               <div class="qr-payment-section" style="margin-top:1.5rem;">
                 <h4 style="margin-bottom:0.75rem;"><%= t('payment.bank_transfer_title') %></h4>
-                <p style="color:var(--text-secondary);font-size:0.9rem;margin-bottom:1rem;"><%= t('payment.qr_instructions') %></p>
-                <div class="qr-code-wrap">
-                  <img src="<%= qrDataUri %>" alt="Payment QR Code" width="250">
-                </div>
-                <div class="bank-details" style="margin-top:1rem;">
+                <div class="bank-details">
                   <div class="bank-detail-row">
-                    <span><%= t('payment.amount') %>:</span>
-                    <strong>&#8382;<%= hike.price %></strong>
-                  </div>
-                  <div class="bank-detail-row">
-                    <span><%= t('payment.reference') %>:</span>
-                    <strong><%= typeof paymentReference !== 'undefined' ? paymentReference : '' %></strong>
+                    <span><%= t('payment.recipient') %>:</span>
+                    <strong><%= bankDetails.bog.holder %></strong>
                   </div>
                   <div class="bank-detail-row">
                     <span>IBAN (BOG):</span>
@@ -125,8 +117,12 @@
                     <strong><%= bankDetails.tbc.iban %></strong>
                   </div>
                   <div class="bank-detail-row">
-                    <span><%= t('payment.recipient') %>:</span>
-                    <strong><%= bankDetails.bog.holder %></strong>
+                    <span><%= t('payment.amount') %>:</span>
+                    <strong>&#8382;<%= hike.price %></strong>
+                  </div>
+                  <div class="bank-detail-row">
+                    <span><%= t('payment.reference') %>:</span>
+                    <strong><%= typeof paymentReference !== 'undefined' ? paymentReference : '' %></strong>
                   </div>
                 </div>
               </div>

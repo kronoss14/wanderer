@@ -936,26 +936,13 @@
   .checkout-summary { position: static; }
 }
 
-/* === QR PAYMENT SECTION === */
+/* === PAYMENT SECTION === */
 .qr-payment-section {
   background: var(--bg-card);
   border: 1px solid var(--border-color);
   border-radius: var(--radius-lg);
   padding: 2rem;
   margin-top: 1.5rem;
-}
-.qr-code-wrap {
-  text-align: center;
-  padding: 1.5rem;
-  background: #fff;
-  border-radius: var(--radius);
-  display: inline-block;
-  margin: 0 auto;
-}
-.qr-payment-section .qr-code-wrap {
-  display: block;
-  max-width: 320px;
-  margin: 0 auto 1.5rem;
 }
 .bank-details {
   background: var(--bg-surface);

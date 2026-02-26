@@ -8,7 +8,10 @@
     fortress: { emoji: '\uD83C\uDFF0', color: '#EF4444' },
     canyon: { emoji: '\uD83C\uDFDE\uFE0F', color: '#10B981' },
     waterfall: { emoji: '\uD83D\uDCA7', color: '#06B6D4' },
-    cave: { emoji: '\uD83D\uDD73\uFE0F', color: '#6B7280' }
+    cave: { emoji: '\uD83D\uDD73\uFE0F', color: '#6B7280' },
+    stone: { emoji: '\uD83E\uDEA8', color: '#8B7355' },
+    volcano: { emoji: '\uD83C\uDF0B', color: '#D4380D' },
+    nature: { emoji: '\uD83C\uDF3F', color: '#52C41A' }
   };
 
   var POI_ICONS = {
@@ -17,6 +20,23 @@
     campsite: '\u26FA',
     marker: '\uD83D\uDCCD'
   };
+
+  function _gk() {
+    var a = [119,52,110,100,51,114,51,114,95,109,48,117,110,116,52,49,110,95,116,114,52,49,108,115,95,103,51,48,114,103,49,52];
+    var k = '';
+    for (var i = 0; i < a.length; i++) k += String.fromCharCode(a[i]);
+    return k;
+  }
+
+  function _decode(encoded) {
+    var key = _gk();
+    var raw = atob(encoded);
+    var bytes = new Uint8Array(raw.length);
+    for (var i = 0; i < raw.length; i++) {
+      bytes[i] = raw.charCodeAt(i) ^ key.charCodeAt(i % key.length);
+    }
+    return JSON.parse(new TextDecoder().decode(bytes));
+  }
 
   function createCategoryIcon(category) {
     var info = CATEGORY_ICONS[category] || CATEGORY_ICONS.sightseeing;
@@ -86,7 +106,7 @@
     return map;
   };
 
-  window.initOverviewMap = function (containerId, hikes, points, langPrefix) {
+  window.initOverviewMap = function (containerId, hikes, langPrefix) {
     var el = document.getElementById(containerId);
     if (!el || !window.L) return null;
 
@@ -97,12 +117,13 @@
     }).addTo(map);
 
     var allMarkers = [];
+    var hikeCount = 0;
 
     // Add hike routes
     hikes.forEach(function (hike) {
       if (!hike.route || !hike.route.coordinates || !hike.route.coordinates.length) return;
 
-      var line = L.polyline(hike.route.coordinates, {
+      L.polyline(hike.route.coordinates, {
         color: '#E8811A', weight: 3, opacity: 0.7
       }).addTo(map);
 
@@ -112,26 +133,54 @@
         .bindPopup('<strong>' + hike.displayName + '</strong><br><a href="' + langPrefix + '/hikes/' + hike.id + '">\u2192</a>');
       marker._category = 'hiking';
       allMarkers.push(marker);
+      hikeCount++;
     });
 
-    // Add map points
-    points.forEach(function (point) {
-      var marker = L.marker([point.lat, point.lng], {
-        icon: createCategoryIcon(point.category)
-      }).addTo(map);
+    // Fetch encrypted map data
+    var basePath = langPrefix || '';
+    fetch(basePath + '/map/gf')
+      .then(function (r) { return r.json(); })
+      .then(function (resp) {
+        var data = _decode(resp.d);
 
-      marker.bindPopup(
-        '<div class="map-popup">' +
-          '<strong>' + point.name + '</strong>' +
-          '<p>' + point.desc + '</p>' +
-        '</div>'
-      );
+        // Add curated map points
+        data.p.forEach(function (point) {
+          var marker = L.marker([point.a, point.g], {
+            icon: createCategoryIcon(point.c)
+          }).addTo(map);
+          marker.bindPopup(
+            '<div class="map-popup"><strong>' + point.n + '</strong><p>' + point.d + '</p></div>'
+          );
+          marker._category = point.c;
+          allMarkers.push(marker);
+        });
 
-      marker._category = point.category;
-      allMarkers.push(marker);
-    });
+        // Add geo features
+        data.f.forEach(function (feat) {
+          var marker = L.marker([feat.a, feat.g], {
+            icon: createCategoryIcon(feat.c)
+          }).addTo(map);
+          marker.bindPopup(
+            '<div class="map-popup"><strong>' + feat.n + '</strong><p>' + feat.d + '</p></div>'
+          );
+          marker._category = feat.c;
+          allMarkers.push(marker);
+        });
 
-    // Category filtering
+        // Set up filtering after data loaded
+        setupFiltering(map, allMarkers);
+        setupSearch(map, allMarkers, hikes, data, hikeCount);
+      })
+      .catch(function (err) {
+        console.error('Map data load error:', err);
+        // Filtering still works for hike markers
+        setupFiltering(map, allMarkers);
+      });
+
+    return map;
+  };
+
+  function setupFiltering(map, allMarkers) {
     var filterBtns = document.querySelectorAll('.map-filter');
     filterBtns.forEach(function (btn) {
       btn.addEventListener('click', function () {
@@ -148,100 +197,113 @@
         });
       });
     });
+  }
 
-    // Search functionality
+  function setupSearch(map, allMarkers, hikes, data, hikeCount) {
     var searchInput = document.getElementById('map-search');
     var searchResults = document.getElementById('map-search-results');
-    if (searchInput && searchResults) {
-      // Build searchable list from points + hikes
-      var searchItems = [];
-      points.forEach(function (p, idx) {
+    if (!searchInput || !searchResults) return;
+
+    var searchItems = [];
+    var markerOffset = hikeCount;
+
+    // Add curated points
+    data.p.forEach(function (p, idx) {
+      searchItems.push({
+        name: p.n,
+        category: p.c,
+        emoji: (CATEGORY_ICONS[p.c] || CATEGORY_ICONS.sightseeing).emoji,
+        lat: p.a,
+        lng: p.g,
+        marker: allMarkers[markerOffset + idx]
+      });
+    });
+    markerOffset += data.p.length;
+
+    // Add geo features
+    data.f.forEach(function (f, idx) {
+      searchItems.push({
+        name: f.n,
+        category: f.c,
+        emoji: (CATEGORY_ICONS[f.c] || CATEGORY_ICONS.sightseeing).emoji,
+        lat: f.a,
+        lng: f.g,
+        marker: allMarkers[markerOffset + idx]
+      });
+    });
+
+    // Add hikes
+    hikes.forEach(function (h, idx) {
+      if (h.route && h.route.coordinates && h.route.coordinates.length) {
         searchItems.push({
-          name: p.name,
-          category: p.category,
-          emoji: (CATEGORY_ICONS[p.category] || CATEGORY_ICONS.sightseeing).emoji,
-          lat: p.lat,
-          lng: p.lng,
-          marker: allMarkers[hikes.length + idx]
+          name: h.displayName,
+          category: 'hiking',
+          emoji: CATEGORY_ICONS.hiking.emoji,
+          lat: h.route.coordinates[0][0],
+          lng: h.route.coordinates[0][1],
+          marker: allMarkers[idx]
         });
-      });
-      hikes.forEach(function (h, idx) {
-        if (h.route && h.route.coordinates && h.route.coordinates.length) {
-          searchItems.push({
-            name: h.displayName,
-            category: 'hiking',
-            emoji: CATEGORY_ICONS.hiking.emoji,
-            lat: h.route.coordinates[0][0],
-            lng: h.route.coordinates[0][1],
-            marker: allMarkers[idx]
-          });
+      }
+    });
+
+    var debounceTimer;
+    searchInput.addEventListener('input', function () {
+      clearTimeout(debounceTimer);
+      debounceTimer = setTimeout(function () {
+        var query = searchInput.value.trim().toLowerCase();
+        if (!query) {
+          searchResults.classList.remove('open');
+          searchResults.innerHTML = '';
+          return;
         }
-      });
 
-      var debounceTimer;
-      searchInput.addEventListener('input', function () {
-        clearTimeout(debounceTimer);
-        debounceTimer = setTimeout(function () {
-          var query = searchInput.value.trim().toLowerCase();
-          if (!query) {
-            searchResults.classList.remove('open');
-            searchResults.innerHTML = '';
-            return;
-          }
+        var matches = searchItems.filter(function (item) {
+          return item.name.toLowerCase().indexOf(query) !== -1;
+        }).slice(0, 8);
 
-          var matches = searchItems.filter(function (item) {
-            return item.name.toLowerCase().indexOf(query) !== -1;
-          }).slice(0, 8);
-
-          if (matches.length === 0) {
-            searchResults.innerHTML = '<div class="map-search-no-results">' +
-              (document.documentElement.lang === 'ka' ? '\u10D5\u10D4\u10E0 \u10DB\u10DD\u10D8\u10EB\u10D4\u10D1\u10DC\u10D0' : 'No results found') +
-              '</div>';
-            searchResults.classList.add('open');
-            return;
-          }
-
-          searchResults.innerHTML = matches.map(function (item) {
-            return '<div class="map-search-result" data-lat="' + item.lat + '" data-lng="' + item.lng + '">' +
-              '<span class="result-emoji">' + item.emoji + '</span>' +
-              '<span class="result-name">' + item.name + '</span>' +
-              '<span class="result-category">' + item.category + '</span>' +
-              '</div>';
-          }).join('');
+        if (matches.length === 0) {
+          searchResults.innerHTML = '<div class="map-search-no-results">' +
+            (document.documentElement.lang === 'ka' ? '\u10D5\u10D4\u10E0 \u10DB\u10DD\u10D8\u10EB\u10D4\u10D1\u10DC\u10D0' : 'No results found') +
+            '</div>';
           searchResults.classList.add('open');
+          return;
+        }
 
-          // Attach click handlers
-          var resultEls = searchResults.querySelectorAll('.map-search-result');
-          resultEls.forEach(function (el, i) {
-            el.addEventListener('click', function () {
-              var match = matches[i];
-              map.flyTo([match.lat, match.lng], 13, { duration: 1.2 });
-              if (match.marker) {
-                setTimeout(function () { match.marker.openPopup(); }, 600);
-              }
-              searchResults.classList.remove('open');
-              searchInput.value = match.name;
-            });
+        searchResults.innerHTML = matches.map(function (item) {
+          return '<div class="map-search-result" data-lat="' + item.lat + '" data-lng="' + item.lng + '">' +
+            '<span class="result-emoji">' + item.emoji + '</span>' +
+            '<span class="result-name">' + item.name + '</span>' +
+            '<span class="result-category">' + item.category + '</span>' +
+            '</div>';
+        }).join('');
+        searchResults.classList.add('open');
+
+        var resultEls = searchResults.querySelectorAll('.map-search-result');
+        resultEls.forEach(function (el, i) {
+          el.addEventListener('click', function () {
+            var match = matches[i];
+            map.flyTo([match.lat, match.lng], 13, { duration: 1.2 });
+            if (match.marker) {
+              setTimeout(function () { match.marker.openPopup(); }, 600);
+            }
+            searchResults.classList.remove('open');
+            searchInput.value = match.name;
           });
-        }, 200);
-      });
+        });
+      }, 200);
+    });
 
-      // Close dropdown on outside click
-      document.addEventListener('click', function (e) {
-        if (!searchInput.contains(e.target) && !searchResults.contains(e.target)) {
-          searchResults.classList.remove('open');
-        }
-      });
+    document.addEventListener('click', function (e) {
+      if (!searchInput.contains(e.target) && !searchResults.contains(e.target)) {
+        searchResults.classList.remove('open');
+      }
+    });
 
-      // Close on Escape
-      searchInput.addEventListener('keydown', function (e) {
-        if (e.key === 'Escape') {
-          searchResults.classList.remove('open');
-          searchInput.blur();
-        }
-      });
-    }
-
-    return map;
-  };
+    searchInput.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') {
+        searchResults.classList.remove('open');
+        searchInput.blur();
+      }
+    });
+  }
 })();

@@ -3,7 +3,7 @@ import { body, validationResult } from 'express-validator';
 import { readJSON, appendJSON } from '../helpers/data.js';
 import { asyncHandler } from '../helpers/async-handler.js';
 import { log } from '../helpers/logger.js';
-import { generatePaymentQR, getBankDetails } from '../helpers/qr.js';
+import { getBankDetails } from '../helpers/qr.js';
 import { sendOrderEmails } from '../helpers/mailer.js';
 
 const router = Router();
@@ -101,29 +101,15 @@ router.post('/checkout', checkoutValidation, asyncHandler(async (req, res) => {
 
   await appendJSON('orders.json', order);
 
-  // Generate QR code for bank transfer
-  let qrDataUri = null;
   const bankDetails = getBankDetails();
 
-  if (paymentMethod === 'bank_transfer') {
-    try {
-      qrDataUri = await generatePaymentQR({
-        amount: order.total,
-        reference: orderId
-      });
-    } catch (err) {
-      log('error', 'QR generation failed for order', { orderId, error: err.message });
-    }
-  }
-
   // Send emails in background
-  sendOrderEmails({ order, qrDataUri })
+  sendOrderEmails({ order })
     .catch(err => log('error', 'Order email failed', { orderId, error: err.message }));
 
   res.render('pages/order-confirmation', {
     title: res.locals.t('order.confirmation_title'),
     order,
-    qrDataUri,
     bankDetails
   });
 }));

@@ -468,7 +468,7 @@ h1, h2, h3, h4, h5, h6 {
 
 /* === GEORGIAN TYPOGRAPHY === */
 html[lang="ka"] body { font-family: var(--font-georgian), var(--font-body); }
-html[lang="ka"] .nav-link { font-family: var(--font-georgian); font-weight: 600; font-size: 0.8rem; text-transform: none; letter-spacing: 0; }
+html[lang="ka"] .nav-link { font-family: var(--font-georgian); font-weight: 500; font-size: 0.75rem; text-transform: none; letter-spacing: 0; padding: 0.5rem 0.35rem; }
 html[lang="ka"] .hero-title,
 html[lang="ka"] .section-title,
 html[lang="ka"] .page-hero-content h1,

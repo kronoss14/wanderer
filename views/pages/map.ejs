@@ -24,7 +24,22 @@
         <button class="map-filter" data-category="canyon"><%= t('map.filter_canyon') %></button>
         <button class="map-filter" data-category="waterfall"><%= t('map.filter_waterfall') %></button>
         <button class="map-filter" data-category="cave"><%= t('map.filter_cave') %></button>
+        <button class="map-filter" data-category="stone"><%= t('map.filter_stone') %></button>
+        <button class="map-filter" data-category="volcano"><%= t('map.filter_volcano') %></button>
+        <button class="map-filter" data-category="nature"><%= t('map.filter_nature') %></button>
       </div>
+    </div>
+    <div class="map-legend">
+      <span class="map-legend-item"><span class="legend-icon">🥾</span> <%= t('map.filter_hiking') %></span>
+      <span class="map-legend-item"><span class="legend-icon">📍</span> <%= t('map.filter_sightseeing') %></span>
+      <span class="map-legend-item"><span class="legend-icon">⛪</span> <%= t('map.filter_monastery') %></span>
+      <span class="map-legend-item"><span class="legend-icon">🏰</span> <%= t('map.filter_fortress') %></span>
+      <span class="map-legend-item"><span class="legend-icon">🏞️</span> <%= t('map.filter_canyon') %></span>
+      <span class="map-legend-item"><span class="legend-icon">💧</span> <%= t('map.filter_waterfall') %></span>
+      <span class="map-legend-item"><span class="legend-icon">🕳️</span> <%= t('map.filter_cave') %></span>
+      <span class="map-legend-item"><span class="legend-icon">🪨</span> <%= t('map.filter_stone') %></span>
+      <span class="map-legend-item"><span class="legend-icon">🌋</span> <%= t('map.filter_volcano') %></span>
+      <span class="map-legend-item"><span class="legend-icon">🌿</span> <%= t('map.filter_nature') %></span>
     </div>
     <div id="overview-map" class="overview-map"></div>
     <script>
@@ -36,17 +51,7 @@
             route: h.route || {}
           };
         })) %>;
-        var points = <%- JSON.stringify(mapPoints.map(function(p) {
-          return {
-            id: p.id,
-            name: l(p, 'name'),
-            desc: l(p, 'desc'),
-            category: p.category,
-            lat: p.lat,
-            lng: p.lng
-          };
-        })) %>;
-        initOverviewMap('overview-map', hikes, points, '<%= langPrefix %>');
+        initOverviewMap('overview-map', hikes, '<%= langPrefix %>');
       });
     </script>
   </div>
