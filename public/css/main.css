@@ -126,6 +126,27 @@ h1, h2, h3, h4, h5, h6 {
   background: rgba(232, 129, 26, 0.1);
 }
 .nav-link.active { color: var(--accent-orange); }
+.nav-shop {
+  background: linear-gradient(135deg, var(--accent-orange), var(--accent-amber));
+  color: #fff !important;
+  font-weight: 600;
+  border-radius: 20px;
+  padding: 0.4rem 0.9rem;
+}
+.nav-shop:hover {
+  background: linear-gradient(135deg, var(--accent-amber), var(--accent-orange));
+  color: #fff !important;
+  box-shadow: 0 0 12px rgba(232,129,26,0.4);
+  transform: scale(1.05);
+}
+.cart-link {
+  color: var(--accent-orange);
+  transition: all var(--transition);
+}
+.cart-link:hover {
+  color: var(--accent-amber);
+  transform: scale(1.1);
+}
 .nav-social { display: flex; gap: 0.5rem; margin-left: 0.5rem; }
 .social-link {
   display: flex; align-items: center; justify-content: center;

@@ -5,6 +5,7 @@
     "name_en": "sleeping bag",
     "category": "equipment",
     "price": 150,
+    "originalPrice": 199,
     "description": "NatureHike-ს საძილე ტომარა",
     "description_en": "Naturehike sleeping bag",
     "image": "https://res.cloudinary.com/dqlvn7btu/image/upload/v1772121552/wanderer/9ef5508f-e90d-4f68-9355-a4011b95959e.jpg",
