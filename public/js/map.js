@@ -206,7 +206,7 @@
 
     // Marker cluster group
     var clusterGroup = L.markerClusterGroup({
-      maxClusterRadius: 50,
+      maxClusterRadius: 30,
       spiderfyOnMaxZoom: true,
       showCoverageOnHover: false,
       zoomToBoundsOnClick: true,
