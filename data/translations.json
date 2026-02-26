@@ -81,6 +81,7 @@
   "map.filter_nature": { "ka": "ბუნება", "en": "Nature" },
   "map.search_placeholder": { "ka": "მოძებნე ადგილი...", "en": "Search places..." },
   "map.no_results": { "ka": "ვერ მოიძებნა", "en": "No results found" },
+  "map.legend": { "ka": "ლეგენდა", "en": "Legend" },
   "blog.title": { "ka": "ბლოგი", "en": "Blog" },
   "blog.read_more": { "ka": "წაიკითხე მეტი", "en": "Read More" },
   "blog.published": { "ka": "გამოქვეყნდა", "en": "Published" },

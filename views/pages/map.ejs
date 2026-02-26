@@ -29,7 +29,8 @@
         <button class="map-filter" data-category="nature"><%= t('map.filter_nature') %></button>
       </div>
     </div>
-    <div class="map-legend">
+    <button class="map-legend-toggle" id="legend-toggle"><%= t('map.legend') %></button>
+    <div class="map-legend" id="map-legend">
       <span class="map-legend-item"><span class="legend-icon">🥾</span> <%= t('map.filter_hiking') %></span>
       <span class="map-legend-item"><span class="legend-icon">📍</span> <%= t('map.filter_sightseeing') %></span>
       <span class="map-legend-item"><span class="legend-icon">⛪</span> <%= t('map.filter_monastery') %></span>
@@ -41,7 +42,21 @@
       <span class="map-legend-item"><span class="legend-icon">🌋</span> <%= t('map.filter_volcano') %></span>
       <span class="map-legend-item"><span class="legend-icon">🌿</span> <%= t('map.filter_nature') %></span>
     </div>
-    <div id="overview-map" class="overview-map"></div>
+    <div class="map-container-wrap">
+      <div id="overview-map" class="overview-map"></div>
+      <div id="map-info-panel" class="map-info-panel">
+        <div class="info-panel-drag-handle"></div>
+        <button class="info-panel-close">&times;</button>
+        <div class="info-panel-header">
+          <span class="info-panel-emoji"></span>
+          <div class="info-panel-header-text">
+            <h3 class="info-panel-name"></h3>
+            <span class="info-panel-category"></span>
+          </div>
+        </div>
+        <div class="info-panel-body"></div>
+      </div>
+    </div>
     <script>
       document.addEventListener('DOMContentLoaded', function() {
         var hikes = <%- JSON.stringify(hikes.map(function(h) {
@@ -52,6 +67,16 @@
           };
         })) %>;
         initOverviewMap('overview-map', hikes, '<%= langPrefix %>');
+
+        // Legend toggle for mobile
+        var legendToggle = document.getElementById('legend-toggle');
+        var legend = document.getElementById('map-legend');
+        if (legendToggle && legend) {
+          legendToggle.addEventListener('click', function() {
+            legend.classList.toggle('legend-open');
+            legendToggle.classList.toggle('active');
+          });
+        }
       });
     </script>
   </div>
