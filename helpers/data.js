@@ -17,7 +17,9 @@ const COLLECTION_MAP = {
   'reviews.json': 'reviews',
   'contact-submissions.json': 'contactSubmissions',
   'registrations.json': 'registrations',
-  'booking-inquiries.json': 'bookingInquiries'
+  'booking-inquiries.json': 'bookingInquiries',
+  'products.json': 'products',
+  'orders.json': 'orders'
 };
 
 // Static files always read from disk

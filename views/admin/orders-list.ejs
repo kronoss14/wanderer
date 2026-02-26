@@ -1,0 +1,41 @@
+<div class="admin-header">
+  <h1>Orders</h1>
+</div>
+
+<div class="admin-table-wrap">
+  <table class="admin-table">
+    <thead>
+      <tr>
+        <th>Order ID</th>
+        <th>Customer</th>
+        <th>Items</th>
+        <th>Total</th>
+        <th>Payment</th>
+        <th>Status</th>
+        <th>Date</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% orders.forEach(o => { %>
+        <tr>
+          <td><a href="/admin/orders/<%= o.id %>"><%= o.id %></a></td>
+          <td><%= o.customer ? o.customer.name : '—' %></td>
+          <td><%= o.items ? o.items.length : 0 %></td>
+          <td>&#8382;<%= o.total || 0 %></td>
+          <td><%= o.paymentMethod || '—' %></td>
+          <td>
+            <span class="order-status status-<%= o.status || 'pending' %>"><%= o.status || 'pending' %></span>
+          </td>
+          <td><%= o.createdAt ? new Date(o.createdAt).toLocaleDateString('en-GB') : '—' %></td>
+          <td class="actions">
+            <a href="/admin/orders/<%= o.id %>" class="btn btn-secondary btn-sm">View</a>
+          </td>
+        </tr>
+      <% }) %>
+      <% if (!orders.length) { %>
+        <tr><td colspan="8" style="text-align:center;color:var(--admin-text-muted)">No orders yet</td></tr>
+      <% } %>
+    </tbody>
+  </table>
+</div>

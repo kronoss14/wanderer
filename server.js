@@ -22,6 +22,9 @@ import adminRouter from './routes/admin.js';
 import analyticsRouter from './routes/analytics.js';
 import mapRouter from './routes/map.js';
 import blogRouter from './routes/blog.js';
+import shopRouter from './routes/shop.js';
+import cartRouter from './routes/cart.js';
+import compression from 'compression';
 import helmet from 'helmet';
 import cookieParser from 'cookie-parser';
 import session from 'express-session';
@@ -49,6 +52,9 @@ app.set('layout', 'layout');
 // Body parsing
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+
+// Gzip/Brotli compression — cuts transfer size ~70%
+app.use(compression());
 
 // Security headers
 app.use(helmet({
@@ -109,8 +115,10 @@ app.use((req, res, next) => {
 // i18n middleware (after CSRF, before static files)
 app.use(i18nMiddleware);
 
-// Static files
-app.use(express.static(join(__dirname, 'public')));
+// Static files (cache 7 days in production)
+app.use(express.static(join(__dirname, 'public'), {
+  maxAge: process.env.NODE_ENV === 'production' ? '7d' : 0
+}));
 
 // Locals available to all templates
 app.use((req, res, next) => {
@@ -134,6 +142,8 @@ app.use('/gallery', galleryRouter);
 app.use('/reviews', reviewsRouter);
 app.use('/map', mapRouter);
 app.use('/blog', blogRouter);
+app.use('/shop', shopRouter);
+app.use('/cart', cartRouter);
 app.use('/admin', adminRouter);
 app.use(analyticsRouter);
 
@@ -146,6 +156,8 @@ app.use('/en/gallery', galleryRouter);
 app.use('/en/reviews', reviewsRouter);
 app.use('/en/map', mapRouter);
 app.use('/en/blog', blogRouter);
+app.use('/en/shop', shopRouter);
+app.use('/en/cart', cartRouter);
 
 // 404
 app.use((req, res) => {

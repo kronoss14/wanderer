@@ -1,0 +1,30 @@
+<!-- PAGE HERO -->
+<section class="page-hero">
+  <div class="page-hero-bg" style="background-image: url('/images/hikes-hero.jpeg'); background-position: center 65%"></div>
+  <div class="page-hero-overlay" style="background: linear-gradient(135deg, rgba(13,13,13,0.45) 0%, rgba(26,26,46,0.35) 100%)"></div>
+  <div class="page-hero-content container">
+    <h1><%- t('shop.title') %></h1>
+    <p><%= t('shop.subtitle') %></p>
+  </div>
+</section>
+
+<!-- FILTER + GRID -->
+<section class="section">
+  <div class="container">
+    <div class="filter-bar">
+      <a href="<%= langPrefix %>/shop" class="filter-btn<%= activeCategory === 'all' ? ' active' : '' %>"><%= t('shop.filter_all') %></a>
+      <% categories.forEach(cat => { %>
+        <a href="<%= langPrefix %>/shop?category=<%= cat %>" class="filter-btn<%= activeCategory === cat ? ' active' : '' %>"><%= t('shop.category.' + cat) %></a>
+      <% }) %>
+    </div>
+    <% if (products.length === 0) { %>
+      <p class="text-center" style="color: var(--text-secondary); padding: 3rem 0;"><%= t('shop.empty') %></p>
+    <% } else { %>
+      <div class="product-grid">
+        <% products.forEach(product => { %>
+          <%- include('../partials/_product-card', { product }) %>
+        <% }) %>
+      </div>
+    <% } %>
+  </div>
+</section>

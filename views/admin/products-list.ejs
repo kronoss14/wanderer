@@ -1,0 +1,42 @@
+<div class="admin-header">
+  <h1>Products</h1>
+  <a href="/admin/products/new" class="btn btn-primary">+ New Product</a>
+</div>
+
+<div class="admin-table-wrap">
+  <table class="admin-table">
+    <thead>
+      <tr>
+        <th>Image</th>
+        <th>Name</th>
+        <th>Category</th>
+        <th>Price</th>
+        <th>In Stock</th>
+        <th>Featured</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% products.forEach(p => { %>
+        <tr>
+          <td><% if (p.image) { %><img src="<%= p.image %>" alt="" style="width:50px;height:50px;object-fit:cover;border-radius:4px;"><% } else { %>—<% } %></td>
+          <td><%= p.name %></td>
+          <td><%= p.category %></td>
+          <td>&#8382;<%= p.price %></td>
+          <td><%= p.inStock !== false ? 'Yes' : 'No' %></td>
+          <td><%= p.featured ? 'Yes' : 'No' %></td>
+          <td class="actions">
+            <a href="/admin/products/edit/<%= p.id %>" class="btn btn-secondary btn-sm">Edit</a>
+            <form method="POST" action="/admin/products/delete/<%= p.id %>" onsubmit="return confirm('Delete this product?')">
+              <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+              <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+            </form>
+          </td>
+        </tr>
+      <% }) %>
+      <% if (!products.length) { %>
+        <tr><td colspan="7" style="text-align:center;color:var(--admin-text-muted)">No products yet</td></tr>
+      <% } %>
+    </tbody>
+  </table>
+</div>

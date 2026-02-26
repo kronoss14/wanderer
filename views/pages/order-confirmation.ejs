@@ -1,0 +1,95 @@
+<section class="section">
+  <div class="container" style="max-width:700px;">
+    <div class="text-center" style="margin-bottom:2rem;">
+      <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="var(--accent-emerald)" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="9 12 12 15 16 10"/></svg>
+      <h1 style="margin-top:1rem;"><%= t('order.success_title') %></h1>
+      <p style="color:var(--text-secondary);"><%= t('order.success_text') %></p>
+    </div>
+
+    <div class="order-confirmation-card">
+      <h3><%= t('order.order_id') %>: <%= order.id %></h3>
+      <p style="color:var(--text-muted);font-size:0.9rem;"><%= new Date(order.createdAt).toLocaleString() %></p>
+
+      <table class="cart-table" style="margin:1.5rem 0;">
+        <thead>
+          <tr>
+            <th><%= t('cart.product') %></th>
+            <th><%= t('cart.quantity') %></th>
+            <th><%= t('cart.subtotal') %></th>
+          </tr>
+        </thead>
+        <tbody>
+          <% order.items.forEach(item => { %>
+            <tr>
+              <td><%= item.name %></td>
+              <td><%= item.quantity %></td>
+              <td>&#8382;<%= (item.price * item.quantity).toFixed(2) %></td>
+            </tr>
+          <% }) %>
+        </tbody>
+        <tfoot>
+          <tr>
+            <td colspan="2" style="text-align:right;font-weight:700;"><%= t('cart.total') %></td>
+            <td style="font-weight:700;color:var(--accent-emerald);">&#8382;<%= order.total.toFixed(2) %></td>
+          </tr>
+        </tfoot>
+      </table>
+
+      <% if (order.paymentMethod === 'bank_transfer') { %>
+        <div class="qr-payment-section">
+          <h3><%= t('payment.bank_transfer_title') %></h3>
+          <p style="color:var(--text-secondary);margin-bottom:1rem;"><%= t('payment.qr_instructions') %></p>
+
+          <% if (qrDataUri) { %>
+            <div class="qr-code-wrap">
+              <img src="<%= qrDataUri %>" alt="Payment QR Code" width="300" height="300">
+            </div>
+          <% } %>
+
+          <div class="bank-details">
+            <h4><%= t('payment.bank_details') %></h4>
+            <div class="bank-detail-row">
+              <span><%= t('payment.recipient') %>:</span>
+              <strong><%= bankDetails.bog.holder %></strong>
+            </div>
+            <div class="bank-detail-row">
+              <span>IBAN (BOG):</span>
+              <strong><%= bankDetails.bog.iban %></strong>
+            </div>
+            <div class="bank-detail-row">
+              <span>IBAN (TBC):</span>
+              <strong><%= bankDetails.tbc.iban %></strong>
+            </div>
+            <div class="bank-detail-row">
+              <span><%= t('payment.amount') %>:</span>
+              <strong>&#8382;<%= order.total.toFixed(2) %></strong>
+            </div>
+            <div class="bank-detail-row">
+              <span><%= t('payment.reference') %>:</span>
+              <strong><%= order.id %></strong>
+            </div>
+          </div>
+        </div>
+      <% } else if (order.paymentMethod === 'on_delivery') { %>
+        <div class="payment-info-box">
+          <p><%= t('payment.on_delivery_info') %></p>
+        </div>
+      <% } else if (order.paymentMethod === 'on_pickup') { %>
+        <div class="payment-info-box">
+          <p><%= t('payment.on_pickup_info') %></p>
+        </div>
+      <% } %>
+    </div>
+
+    <div class="text-center" style="margin-top:2rem;">
+      <a href="<%= langPrefix %>/shop" class="btn btn-primary"><%= t('cart.continue_shopping') %></a>
+    </div>
+  </div>
+</section>
+
+<script>
+  // Clear cart after successful order
+  localStorage.removeItem('wanderer_cart');
+  // Update cart badge
+  if (typeof updateCartBadge === 'function') updateCartBadge();
+</script>

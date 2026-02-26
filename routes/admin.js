@@ -152,6 +152,22 @@ function parseGalleryBody(b, id) {
   };
 }
 
+function parseProductBody(b, id) {
+  return {
+    id,
+    name: b.name,
+    name_en: b.name_en || '',
+    category: b.category || 'gear',
+    price: b.price ? Math.max(0, Number(b.price)) : 0,
+    description: b.description,
+    description_en: b.description_en || '',
+    image: b.image || '',
+    images: textToArray(b.images).filter(isValidImageUrl),
+    inStock: b.inStock === 'true',
+    featured: b.featured === 'true'
+  };
+}
+
 function parseBlogBody(b, id, slug) {
   return {
     id,
@@ -299,16 +315,22 @@ router.get('/logout', (req, res) => {
 
 // ─── Dashboard ───
 router.get('/', asyncHandler(async (req, res) => {
-  const [hikes, guides, pricing, gallery, blog] = await Promise.all([
+  const [hikes, guides, pricing, gallery, blog, products, orders] = await Promise.all([
     readJSON('hikes.json'),
     readJSON('guides.json'),
     readJSON('pricing.json'),
     readJSON('gallery.json'),
-    readJSON('blog.json')
+    readJSON('blog.json'),
+    readJSON('products.json'),
+    readJSON('orders.json')
   ]);
   renderAdmin(res, join(__dirname, '..', 'views', 'admin', 'dashboard.ejs'), {
     title: 'Dashboard',
-    counts: { hikes: hikes.length, guides: guides.length, pricing: pricing.length, gallery: gallery.length, blog: blog.length }
+    counts: {
+      hikes: hikes.length, guides: guides.length, pricing: pricing.length,
+      gallery: gallery.length, blog: blog.length,
+      products: products.length, orders: orders.length
+    }
   });
 }));
 
@@ -609,6 +631,90 @@ router.post('/blog/delete/:id', asyncHandler(async (req, res) => {
   await writeJSON('blog.json', filtered);
   await audit('blog.delete', { id: Number(req.params.id) });
   res.redirect('/admin/blog');
+}));
+
+// ═══════════════════════════════════════════
+//  PRODUCTS CRUD
+// ═══════════════════════════════════════════
+
+router.get('/products', asyncHandler(async (req, res) => {
+  const products = await readJSON('products.json');
+  renderAdmin(res, join(__dirname, '..', 'views', 'admin', 'products-list.ejs'), { title: 'Products', products });
+}));
+
+router.get('/products/new', (req, res) => {
+  renderAdmin(res, join(__dirname, '..', 'views', 'admin', 'products-form.ejs'), {
+    title: 'New Product', editing: false, product: {}
+  });
+});
+
+router.post('/products', asyncHandler(async (req, res) => {
+  const products = await readJSON('products.json');
+  const b = req.body;
+  const id = toSlug(b.name) || `product-${Date.now()}`;
+  let finalId = id;
+  let counter = 1;
+  while (products.some(p => p.id === finalId)) {
+    finalId = `${id}-${counter++}`;
+  }
+  products.push(parseProductBody(b, finalId));
+  await writeJSON('products.json', products);
+  await audit('product.create', { id: finalId, name: b.name });
+  res.redirect('/admin/products');
+}));
+
+router.get('/products/edit/:id', asyncHandler(async (req, res) => {
+  const products = await readJSON('products.json');
+  const product = products.find(p => p.id === req.params.id);
+  if (!product) return res.redirect('/admin/products');
+  renderAdmin(res, join(__dirname, '..', 'views', 'admin', 'products-form.ejs'), {
+    title: 'Edit Product', editing: true, product
+  });
+}));
+
+router.post('/products/edit/:id', asyncHandler(async (req, res) => {
+  const products = await readJSON('products.json');
+  const idx = products.findIndex(p => p.id === req.params.id);
+  if (idx === -1) return res.redirect('/admin/products');
+  products[idx] = parseProductBody(req.body, req.params.id);
+  await writeJSON('products.json', products);
+  await audit('product.edit', { id: req.params.id });
+  res.redirect('/admin/products');
+}));
+
+router.post('/products/delete/:id', asyncHandler(async (req, res) => {
+  const products = await readJSON('products.json');
+  const filtered = products.filter(p => p.id !== req.params.id);
+  await writeJSON('products.json', filtered);
+  await audit('product.delete', { id: req.params.id });
+  res.redirect('/admin/products');
+}));
+
+// ═══════════════════════════════════════════
+//  ORDERS (read-only admin view + status update)
+// ═══════════════════════════════════════════
+
+router.get('/orders', asyncHandler(async (req, res) => {
+  const orders = await readJSON('orders.json');
+  orders.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+  renderAdmin(res, join(__dirname, '..', 'views', 'admin', 'orders-list.ejs'), { title: 'Orders', orders });
+}));
+
+router.get('/orders/:id', asyncHandler(async (req, res) => {
+  const orders = await readJSON('orders.json');
+  const order = orders.find(o => o.id === req.params.id);
+  if (!order) return res.redirect('/admin/orders');
+  renderAdmin(res, join(__dirname, '..', 'views', 'admin', 'order-detail.ejs'), { title: `Order ${order.id}`, order });
+}));
+
+router.post('/orders/:id/status', asyncHandler(async (req, res) => {
+  const orders = await readJSON('orders.json');
+  const idx = orders.findIndex(o => o.id === req.params.id);
+  if (idx === -1) return res.redirect('/admin/orders');
+  orders[idx].status = req.body.status;
+  await writeJSON('orders.json', orders);
+  await audit('order.status', { id: req.params.id, status: req.body.status });
+  res.redirect(`/admin/orders/${req.params.id}`);
 }));
 
 export default router;

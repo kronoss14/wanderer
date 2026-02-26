@@ -1,0 +1,48 @@
+[
+  {
+    "id": "WND-20260226-VZ2M",
+    "customer": {
+      "name": "Vaska Kapanadze",
+      "email": "kbageultron@gmail.com",
+      "phone": "568730184",
+      "address": "Kosmonavtebis 91"
+    },
+    "items": [
+      {
+        "id": "საძილე-ტომარა",
+        "name": "საძილე ტომარა",
+        "name_en": "sleeping bag",
+        "price": 150,
+        "quantity": 2,
+        "image": "https://res.cloudinary.com/dqlvn7btu/image/upload/v1772121552/wanderer/9ef5508f-e90d-4f68-9355-a4011b95959e.jpg"
+      }
+    ],
+    "total": 300,
+    "paymentMethod": "bank_transfer",
+    "status": "pending",
+    "createdAt": "2026-02-26T16:04:36.848Z"
+  },
+  {
+    "id": "WND-20260226-1P8K",
+    "customer": {
+      "name": "Vaska Kapanadze",
+      "email": "kbageultron@gmail.com",
+      "phone": "568730184",
+      "address": "Kosmonavtebis 91"
+    },
+    "items": [
+      {
+        "id": "საძილე-ტომარა",
+        "name": "საძილე ტომარა",
+        "name_en": "sleeping bag",
+        "price": 150,
+        "quantity": 1,
+        "image": "https://res.cloudinary.com/dqlvn7btu/image/upload/v1772121552/wanderer/9ef5508f-e90d-4f68-9355-a4011b95959e.jpg"
+      }
+    ],
+    "total": 150,
+    "paymentMethod": "bank_transfer",
+    "status": "pending",
+    "createdAt": "2026-02-26T16:13:32.930Z"
+  }
+]
