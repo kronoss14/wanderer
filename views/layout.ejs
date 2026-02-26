@@ -5,6 +5,33 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title><%= title %> | <%= siteName %> — <%= siteNameGeo %></title>
   <link rel="icon" type="image/png" href="/images/favicon.png">
+  <% if (typeof seo !== 'undefined' && seo) { %>
+  <meta name="description" content="<%= seo.description %>">
+  <link rel="canonical" href="<%= seo.canonical %>">
+  <% seo.hreflang.forEach(function(alt) { %>
+  <link rel="alternate" hreflang="<%= alt.lang %>" href="<%= alt.url %>">
+  <% }); %>
+  <meta property="og:type" content="<%= seo.og.type %>">
+  <meta property="og:title" content="<%= seo.og.title %>">
+  <meta property="og:description" content="<%= seo.og.description %>">
+  <meta property="og:image" content="<%= seo.og.image %>">
+  <meta property="og:url" content="<%= seo.og.url %>">
+  <meta property="og:site_name" content="<%= seo.og.siteName %>">
+  <meta property="og:locale" content="<%= seo.og.locale %>">
+  <meta name="twitter:card" content="<%= seo.twitter.card %>">
+  <meta name="twitter:title" content="<%= seo.twitter.title %>">
+  <meta name="twitter:description" content="<%= seo.twitter.description %>">
+  <meta name="twitter:image" content="<%= seo.twitter.image %>">
+  <% if (seo.noindex) { %>
+  <meta name="robots" content="noindex">
+  <% } %>
+  <% if (seo.jsonLd) { %>
+  <script type="application/ld+json"><%- JSON.stringify(seo.jsonLd) %></script>
+  <% } %>
+  <% if (typeof orgJsonLd !== 'undefined' && orgJsonLd) { %>
+  <script type="application/ld+json"><%- JSON.stringify(orgJsonLd) %></script>
+  <% } %>
+  <% } %>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Noto+Sans+Georgian:wght@400;500;600;700;800&family=Oswald:wght@400;500;600;700&display=swap" rel="stylesheet">

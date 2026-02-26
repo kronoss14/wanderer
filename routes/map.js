@@ -24,10 +24,21 @@ function loadGeoFeatures() {
   return geoFeaturesCache;
 }
 
+import { buildSeo } from '../helpers/seo.js';
+
 const router = Router();
 
 router.get('/', asyncHandler(async (req, res) => {
   const hikes = await readJSON('hikes.json');
+  const lang = res.locals.lang;
+  res.locals.seo = buildSeo({
+    title: lang === 'en' ? 'Trail Map' : res.locals.t('map.title'),
+    description: lang === 'en'
+      ? 'Interactive map of hiking trails, natural landmarks, and points of interest across Georgia.'
+      : 'საქართველოს ლაშქრობის ბილიკების, ბუნებრივი ღირშესანიშნაობებისა და საინტერესო ადგილების ინტერაქტიული რუკა.',
+    path: '/map',
+    lang
+  });
   res.render('pages/map', { title: res.locals.t('map.title'), hikes });
 }));
 

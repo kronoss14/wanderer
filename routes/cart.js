@@ -6,9 +6,19 @@ import { log } from '../helpers/logger.js';
 import { getBankDetails } from '../helpers/qr.js';
 import { sendOrderEmails } from '../helpers/mailer.js';
 
+import { buildSeo } from '../helpers/seo.js';
+
 const router = Router();
 
 router.get('/', (req, res) => {
+  const lang = res.locals.lang;
+  res.locals.seo = buildSeo({
+    title: lang === 'en' ? 'Cart' : res.locals.t('cart.title'),
+    description: '',
+    path: '/cart',
+    lang,
+    noindex: true
+  });
   res.render('pages/cart', { title: res.locals.t('cart.title') });
 });
 

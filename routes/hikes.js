@@ -6,6 +6,7 @@ import { sendRegistrationEmail } from '../helpers/mailer.js';
 import { getBankDetails } from '../helpers/qr.js';
 import { asyncHandler } from '../helpers/async-handler.js';
 import { log } from '../helpers/logger.js';
+import { buildSeo } from '../helpers/seo.js';
 
 const router = Router();
 
@@ -13,6 +14,16 @@ router.get('/', asyncHandler(async (req, res) => {
   const hikes = await readJSON('hikes.json');
   const { type } = req.query;
   const filtered = type ? hikes.filter(h => h.type === type) : hikes;
+  const lang = res.locals.lang;
+  res.locals.seo = buildSeo({
+    title: lang === 'en' ? 'Hiking Tours' : 'ლაშქრობები',
+    description: lang === 'en'
+      ? 'Browse all guided hiking tours in Georgia — day hikes, multi-day treks, and mountain adventures in the Caucasus.'
+      : 'დაათვალიერეთ ყველა გიდიანი ლაშქრობა საქართველოში — ერთდღიანი, მრავალდღიანი ტრეკინგი და თავგადასავლები კავკასიონში.',
+    path: '/hikes',
+    lang,
+    ogImage: '/images/hikes-hero.jpeg'
+  });
   res.render('pages/hikes', { title: 'Hikes', hikes: filtered, activeType: type || 'all' });
 }));
 
@@ -22,6 +33,30 @@ router.get('/:id', asyncHandler(async (req, res) => {
   const hike = hikes.find(h => h.id === req.params.id);
   if (!hike) return res.status(404).render('pages/404', { title: 'Not Found' });
   const hikeReviews = reviews.filter(r => r.hikeId === hike.id);
+  const lang = res.locals.lang;
+  const l = res.locals.l;
+  res.locals.seo = buildSeo({
+    title: l(hike, 'name'),
+    description: l(hike, 'summary') || l(hike, 'description').slice(0, 160),
+    path: `/hikes/${hike.id}`,
+    lang,
+    ogImage: hike.heroImage || hike.cardImage,
+    ogType: 'article',
+    jsonLd: {
+      '@context': 'https://schema.org',
+      '@type': 'TouristTrip',
+      name: l(hike, 'name'),
+      description: l(hike, 'description'),
+      image: hike.heroImage ? `https://wanderer.ge${hike.heroImage}` : undefined,
+      touristType: 'Hiking',
+      offers: {
+        '@type': 'Offer',
+        price: hike.price,
+        priceCurrency: 'GEL',
+        availability: 'https://schema.org/InStock'
+      }
+    }
+  });
   res.render('pages/hike-detail', { title: hike.name, hike, hikeReviews });
 }));
 

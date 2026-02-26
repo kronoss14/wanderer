@@ -26,6 +26,7 @@ import mapRouter from './routes/map.js';
 import blogRouter from './routes/blog.js';
 import shopRouter from './routes/shop.js';
 import cartRouter from './routes/cart.js';
+import sitemapRouter from './routes/sitemap.js';
 import compression from 'compression';
 import helmet from 'helmet';
 import cookieParser from 'cookie-parser';
@@ -133,8 +134,24 @@ app.use((req, res, next) => {
     facebook: 'https://www.facebook.com/profile.php?id=61575333926780',
     instagram: 'https://www.instagram.com/wanderer_mokhetiale/'
   };
+  res.locals.orgJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'TourOperator',
+    name: 'Wanderer — მოხეტიალე',
+    url: 'https://wanderer.ge',
+    logo: 'https://wanderer.ge/images/logo.jpg',
+    email: 'wanderer.mokhetiale@gmail.com',
+    telephone: '+995555123456',
+    sameAs: [
+      'https://www.facebook.com/profile.php?id=61575333926780',
+      'https://www.instagram.com/wanderer_mokhetiale/'
+    ]
+  };
   next();
 });
+
+// Sitemap
+app.use(sitemapRouter);
 
 // Routes
 app.use('/', indexRouter);

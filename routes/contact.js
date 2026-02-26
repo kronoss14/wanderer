@@ -5,9 +5,20 @@ import { sendContactEmail } from '../helpers/mailer.js';
 import { asyncHandler } from '../helpers/async-handler.js';
 import { log } from '../helpers/logger.js';
 
+import { buildSeo } from '../helpers/seo.js';
+
 const router = Router();
 
 router.get('/', (req, res) => {
+  const lang = res.locals.lang;
+  res.locals.seo = buildSeo({
+    title: lang === 'en' ? 'Contact Us' : 'კონტაქტი',
+    description: lang === 'en'
+      ? 'Get in touch with Wanderer for hiking tour bookings, questions, and custom trip planning in Georgia.'
+      : 'დაგვიკავშირდით ლაშქრობის დაჯავშნისთვის, კითხვებისთვის და ინდივიდუალური მარშრუტის დაგეგმვისთვის.',
+    path: '/contact',
+    lang
+  });
   res.render('pages/contact', { title: 'Contact Us', success: false, errors: [] });
 });
 

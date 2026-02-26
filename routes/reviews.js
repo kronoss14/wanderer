@@ -3,6 +3,7 @@ import { body, validationResult } from 'express-validator';
 import { readJSON, appendJSON } from '../helpers/data.js';
 import { asyncHandler } from '../helpers/async-handler.js';
 import { log } from '../helpers/logger.js';
+import { buildSeo } from '../helpers/seo.js';
 
 const router = Router();
 
@@ -10,6 +11,15 @@ router.get('/', asyncHandler(async (req, res) => {
   const reviews = await readJSON('reviews.json');
   const hikes = await readJSON('hikes.json');
   const avg = reviews.length ? reviews.reduce((sum, r) => sum + r.rating, 0) / reviews.length : 0;
+  const lang = res.locals.lang;
+  res.locals.seo = buildSeo({
+    title: lang === 'en' ? 'Hiker Reviews' : 'შეფასებები',
+    description: lang === 'en'
+      ? 'Read reviews from hikers who explored Georgia\'s trails with Wanderer. Real experiences and ratings.'
+      : 'წაიკითხეთ მოლაშქრეების შეფასებები, რომლებმაც მოხეტიალესთან ერთად იმოგზაურეს საქართველოს ბილიკებზე.',
+    path: '/reviews',
+    lang
+  });
   res.render('pages/reviews', { title: 'შეფასებები', reviews, hikes, avgRating: avg, success: false, errors: [] });
 }));
 
