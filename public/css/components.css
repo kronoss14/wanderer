@@ -786,7 +786,7 @@
   gap: 0.5rem;
 }
 .product-card-original-price {
-  color: var(--text-muted);
+  color: #c45050;
   text-decoration: line-through;
   font-size: 0.9rem;
 }
@@ -804,7 +804,7 @@
   z-index: 1;
 }
 .widget-original-price {
-  color: var(--text-muted);
+  color: #c45050;
   text-decoration: line-through;
   font-size: 1rem;
   font-weight: 400;
