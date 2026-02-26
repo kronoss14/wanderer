@@ -7,6 +7,8 @@ if (missing.length) {
   process.exit(1);
 }
 
+const assetVersion = Date.now().toString(36);
+
 import express from 'express';
 import expressLayouts from 'express-ejs-layouts';
 import { dirname, join } from 'node:path';
@@ -124,6 +126,7 @@ app.use(express.static(join(__dirname, 'public'), {
 app.use((req, res, next) => {
   res.locals.currentPath = req.url.split('?')[0];
   res.locals.escapeAttr = escapeAttr;
+  res.locals.assetVersion = assetVersion;
   res.locals.siteName = 'Wanderer';
   res.locals.siteNameGeo = 'მოხეტიალე';
   res.locals.socialLinks = {
