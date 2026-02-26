@@ -31,7 +31,15 @@
       </div>
       <aside class="detail-sidebar">
         <div class="booking-widget">
-          <p class="widget-price"><strong>&#8382;<%= product.price %></strong></p>
+          <% if (product.originalPrice && product.originalPrice > product.price) { %>
+            <p class="widget-price">
+              <span class="widget-original-price">&#8382;<%= product.originalPrice %></span>
+              <strong>&#8382;<%= product.price %></strong>
+              <span class="widget-discount-badge">-<%= Math.round((1 - product.price / product.originalPrice) * 100) %>%</span>
+            </p>
+          <% } else { %>
+            <p class="widget-price"><strong>&#8382;<%= product.price %></strong></p>
+          <% } %>
           <% if (product.inStock !== false) { %>
             <p style="color:var(--accent-emerald);font-size:0.9rem;margin-bottom:1rem;">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:-2px;"><polyline points="20 6 9 17 4 12"/></svg>

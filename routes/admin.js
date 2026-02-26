@@ -159,6 +159,7 @@ function parseProductBody(b, id) {
     name_en: b.name_en || '',
     category: b.category || 'gear',
     price: b.price ? Math.max(0, Number(b.price)) : 0,
+    originalPrice: b.originalPrice ? Math.max(0, Number(b.originalPrice)) : 0,
     description: b.description,
     description_en: b.description_en || '',
     image: b.image || '',

@@ -9,10 +9,18 @@
         </div>
       <% } %>
       <span class="product-card-badge badge-<%= product.category %>"><%= t('shop.category.' + product.category) %></span>
+      <% if (product.originalPrice && product.originalPrice > product.price) { %>
+        <span class="product-card-discount">-<%= Math.round((1 - product.price / product.originalPrice) * 100) %>%</span>
+      <% } %>
     </div>
     <div class="product-card-body">
       <h3 class="product-card-title"><%= l(product, 'name') %></h3>
-      <p class="product-card-price">&#8382;<%= product.price %></p>
+      <div class="product-card-price-row">
+        <% if (product.originalPrice && product.originalPrice > product.price) { %>
+          <span class="product-card-original-price">&#8382;<%= product.originalPrice %></span>
+        <% } %>
+        <span class="product-card-price">&#8382;<%= product.price %></span>
+      </div>
     </div>
   </a>
   <button class="btn btn-primary btn-add-cart" data-product-id="<%= product.id %>" data-product-name="<%= l(product, 'name') %>" data-product-price="<%= product.price %>" data-product-image="<%= product.image || '' %>">

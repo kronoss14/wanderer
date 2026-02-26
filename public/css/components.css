@@ -780,6 +780,45 @@
   font-weight: 700;
   font-size: 1.15rem;
 }
+.product-card-price-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.product-card-original-price {
+  color: var(--text-muted);
+  text-decoration: line-through;
+  font-size: 0.9rem;
+}
+.product-card-discount {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  background: #dc2626;
+  color: #fff;
+  font-family: var(--font-heading);
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 0.2rem 0.5rem;
+  border-radius: 4px;
+  z-index: 1;
+}
+.widget-original-price {
+  color: var(--text-muted);
+  text-decoration: line-through;
+  font-size: 1rem;
+  font-weight: 400;
+  margin-right: 0.25rem;
+}
+.widget-discount-badge {
+  background: #dc2626;
+  color: #fff;
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 0.15rem 0.45rem;
+  border-radius: 4px;
+  margin-left: 0.5rem;
+}
 .product-card .btn-add-cart {
   margin: 0 1.25rem 1.25rem;
   width: calc(100% - 2.5rem);
