@@ -208,7 +208,7 @@ router.use(requireAdmin);
 
 // ─── Image Upload ───
 const UPLOAD_DIR = join(__dirname, '..', 'public', 'images', 'uploads');
-const ALLOWED_MIME = new Set(['image/jpeg', 'image/png', 'image/gif', 'image/webp', 'image/svg+xml']);
+const ALLOWED_MIME = new Set(['image/jpeg', 'image/png', 'image/gif', 'image/webp', 'image/svg+xml', 'image/avif']);
 
 if (!existsSync(UPLOAD_DIR)) {
   mkdirSync(UPLOAD_DIR, { recursive: true });
