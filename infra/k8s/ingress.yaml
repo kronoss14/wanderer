@@ -1,0 +1,37 @@
+# ── ingress.yaml ────────────────────────────────────────
+# Ingress — routes external HTTP traffic to our Service.
+#
+# Request flow:
+#   Browser → Nginx Ingress Controller → wanderer-service → Pod
+#
+# We switched from Traefik (K3s default) to Nginx because:
+#   1. Nginx is the most widely used Ingress Controller in production
+#   2. Your company uses it
+#   3. Most tutorials and docs reference Nginx
+#
+# "ingressClassName: nginx" tells K8s to use our Nginx controller
+# instead of Traefik. Multiple Ingress Controllers can coexist —
+# each Ingress resource picks which one to use via this field.
+
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: wanderer-ingress
+  namespace: wanderer
+  annotations:
+    # Nginx-specific settings
+    nginx.ingress.kubernetes.io/proxy-body-size: "10m"    # allow file uploads up to 10MB
+    nginx.ingress.kubernetes.io/proxy-read-timeout: "60"  # timeout for reading response
+spec:
+  ingressClassName: nginx    # ← USE NGINX, not Traefik
+
+  rules:
+    - http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: wanderer-service
+                port:
+                  number: 80

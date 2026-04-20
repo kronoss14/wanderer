@@ -43,21 +43,38 @@ router.get('/', asyncHandler(async (req, res) => {
 }));
 
 router.get('/gf', asyncHandler(async (req, res) => {
-  const [mapPoints, geoData] = await Promise.all([
+  const [mapPoints, geoData, hikes] = await Promise.all([
     readJSON('map-points.json'),
-    Promise.resolve(loadGeoFeatures())
+    Promise.resolve(loadGeoFeatures()),
+    readJSON('hikes.json')
   ]);
 
   const lang = res.locals.lang || 'ka';
   const l = (obj, key) => lang === 'ka' ? obj[key] : (obj[key + '_en'] || obj[key]);
 
-  const points = mapPoints.map(p => ({
-    n: l(p, 'name'),
-    d: l(p, 'desc'),
-    c: p.category,
-    a: p.lat,
-    g: p.lng
-  }));
+  const points = mapPoints.map(p => {
+    const point = {
+      n: l(p, 'name'),
+      d: l(p, 'desc'),
+      c: p.category,
+      a: p.lat,
+      g: p.lng
+    };
+    if (p.photos && p.photos.length) point.ph = p.photos;
+    if (p.linkedHikeId) {
+      const hike = hikes.find(h => h.id === p.linkedHikeId);
+      if (hike) {
+        point.lh = {
+          n: l(hike, 'name'),
+          i: hike.cardImage || (hike.images && hike.images[0]) || '',
+          d: hike.difficulty || '',
+          du: l(hike, 'duration') || '',
+          id: hike.id
+        };
+      }
+    }
+    return point;
+  });
 
   const features = geoData.features
     .filter(f => f.properties.name_ge !== 'N_A')

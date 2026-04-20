@@ -1,0 +1,424 @@
+<link rel="stylesheet" href="https://unpkg.com/leaflet-draw@1.0.4/dist/leaflet.draw.css">
+<style>
+.admin-map-container {
+  display: flex;
+  height: calc(100vh - 4rem);
+  margin: -2rem;
+  overflow: hidden;
+}
+.map-sidebar {
+  width: 300px;
+  min-width: 300px;
+  background: var(--admin-surface);
+  border-right: 1px solid var(--admin-border);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+.map-tabs {
+  display: flex;
+  border-bottom: 1px solid var(--admin-border);
+  background: var(--admin-surface-alt);
+}
+.map-tabs button {
+  flex: 1;
+  padding: 0.6rem 0.4rem;
+  border: none;
+  background: none;
+  color: var(--admin-text-muted);
+  font-size: 0.78rem;
+  font-family: inherit;
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  transition: color 0.15s, border-color 0.15s;
+}
+.map-tabs button:hover { color: var(--admin-text); }
+.map-tabs button.active {
+  color: var(--admin-primary);
+  border-bottom-color: var(--admin-primary);
+}
+.map-panel {
+  flex: 1;
+  overflow-y: auto;
+  padding: 0.75rem;
+  display: none;
+}
+.map-panel.active { display: block; }
+.map-area {
+  flex: 1;
+  position: relative;
+}
+#adminMap { width: 100%; height: 100%; }
+
+/* Sidebar items */
+.point-list-item, .trail-point-item {
+  padding: 0.5rem 0.6rem;
+  background: var(--admin-input-bg);
+  border: 1px solid var(--admin-border);
+  border-radius: var(--admin-radius);
+  margin-bottom: 0.4rem;
+  cursor: pointer;
+  font-size: 0.82rem;
+  transition: border-color 0.15s;
+}
+.point-list-item:hover, .trail-point-item:hover {
+  border-color: var(--admin-primary);
+}
+.point-list-item .point-name { font-weight: 500; }
+.point-list-item .point-cat {
+  font-size: 0.72rem;
+  color: var(--admin-text-muted);
+}
+.sidebar-actions {
+  padding: 0.5rem 0.75rem;
+  border-bottom: 1px solid var(--admin-border);
+  display: flex;
+  gap: 0.4rem;
+}
+.sidebar-actions .btn { font-size: 0.78rem; padding: 0.35rem 0.6rem; }
+
+/* Trail controls */
+.trail-select-wrap { margin-bottom: 0.75rem; }
+.trail-select-wrap select {
+  width: 100%;
+  padding: 0.45rem 0.6rem;
+  background: var(--admin-input-bg);
+  color: var(--admin-text);
+  border: 1px solid var(--admin-border);
+  border-radius: var(--admin-radius);
+  font-family: inherit;
+  font-size: 0.85rem;
+}
+.trail-controls {
+  display: flex;
+  gap: 0.4rem;
+  flex-wrap: wrap;
+  margin-bottom: 0.75rem;
+}
+.trail-controls .btn { font-size: 0.78rem; padding: 0.35rem 0.6rem; }
+.trail-info {
+  font-size: 0.8rem;
+  color: var(--admin-text-muted);
+  margin-bottom: 0.5rem;
+}
+.trail-point-list { list-style: none; }
+
+/* Modal overlay */
+.map-modal-overlay {
+  display: none;
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.65);
+  z-index: 1000;
+  align-items: center;
+  justify-content: center;
+}
+.map-modal-overlay.open { display: flex; }
+.map-modal {
+  background: var(--admin-surface);
+  border: 1px solid var(--admin-border);
+  border-radius: 8px;
+  width: 520px;
+  max-width: 95vw;
+  max-height: 90vh;
+  overflow-y: auto;
+  padding: 1.25rem;
+}
+.map-modal h3 {
+  font-size: 1.05rem;
+  margin-bottom: 1rem;
+  color: var(--admin-text);
+}
+.map-modal .form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+}
+.map-modal .form-group { margin-bottom: 0.75rem; }
+.map-modal .form-group label {
+  display: block;
+  font-size: 0.8rem;
+  font-weight: 500;
+  margin-bottom: 0.2rem;
+  color: var(--admin-text);
+}
+.map-modal .form-group input,
+.map-modal .form-group select,
+.map-modal .form-group textarea {
+  width: 100%;
+  padding: 0.4rem 0.6rem;
+  border: 1px solid var(--admin-border);
+  border-radius: var(--admin-radius);
+  font-size: 0.85rem;
+  font-family: inherit;
+  background: var(--admin-input-bg);
+  color: var(--admin-text);
+}
+.map-modal .form-group textarea { min-height: 60px; resize: vertical; }
+.map-modal .form-group input:focus,
+.map-modal .form-group select:focus,
+.map-modal .form-group textarea:focus {
+  outline: none;
+  border-color: var(--admin-primary);
+  box-shadow: 0 0 0 2px rgba(232,129,26,0.2);
+}
+.map-modal .modal-actions {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+.map-modal .photos-area {
+  border: 1px dashed var(--admin-border);
+  border-radius: var(--admin-radius);
+  padding: 0.5rem;
+  min-height: 50px;
+  margin-top: 0.25rem;
+}
+.map-modal .photos-area .photo-thumb {
+  display: inline-block;
+  width: 60px; height: 60px;
+  object-fit: cover;
+  border-radius: 4px;
+  margin: 2px;
+  border: 1px solid var(--admin-border);
+}
+.map-modal .photos-area .upload-wrap { margin-top: 0.35rem; }
+.empty-state {
+  text-align: center;
+  padding: 2rem 1rem;
+  color: var(--admin-text-muted);
+  font-size: 0.85rem;
+}
+</style>
+
+<input type="hidden" name="_csrf" value="<%= csrfToken %>">
+
+<div class="admin-map-container">
+  <!-- Left Sidebar -->
+  <div class="map-sidebar">
+    <div class="map-tabs">
+      <button class="active" data-tab="points">Map Points</button>
+      <button data-tab="trails">Trails</button>
+      <button data-tab="trailpoints">Trail Points</button>
+    </div>
+
+    <!-- Tab 1: Map Points -->
+    <div class="sidebar-actions" id="pointsActions">
+      <button class="btn btn-primary btn-sm" id="addPointBtn">+ Add Point</button>
+    </div>
+    <div class="map-panel active" id="panel-points">
+      <% if (points.length === 0) { %>
+        <div class="empty-state">No map points yet. Click "Add Point" or click on the map.</div>
+      <% } else { %>
+        <% points.forEach(function(p) { %>
+          <div class="point-list-item" data-id="<%= p.id %>">
+            <div class="point-name"><%= p.name_en || p.name %></div>
+            <div class="point-cat"><%= p.category %> &middot; [<%= p.lat.toFixed(4) %>, <%= p.lng.toFixed(4) %>]</div>
+          </div>
+        <% }); %>
+      <% } %>
+    </div>
+
+    <!-- Tab 2: Trails -->
+    <div class="map-panel" id="panel-trails">
+      <div class="trail-select-wrap">
+        <label style="font-size:0.8rem;margin-bottom:0.2rem;display:block;color:var(--admin-text-muted)">Select Hike</label>
+        <select id="hikeSelect">
+          <option value="">-- Choose a hike --</option>
+          <% hikes.forEach(function(h) { %>
+            <option value="<%= h.id %>"><%= h.name_en || h.name %></option>
+          <% }); %>
+        </select>
+      </div>
+      <div class="trail-controls">
+        <button class="btn btn-primary btn-sm" id="drawTrailBtn" disabled>Draw Trail</button>
+        <button class="btn btn-secondary btn-sm" id="clearTrailBtn" disabled>Clear</button>
+        <button class="btn btn-primary btn-sm" id="saveTrailBtn" disabled>Save Trail</button>
+        <button class="btn btn-danger btn-sm" id="deleteTrailBtn" disabled>Delete Trail</button>
+      </div>
+      <div class="trail-info" id="trailInfo">Select a hike to begin.</div>
+    </div>
+
+    <!-- Tab 3: Trail Points -->
+    <div class="map-panel" id="panel-trailpoints">
+      <div id="trailPointsHeader" style="margin-bottom:0.5rem;">
+        <button class="btn btn-primary btn-sm" id="addTrailPointBtn" disabled>+ Add Trail Point</button>
+      </div>
+      <div id="trailPointsList">
+        <div class="empty-state">Select a hike with a trail first.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Map Area -->
+  <div class="map-area">
+    <div id="adminMap"></div>
+  </div>
+</div>
+
+<!-- Map Point Modal -->
+<div class="map-modal-overlay" id="pointModal">
+  <div class="map-modal">
+    <h3 id="pointModalTitle">Add Map Point</h3>
+    <form id="pointForm">
+      <div class="form-row">
+        <div class="form-group">
+          <label>Name (KA)</label>
+          <input type="text" name="name" required>
+        </div>
+        <div class="form-group">
+          <label>Name (EN)</label>
+          <input type="text" name="name_en">
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Category</label>
+        <select name="category" required>
+          <option value="hiking">Hiking</option>
+          <option value="sightseeing">Sightseeing</option>
+          <option value="monastery">Monastery</option>
+          <option value="fortress">Fortress</option>
+          <option value="canyon">Canyon</option>
+          <option value="waterfall">Waterfall</option>
+          <option value="cave">Cave</option>
+          <option value="stone">Stone</option>
+          <option value="volcano">Volcano</option>
+          <option value="nature">Nature</option>
+        </select>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Description (KA)</label>
+          <textarea name="desc" rows="3"></textarea>
+        </div>
+        <div class="form-group">
+          <label>Description (EN)</label>
+          <textarea name="desc_en" rows="3"></textarea>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Linked Hike (optional)</label>
+        <select name="linkedHikeId">
+          <option value="">-- None --</option>
+          <% hikes.forEach(function(h) { %>
+            <option value="<%= h.id %>"><%= h.name_en || h.name %></option>
+          <% }); %>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Photos</label>
+        <div class="photos-area" id="pointPhotosArea">
+          <div class="upload-wrap">
+            <button type="button" class="btn btn-secondary btn-sm" id="pointUploadBtn">Upload Photos</button>
+            <input type="file" accept="image/*" multiple hidden id="pointFileInput">
+            <span class="upload-status" id="pointUploadStatus"></span>
+          </div>
+        </div>
+        <input type="hidden" name="photos" value="[]">
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Latitude</label>
+          <input type="number" name="lat" step="any" required>
+        </div>
+        <div class="form-group">
+          <label>Longitude</label>
+          <input type="number" name="lng" step="any" required>
+        </div>
+      </div>
+      <input type="hidden" name="id" value="">
+      <div class="modal-actions">
+        <button type="submit" class="btn btn-primary">Save</button>
+        <button type="button" class="btn btn-danger" id="deletePointBtn" style="display:none">Delete</button>
+        <button type="button" class="btn btn-secondary" id="cancelPointBtn">Cancel</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Trail Point Modal -->
+<div class="map-modal-overlay" id="trailPointModal">
+  <div class="map-modal">
+    <h3 id="trailPointModalTitle">Add Trail Point</h3>
+    <form id="trailPointForm">
+      <div class="form-group">
+        <label>Point Type</label>
+        <select name="type" required>
+          <option value="water">&#x1F4A7; Water Source</option>
+          <option value="campsite">&#x26FA; Campsite</option>
+          <option value="pass">&#x1F3D4;&#xFE0F; Mountain Pass</option>
+          <option value="toilet">&#x1F6BB; Toilet</option>
+          <option value="viewpoint">&#x1F441;&#xFE0F; Viewpoint</option>
+          <option value="shelter">&#x1F6D6; Shelter</option>
+          <option value="danger">&#x26A0;&#xFE0F; Danger Zone</option>
+          <option value="parking">&#x1F17F;&#xFE0F; Parking</option>
+          <option value="food">&#x1F37D;&#xFE0F; Food/Restaurant</option>
+          <option value="start">&#x1F7E2; Start Point</option>
+          <option value="end">&#x1F534; End Point</option>
+          <option value="photo_spot">&#x1F4F8; Photo Spot</option>
+          <option value="historical">&#x1F3DB;&#xFE0F; Historical Site</option>
+          <option value="bridge">&#x1F309; Bridge</option>
+          <option value="cave">&#x1F573;&#xFE0F; Cave</option>
+        </select>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Name (KA)</label>
+          <input type="text" name="name" required>
+        </div>
+        <div class="form-group">
+          <label>Name (EN)</label>
+          <input type="text" name="name_en">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Description (KA)</label>
+          <textarea name="desc" rows="2"></textarea>
+        </div>
+        <div class="form-group">
+          <label>Description (EN)</label>
+          <textarea name="desc_en" rows="2"></textarea>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Photos</label>
+        <div class="photos-area" id="tpPhotosArea">
+          <div class="upload-wrap">
+            <button type="button" class="btn btn-secondary btn-sm" id="tpUploadBtn">Upload Photos</button>
+            <input type="file" accept="image/*" multiple hidden id="tpFileInput">
+            <span class="upload-status" id="tpUploadStatus"></span>
+          </div>
+        </div>
+        <input type="hidden" name="photos" value="[]">
+      </div>
+      <div class="form-group">
+        <label>Elevation (m, optional)</label>
+        <input type="number" name="elevation" step="any">
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Latitude</label>
+          <input type="number" name="lat" step="any" required>
+        </div>
+        <div class="form-group">
+          <label>Longitude</label>
+          <input type="number" name="lng" step="any" required>
+        </div>
+      </div>
+      <input type="hidden" name="tpIndex" value="-1">
+      <div class="modal-actions">
+        <button type="submit" class="btn btn-primary">Save</button>
+        <button type="button" class="btn btn-danger" id="deleteTrailPointBtn" style="display:none">Delete</button>
+        <button type="button" class="btn btn-secondary" id="cancelTrailPointBtn">Cancel</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script>
+  window.__MAP_POINTS__ = <%- JSON.stringify(points) %>;
+  window.__HIKES__ = <%- JSON.stringify(hikes.map(function(h) { return { id: h.id, name: h.name, name_en: h.name_en, route: h.route || {} }; })) %>;
+</script>
+<script src="https://unpkg.com/leaflet-draw@1.0.4/dist/leaflet.draw.js"></script>
+<script src="/js/admin-map.js"></script>

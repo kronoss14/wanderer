@@ -1,0 +1,9 @@
+# ── namespace.yaml ──────────────────────────────────────
+# Create a namespace for our app.
+# Remember from Nana's video: namespaces organize resources.
+# Instead of dumping everything in "default", we keep our stuff separate.
+
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: wanderer

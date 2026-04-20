@@ -1,0 +1,144 @@
+# ── mongodb.yaml ────────────────────────────────────────
+# MongoDB deployed as a StatefulSet with PersistentVolume.
+#
+# Why StatefulSet and not Deployment?
+# From Nana's video:
+#   - StatefulSet gives pods STABLE IDENTITY (mongodb-0, mongodb-1, etc.)
+#   - Each pod gets its OWN PersistentVolume (data isn't shared/lost)
+#   - Pods start/stop in ORDER (mongodb-0 first, then mongodb-1)
+#   - This is critical for databases — you can't just randomly restart them
+#
+# We also need a HEADLESS SERVICE (clusterIP: None).
+# This gives each Pod its own DNS name:
+#   mongodb-0.mongodb-headless.wanderer.svc.cluster.local
+# Instead of a single virtual IP that load-balances randomly.
+
+---
+# ── Secret for MongoDB credentials ──
+apiVersion: v1
+kind: Secret
+metadata:
+  name: mongodb-secret
+  namespace: wanderer
+type: Opaque
+stringData:
+  MONGO_INITDB_ROOT_USERNAME: "wanderer-admin"
+  MONGO_INITDB_ROOT_PASSWORD: "W4nd3r3r-M0ng0-2026!"
+
+---
+# ── Headless Service ──
+# clusterIP: None makes this "headless".
+# Normal Service: clients talk to ONE virtual IP, traffic gets load-balanced.
+# Headless Service: clients get the ACTUAL Pod IPs directly via DNS.
+# Required for StatefulSets — each Pod needs a unique, stable DNS name.
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: mongodb-headless
+  namespace: wanderer
+spec:
+  clusterIP: None       # ← THIS makes it headless
+  selector:
+    app: mongodb
+  ports:
+    - port: 27017
+      targetPort: 27017
+
+---
+# ── StorageClass ──
+# Remember from Nana's video — StorageClass enables DYNAMIC provisioning.
+# Instead of an admin manually creating PersistentVolumes,
+# StorageClass automatically creates them when a PVC requests storage.
+#
+# K3s comes with a "local-path" StorageClass built in.
+# It stores data on the node's local disk.
+# For learning this is fine. In production you'd use cloud storage.
+
+# (K3s already has local-path provisioner — we'll use it directly in the StatefulSet)
+
+---
+# ── StatefulSet ──
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: mongodb
+  namespace: wanderer
+spec:
+  serviceName: mongodb-headless    # ← links to the headless Service above
+  replicas: 1                      # single instance (no replication for learning)
+
+  selector:
+    matchLabels:
+      app: mongodb
+
+  template:
+    metadata:
+      labels:
+        app: mongodb
+    spec:
+      containers:
+        - name: mongodb
+          image: mongo:7           # official MongoDB 7 image
+
+          ports:
+            - containerPort: 27017
+
+          # Credentials from the Secret
+          env:
+            - name: MONGO_INITDB_ROOT_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: mongodb-secret
+                  key: MONGO_INITDB_ROOT_USERNAME
+            - name: MONGO_INITDB_ROOT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mongodb-secret
+                  key: MONGO_INITDB_ROOT_PASSWORD
+
+          # Mount the persistent volume at MongoDB's data directory
+          volumeMounts:
+            - name: mongodb-data
+              mountPath: /data/db       # where MongoDB stores its data
+
+          resources:
+            requests:
+              memory: "256Mi"
+              cpu: "200m"
+            limits:
+              memory: "512Mi"
+              cpu: "500m"
+
+  # volumeClaimTemplates — THIS is the StatefulSet magic.
+  # Each Pod gets its OWN PersistentVolumeClaim (and therefore its own PV).
+  # Pod "mongodb-0" gets PVC "mongodb-data-mongodb-0"
+  # If we had a second replica, "mongodb-1" would get "mongodb-data-mongodb-1"
+  # Data survives Pod restarts — kill the Pod, new one mounts the same volume.
+  volumeClaimTemplates:
+    - metadata:
+        name: mongodb-data
+      spec:
+        accessModes: ["ReadWriteOnce"]    # only one Pod can write at a time
+        storageClassName: local-path       # K3s built-in provisioner
+        resources:
+          requests:
+            storage: 5Gi                   # 5 GB for the database
+
+---
+# ── Regular Service for app to connect ──
+# This is a normal ClusterIP Service (not headless).
+# The app connects to "mongodb-service:27017" — simple and clean.
+# Like the mongodb-service in Nana's demo project.
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: mongodb-service
+  namespace: wanderer
+spec:
+  selector:
+    app: mongodb
+  ports:
+    - port: 27017
+      targetPort: 27017

@@ -1,0 +1,180 @@
+# ── playbook.yml ────────────────────────────────────────
+# WHAT to do on the servers. This is the main Ansible file.
+#
+# A playbook contains "plays". Each play targets a group of hosts
+# and runs a list of tasks on them.
+#
+# Structure:
+#   - Play 1: "Install Docker on ALL servers"
+#   - Play 2: "Install Rancher on the rancher server only"
+#
+# Tasks run TOP TO BOTTOM, in order. If one fails, Ansible stops.
+
+---
+
+# ═══════════════════════════════════════════════════════════
+# PLAY 1: Install Docker on ALL servers
+# ═══════════════════════════════════════════════════════════
+# "hosts: all" means every server in the inventory file.
+# Both rancher-server and k8s-node need Docker.
+
+- name: Install Docker on all servers
+  hosts: all
+  become: true    # run as root (sudo)
+
+  tasks:
+
+    # ── Task 1: Update apt package cache ──
+    # Like running "sudo apt update" — refreshes the list of available packages.
+    # "apt" is the Ansible MODULE for managing packages on Debian/Ubuntu.
+    # Modules are Ansible's built-in tools — each one does a specific thing.
+    - name: Update apt cache
+      apt:
+        update_cache: true
+        cache_valid_time: 3600    # don't re-update if cache is less than 1 hour old
+
+    # ── Task 2: Install packages Docker needs ──
+    # These are prerequisites — Docker's install script needs them.
+    # "loop" runs the same task multiple times, once per item in the list.
+    # {{ item }} is replaced with each package name.
+    - name: Install Docker prerequisites
+      apt:
+        name: "{{ item }}"
+        state: present    # "present" = make sure it's installed. "absent" = make sure it's removed.
+      loop:
+        - apt-transport-https     # lets apt use HTTPS repos
+        - ca-certificates         # SSL certificates
+        - curl                    # download tool
+        - gnupg                   # encryption keys
+        - lsb-release             # Linux Standard Base info
+
+    # ── Task 3: Add Docker's GPG key ──
+    # Package managers verify downloads using GPG keys.
+    # This adds Docker's official key so apt trusts Docker's packages.
+    - name: Add Docker GPG key
+      shell: |
+        install -m 0755 -d /etc/apt/keyrings
+        curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
+        chmod a+r /etc/apt/keyrings/docker.asc
+      args:
+        creates: /etc/apt/keyrings/docker.asc
+        # "creates" makes this task IDEMPOTENT — if the file already exists,
+        # Ansible skips this task. Run the playbook 10 times, key is added once.
+
+    # ── Task 4: Add Docker's apt repository ──
+    # Tells apt WHERE to download Docker packages from.
+    # Like adding a PPA. Without this, "apt install docker-ce" would fail.
+    - name: Add Docker apt repository
+      shell: |
+        echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" > /etc/apt/sources.list.d/docker.list
+      args:
+        creates: /etc/apt/sources.list.d/docker.list
+
+    # ── Task 5: Update apt again (now with Docker repo added) ──
+    - name: Update apt cache after adding Docker repo
+      apt:
+        update_cache: true
+
+    # ── Task 6: Install Docker ──
+    # docker-ce = Docker Community Edition (the engine)
+    # docker-ce-cli = the "docker" command
+    # containerd.io = container runtime (what actually runs containers)
+    - name: Install Docker packages
+      apt:
+        name:
+          - docker-ce
+          - docker-ce-cli
+          - containerd.io
+        state: present
+
+    # ── Task 7: Start and enable Docker service ──
+    # "started" = start it now
+    # "enabled" = start automatically on boot (survives reboots)
+    # Like "systemctl start docker && systemctl enable docker"
+    - name: Start and enable Docker
+      systemd:
+        name: docker
+        state: started
+        enabled: true
+
+    # ── Task 8: Add our user to the docker group ──
+    # Without this, you'd need "sudo" before every docker command.
+    # Adding user to "docker" group lets them run docker without sudo.
+    - name: Add azureuser to docker group
+      user:
+        name: azureuser
+        groups: docker
+        append: true    # APPEND to existing groups, don't replace them
+
+
+# ═══════════════════════════════════════════════════════════
+# PLAY 2: Install Rancher on the Rancher server
+# ═══════════════════════════════════════════════════════════
+# "hosts: rancher" means ONLY servers in the [rancher] group.
+# We don't want Rancher on the worker node.
+
+- name: Install Rancher on the Rancher server
+  hosts: rancher
+  become: true
+
+  tasks:
+
+    # ── Task 1: Run Rancher as a Docker container ──
+    # Rancher itself runs as a Docker container — beautifully simple.
+    # One command and you have a full K8s management platform.
+    #
+    # docker_container is an Ansible module for managing Docker containers.
+    # It's like running "docker run" but declarative and idempotent.
+    #
+    # Flags explained:
+    #   --restart=unless-stopped → restart automatically if it crashes or VM reboots
+    #   -p 80:80 -p 443:443 → expose HTTP and HTTPS ports
+    #   --privileged → Rancher needs full system access to manage K8s
+    #   -v rancher-data:/var/lib/rancher → persist data in a Docker volume
+    - name: Run Rancher container
+      docker_container:
+        name: rancher
+        image: rancher/rancher:latest
+        state: started
+        restart_policy: unless-stopped
+        privileged: true
+        published_ports:
+          - "80:80"
+          - "443:443"
+        volumes:
+          - "rancher-data:/var/lib/rancher"
+
+    # ── Task 2: Wait for Rancher to be ready ──
+    # Rancher takes ~1-2 minutes to fully start up.
+    # This task keeps checking https://localhost/ping until it responds.
+    # "validate_certs: false" because Rancher uses a self-signed certificate.
+    - name: Wait for Rancher to be ready
+      uri:
+        url: https://localhost/ping
+        validate_certs: false
+        status_code: 200
+      register: rancher_health    # save the result in a variable
+      until: rancher_health.status == 200    # keep trying until HTTP 200
+      retries: 30                 # try up to 30 times
+      delay: 10                   # wait 10 seconds between retries (30 x 10 = 5 min max)
+
+    # ── Task 3: Get the initial admin password ──
+    # Rancher generates a random bootstrap password on first run.
+    # We need it to log into the UI for the first time.
+    # This runs "docker logs" and grabs the password from the output.
+    - name: Get Rancher bootstrap password
+      shell: docker logs rancher 2>&1 | grep "Bootstrap Password:" | tail -1
+      register: bootstrap_password    # save output to a variable
+      changed_when: false             # this task doesn't change anything, just reads
+
+    # ── Task 4: Print the password ──
+    # "debug" module prints a message to your terminal.
+    # bootstrap_password.stdout = the text output from the previous shell command.
+    - name: Display Rancher bootstrap password
+      debug:
+        msg: |
+          ════════════════════════════════════════════
+          Rancher is ready!
+          URL:  https://{{ ansible_host }}
+          Bootstrap password: {{ bootstrap_password.stdout }}
+          ════════════════════════════════════════════

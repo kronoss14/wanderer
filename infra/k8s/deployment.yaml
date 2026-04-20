@@ -1,0 +1,102 @@
+# ── deployment.yaml ─────────────────────────────────────
+# The Deployment — manages our Pod replicas.
+# This is exactly what Nana explained:
+#   Deployment → manages → ReplicaSet → manages → Pod(s)
+#
+# We define the desired state, K8s makes it happen.
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: wanderer                  # name of the Deployment
+  namespace: wanderer             # which namespace it lives in
+  labels:
+    app: wanderer                 # label on the Deployment itself
+spec:
+  replicas: 2                     # run 2 identical Pods (high availability)
+
+  # selector — HOW the Deployment finds its Pods.
+  # "Manage all Pods that have the label app=wanderer"
+  selector:
+    matchLabels:
+      app: wanderer
+
+  # template — the BLUEPRINT for each Pod.
+  # Every replica Pod is created from this template.
+  template:
+    metadata:
+      labels:
+        app: wanderer             # Pod label — MUST match selector above
+    spec:
+      # imagePullSecrets — tells K8s which Secret has the registry credentials
+      # Without this, K8s can't pull from private ghcr.io repos
+      imagePullSecrets:
+        - name: ghcr-secret
+
+      containers:
+        - name: wanderer
+          image: ghcr.io/kronoss14/wanderer:latest
+
+          # ports — which port the container listens on
+          # Same as containerPort in Nana's examples
+          ports:
+            - containerPort: 3000
+
+          # Environment variables FROM the ConfigMap
+          envFrom:
+            - configMapRef:
+                name: wanderer-config
+
+          # Environment variables FROM the Secret
+          # Each key in the Secret becomes an env var
+          env:
+            - name: EMAIL_USER
+              valueFrom:
+                secretKeyRef:
+                  name: wanderer-secret
+                  key: EMAIL_USER
+            - name: EMAIL_PASS
+              valueFrom:
+                secretKeyRef:
+                  name: wanderer-secret
+                  key: EMAIL_PASS
+            - name: ADMIN_PASSWORD_HASH
+              valueFrom:
+                secretKeyRef:
+                  name: wanderer-secret
+                  key: ADMIN_PASSWORD_HASH
+            - name: SESSION_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: wanderer-secret
+                  key: SESSION_SECRET
+
+          # Resource limits — how much CPU/memory this container can use
+          # requests = guaranteed minimum
+          # limits = maximum allowed
+          resources:
+            requests:
+              memory: "128Mi"
+              cpu: "100m"         # 100 millicores = 0.1 CPU
+            limits:
+              memory: "256Mi"
+              cpu: "500m"         # 500 millicores = 0.5 CPU
+
+          # Readiness probe — is the Pod ready to receive traffic?
+          # K8s checks this endpoint. If it fails, Pod is removed from Service.
+          # Same concept Nana explained in the probes section.
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 3000
+            initialDelaySeconds: 5
+            periodSeconds: 10
+
+          # Liveness probe — is the Pod still alive?
+          # If this fails, K8s restarts the container.
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 3000
+            initialDelaySeconds: 15
+            periodSeconds: 20

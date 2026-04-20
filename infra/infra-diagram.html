@@ -1,0 +1,836 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Wanderer — Full Infrastructure Map</title>
+<style>
+  :root {
+    --bg: #0b1120;
+    --card: #131c31;
+    --border: rgba(255,255,255,0.08);
+    --text: #cbd5e1;
+    --text-dim: rgba(255,255,255,0.4);
+    --blue: #3b82f6;
+    --green: #22c55e;
+    --orange: #f97316;
+    --purple: #a78bfa;
+    --cyan: #06b6d4;
+    --pink: #ec4899;
+    --yellow: #eab308;
+    --red: #ef4444;
+    --teal: #14b8a6;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: var(--bg); color: var(--text); font-family: 'Inter', 'Segoe UI', system-ui, sans-serif; }
+
+  /* ── HEADER ── */
+  .header {
+    text-align: center;
+    padding: 40px 20px 10px;
+  }
+  .header h1 {
+    font-size: 32px;
+    font-weight: 700;
+    background: linear-gradient(135deg, var(--blue), var(--purple));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 8px;
+  }
+  .header p { color: var(--text-dim); font-size: 14px; }
+
+  /* ── SECTION LAYOUT ── */
+  .sections {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 30px 20px 60px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .section {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 24px;
+    position: relative;
+    overflow: visible;
+  }
+  .section-label {
+    position: absolute;
+    top: -11px;
+    left: 24px;
+    background: var(--card);
+    padding: 0 12px;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-weight: 700;
+  }
+
+  /* ── FLOW ROW ── */
+  .flow-row {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  /* ── COMPONENT CARD ── */
+  .comp {
+    border-radius: 10px;
+    padding: 14px 18px;
+    min-width: 140px;
+    max-width: 180px;
+    text-align: center;
+    position: relative;
+    opacity: 0;
+    animation: fadeSlideIn 0.5s forwards;
+  }
+  .comp .icon { font-size: 24px; margin-bottom: 6px; }
+  .comp .title { font-size: 13px; font-weight: 700; margin-bottom: 2px; }
+  .comp .sub { font-size: 10px; opacity: 0.6; line-height: 1.4; }
+  .comp .ip { font-family: monospace; font-size: 10px; color: var(--cyan); margin-top: 4px; }
+  .comp .tag {
+    display: inline-block;
+    font-size: 9px;
+    padding: 2px 6px;
+    border-radius: 4px;
+    margin-top: 6px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  @keyframes fadeSlideIn {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── ARROW BETWEEN COMPONENTS ── */
+  .arrow {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0 6px;
+    min-width: 50px;
+    opacity: 0;
+    animation: fadeSlideIn 0.5s forwards;
+  }
+  .arrow .arrow-label {
+    font-size: 9px;
+    color: var(--text-dim);
+    white-space: nowrap;
+    margin-bottom: 2px;
+  }
+  .arrow .arrow-line-h {
+    width: 40px;
+    height: 2px;
+    position: relative;
+  }
+  .arrow .arrow-line-h::after {
+    content: '';
+    position: absolute;
+    right: -1px;
+    top: -4px;
+    border: 5px solid transparent;
+  }
+
+  /* vertical arrow */
+  .arrow-down {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 4px 0;
+    opacity: 0;
+    animation: fadeSlideIn 0.5s forwards;
+  }
+  .arrow-down .arrow-label { font-size: 9px; color: var(--text-dim); margin-bottom: 2px; }
+  .arrow-down .arrow-line-v {
+    width: 2px;
+    height: 24px;
+  }
+
+  /* ── COLOR THEMES ── */
+  .c-blue   { background: rgba(59,130,246,0.1); border: 1.5px solid rgba(59,130,246,0.4); }
+  .c-green  { background: rgba(34,197,94,0.1); border: 1.5px solid rgba(34,197,94,0.4); }
+  .c-orange { background: rgba(249,115,22,0.1); border: 1.5px solid rgba(249,115,22,0.4); }
+  .c-purple { background: rgba(167,139,250,0.1); border: 1.5px solid rgba(167,139,250,0.4); }
+  .c-cyan   { background: rgba(6,182,212,0.1); border: 1.5px solid rgba(6,182,212,0.4); }
+  .c-pink   { background: rgba(236,72,153,0.1); border: 1.5px solid rgba(236,72,153,0.4); }
+  .c-yellow { background: rgba(234,179,8,0.1); border: 1.5px solid rgba(234,179,8,0.4); }
+  .c-teal   { background: rgba(20,184,166,0.1); border: 1.5px solid rgba(20,184,166,0.4); }
+  .c-red    { background: rgba(239,68,68,0.1); border: 1.5px solid rgba(239,68,68,0.4); }
+
+  .tag-blue   { background: rgba(59,130,246,0.2); color: var(--blue); }
+  .tag-green  { background: rgba(34,197,94,0.2); color: var(--green); }
+  .tag-orange { background: rgba(249,115,22,0.2); color: var(--orange); }
+  .tag-purple { background: rgba(167,139,250,0.2); color: var(--purple); }
+  .tag-cyan   { background: rgba(6,182,212,0.2); color: var(--cyan); }
+  .tag-pink   { background: rgba(236,72,153,0.2); color: var(--pink); }
+  .tag-yellow { background: rgba(234,179,8,0.2); color: var(--yellow); }
+  .tag-teal   { background: rgba(20,184,166,0.2); color: var(--teal); }
+
+  .s-label-blue { color: var(--blue); }
+  .s-label-pink { color: var(--pink); }
+  .s-label-cyan { color: var(--cyan); }
+  .s-label-green { color: var(--green); }
+  .s-label-purple { color: var(--purple); }
+  .s-label-orange { color: var(--orange); }
+  .s-label-yellow { color: var(--yellow); }
+  .s-label-teal { color: var(--teal); }
+
+  /* ── PULSE DOT ── */
+  .pulse {
+    display: inline-block;
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    margin-right: 4px;
+    vertical-align: middle;
+    animation: pulse 2s ease-in-out infinite;
+  }
+  .pulse-green { background: var(--green); }
+  .pulse-orange { background: var(--orange); }
+  @keyframes pulse {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(34,197,94,0.5); }
+    50% { box-shadow: 0 0 0 6px rgba(34,197,94,0); }
+  }
+
+  /* ── GRID LAYOUTS ── */
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+  .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+
+  .center { display: flex; justify-content: center; }
+  .wrap { flex-wrap: wrap; }
+  .gap-12 { gap: 12px; }
+  .gap-16 { gap: 16px; }
+  .mt-16 { margin-top: 16px; }
+  .mt-8 { margin-top: 8px; }
+  .mb-8 { margin-bottom: 8px; }
+
+  /* ── EXPLANATION BOXES ── */
+  .explain {
+    background: rgba(255,255,255,0.03);
+    border-left: 3px solid var(--blue);
+    padding: 12px 16px;
+    font-size: 12px;
+    line-height: 1.6;
+    border-radius: 0 8px 8px 0;
+    color: var(--text-dim);
+  }
+  .explain strong { color: var(--text); }
+  .explain code {
+    background: rgba(255,255,255,0.08);
+    padding: 1px 5px;
+    border-radius: 3px;
+    font-size: 11px;
+    color: var(--cyan);
+  }
+
+  .explain-green { border-left-color: var(--green); }
+  .explain-orange { border-left-color: var(--orange); }
+  .explain-purple { border-left-color: var(--purple); }
+  .explain-yellow { border-left-color: var(--yellow); }
+  .explain-cyan { border-left-color: var(--cyan); }
+
+  /* ── FLOW VISUALIZATION ── */
+  .big-flow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+    padding: 20px 10px;
+    flex-wrap: wrap;
+  }
+  .flow-step {
+    text-align: center;
+    padding: 10px 16px;
+    border-radius: 8px;
+    font-size: 12px;
+    font-weight: 600;
+    min-width: 100px;
+    opacity: 0;
+    animation: fadeSlideIn 0.5s forwards;
+  }
+  .flow-step .step-num {
+    font-size: 9px;
+    opacity: 0.5;
+    margin-bottom: 2px;
+  }
+  .flow-arrow {
+    color: var(--text-dim);
+    font-size: 18px;
+    padding: 0 4px;
+    opacity: 0;
+    animation: fadeSlideIn 0.5s forwards;
+  }
+
+  /* ── ANIMATED DATA FLOW ── */
+  .flow-track {
+    position: relative;
+    height: 4px;
+    background: rgba(255,255,255,0.05);
+    border-radius: 2px;
+    margin: 20px 0;
+    overflow: hidden;
+  }
+  .flow-track .particle {
+    position: absolute;
+    top: 0;
+    left: -20px;
+    width: 20px;
+    height: 4px;
+    border-radius: 2px;
+    animation: flowAcross 3s linear infinite;
+  }
+  .particle-blue { background: linear-gradient(90deg, transparent, var(--blue), transparent); }
+  .particle-green { background: linear-gradient(90deg, transparent, var(--green), transparent); animation-delay: 1.5s !important; }
+
+  @keyframes flowAcross {
+    from { left: -20px; }
+    to { left: 100%; }
+  }
+
+  /* ── DELAYS ── */
+  .d1 { animation-delay: 0.05s; } .d2 { animation-delay: 0.1s; } .d3 { animation-delay: 0.15s; }
+  .d4 { animation-delay: 0.2s; } .d5 { animation-delay: 0.25s; } .d6 { animation-delay: 0.3s; }
+  .d7 { animation-delay: 0.35s; } .d8 { animation-delay: 0.4s; } .d9 { animation-delay: 0.45s; }
+  .d10 { animation-delay: 0.5s; } .d11 { animation-delay: 0.55s; } .d12 { animation-delay: 0.6s; }
+
+  /* ── STEP NUMBER BADGES ── */
+  .step-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 22px; height: 22px;
+    border-radius: 50%;
+    font-size: 11px;
+    font-weight: 700;
+    margin-right: 8px;
+  }
+
+  /* ── DIVIDER ── */
+  .divider {
+    height: 1px;
+    background: var(--border);
+    margin: 16px 0;
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>Wanderer Infrastructure</h1>
+  <p>Complete DevOps pipeline — from code to production on Kubernetes</p>
+</div>
+
+<div class="sections">
+
+  <!-- ════════════════════════════════════════════════════ -->
+  <!-- SECTION 1: REQUEST FLOW -->
+  <!-- ════════════════════════════════════════════════════ -->
+  <div class="section">
+    <div class="section-label s-label-blue">How a Request Flows (User → App)</div>
+
+    <div class="big-flow">
+      <div class="flow-step c-blue d1">
+        <div class="step-num">STEP 1</div>
+        Browser
+      </div>
+      <div class="flow-arrow d2">→</div>
+      <div class="flow-step c-cyan d3">
+        <div class="step-num">STEP 2</div>
+        Azure NSG<br><span style="font-size:10px;opacity:0.6">Firewall allows :80</span>
+      </div>
+      <div class="flow-arrow d4">→</div>
+      <div class="flow-step c-yellow d5">
+        <div class="step-num">STEP 3</div>
+        Nginx Ingress<br><span style="font-size:10px;opacity:0.6">Routes path /</span>
+      </div>
+      <div class="flow-arrow d6">→</div>
+      <div class="flow-step c-teal d7">
+        <div class="step-num">STEP 4</div>
+        K8s Service<br><span style="font-size:10px;opacity:0.6">Load balances</span>
+      </div>
+      <div class="flow-arrow d8">→</div>
+      <div class="flow-step c-orange d9">
+        <div class="step-num">STEP 5</div>
+        Pod<br><span style="font-size:10px;opacity:0.6">Node.js app :3000</span>
+      </div>
+      <div class="flow-arrow d10">→</div>
+      <div class="flow-step c-green d11">
+        <div class="step-num">STEP 6</div>
+        MongoDB<br><span style="font-size:10px;opacity:0.6">Read/write data</span>
+      </div>
+    </div>
+
+    <div class="flow-track">
+      <div class="particle particle-blue"></div>
+      <div class="particle particle-green"></div>
+    </div>
+
+    <div class="explain">
+      <strong>The request path:</strong> A user opens <code>http://20.107.210.13:30080</code>.
+      The Azure NSG firewall checks if port 30080 is allowed (it is — NodePort range).
+      <strong>Nginx Ingress Controller</strong> receives the request, evaluates the Ingress rules, and forwards to <code>wanderer-service</code>.
+      The Service <strong>load-balances</strong> across healthy Pods. The Pod runs the Node.js app which queries <strong>MongoDB</strong> for data.
+      Response flows back the same path.
+    </div>
+  </div>
+
+  <!-- ════════════════════════════════════════════════════ -->
+  <!-- SECTION 2: DEVOPS PIPELINE -->
+  <!-- ════════════════════════════════════════════════════ -->
+  <div class="section">
+    <div class="section-label s-label-pink">DevOps Pipeline (How We Built It)</div>
+
+    <div class="big-flow">
+      <div class="flow-step c-pink d1">
+        <div class="step-num">1</div>
+        Code<br><span style="font-size:10px;opacity:0.6">GitHub repo</span>
+      </div>
+      <div class="flow-arrow d2">→</div>
+      <div class="flow-step c-orange d3">
+        <div class="step-num">2</div>
+        Docker Build<br><span style="font-size:10px;opacity:0.6">Dockerfile</span>
+      </div>
+      <div class="flow-arrow d4">→</div>
+      <div class="flow-step c-purple d5">
+        <div class="step-num">3</div>
+        Push Image<br><span style="font-size:10px;opacity:0.6">ghcr.io</span>
+      </div>
+      <div class="flow-arrow d6">→</div>
+      <div class="flow-step c-pink d7">
+        <div class="step-num">4</div>
+        Terraform<br><span style="font-size:10px;opacity:0.6">Create Azure VMs</span>
+      </div>
+      <div class="flow-arrow d8">→</div>
+      <div class="flow-step c-pink d9">
+        <div class="step-num">5</div>
+        Ansible<br><span style="font-size:10px;opacity:0.6">Install Docker+Rancher</span>
+      </div>
+      <div class="flow-arrow d10">→</div>
+      <div class="flow-step c-green d11">
+        <div class="step-num">6</div>
+        Rancher<br><span style="font-size:10px;opacity:0.6">Create K8s cluster</span>
+      </div>
+      <div class="flow-arrow d12">→</div>
+      <div class="flow-step c-blue d12">
+        <div class="step-num">7</div>
+        kubectl apply<br><span style="font-size:10px;opacity:0.6">Deploy manifests</span>
+      </div>
+    </div>
+
+    <div class="explain explain-purple">
+      <strong>Infrastructure as Code:</strong> Nothing was clicked in a UI (except Rancher login).
+      <strong>Terraform</strong> created all Azure resources (VMs, network, firewall) from <code>.tf</code> files.
+      <strong>Ansible</strong> configured the VMs (installed Docker, started Rancher) via SSH — no manual setup.
+      <strong>Rancher API</strong> created the K8s cluster and registered the worker node.
+      <strong>kubectl apply</strong> deployed all K8s manifests. Everything is version-controlled and reproducible.
+    </div>
+  </div>
+
+  <!-- ════════════════════════════════════════════════════ -->
+  <!-- SECTION 3: AZURE INFRASTRUCTURE (Terraform) -->
+  <!-- ════════════════════════════════════════════════════ -->
+  <div class="section">
+    <div class="section-label s-label-cyan">Azure Infrastructure <span style="opacity:0.5">(created by Terraform)</span></div>
+
+    <div class="explain explain-cyan mb-8">
+      <strong>Terraform</strong> created 14 resources with <code>terraform apply</code>.
+      A <strong>Resource Group</strong> is the top-level container — delete it and everything inside is destroyed.
+      The <strong>VNet</strong> is a private network (<code>10.0.0.0/16</code>) and the <strong>Subnet</strong> is a slice of it (<code>10.0.1.0/24</code>).
+      The <strong>NSG</strong> is a firewall — like a Cisco ACL. Each VM has a <strong>NIC</strong> (network interface) connecting it to the subnet, and a <strong>Public IP</strong> for external access.
+    </div>
+
+    <div class="grid-3 mt-8">
+      <!-- Resource Group -->
+      <div class="comp c-cyan d1">
+        <div class="icon">📦</div>
+        <div class="title">Resource Group</div>
+        <div class="sub">wanderer-rg</div>
+        <div class="sub">Container for all resources</div>
+        <div class="tag tag-cyan">delete this = delete everything</div>
+      </div>
+
+      <!-- VNet -->
+      <div class="comp c-cyan d2">
+        <div class="icon">🌐</div>
+        <div class="title">Virtual Network</div>
+        <div class="sub">wanderer-vnet</div>
+        <div class="ip">10.0.0.0/16 (65,536 IPs)</div>
+        <div class="tag tag-cyan">private network</div>
+      </div>
+
+      <!-- NSG -->
+      <div class="comp c-cyan d3">
+        <div class="icon">🛡️</div>
+        <div class="title">NSG (Firewall)</div>
+        <div class="sub">Allows: SSH(22), HTTP(80),<br>HTTPS(443), K8s(6443),<br>NodePort(30000-32767)</div>
+        <div class="tag tag-cyan">like cisco acl</div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="grid-2 mt-8">
+      <!-- Rancher VM -->
+      <div class="comp c-purple d4">
+        <div class="icon">🖥️</div>
+        <div class="title"><span class="pulse pulse-green"></span> rancher-server</div>
+        <div class="sub">Ubuntu 22.04 • 2 vCPU • 4 GB RAM</div>
+        <div class="ip">Public: 20.123.3.31</div>
+        <div class="sub">Runs: Docker + Rancher container</div>
+        <div class="tag tag-purple">management vm</div>
+      </div>
+
+      <!-- K8s Node VM -->
+      <div class="comp c-purple d5">
+        <div class="icon">🖥️</div>
+        <div class="title"><span class="pulse pulse-green"></span> k8s-node</div>
+        <div class="sub">Ubuntu 22.04 • 2 vCPU • 4 GB RAM</div>
+        <div class="ip">Public: 20.107.210.13</div>
+        <div class="sub">Runs: K3s (etcd + control plane + worker)</div>
+        <div class="tag tag-purple">workload vm</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════════════════════════════════════════════════ -->
+  <!-- SECTION 4: RANCHER -->
+  <!-- ════════════════════════════════════════════════════ -->
+  <div class="section">
+    <div class="section-label s-label-green">Rancher <span style="opacity:0.5">(K8s Management)</span></div>
+
+    <div class="flow-row center gap-16">
+      <div class="comp c-green d1">
+        <div class="icon">🐮</div>
+        <div class="title"><span class="pulse pulse-green"></span> Rancher</div>
+        <div class="sub">Runs as Docker container<br>on rancher-server VM</div>
+        <div class="ip">https://20.123.3.31</div>
+        <div class="tag tag-green">web ui + api</div>
+      </div>
+
+      <div class="arrow d2">
+        <div class="arrow-label">manages</div>
+        <div class="arrow-line-h" style="background: var(--green);"></div>
+      </div>
+
+      <div class="comp c-green d3">
+        <div class="icon">☸️</div>
+        <div class="title">wanderer-cluster</div>
+        <div class="sub">K3s (lightweight K8s)<br>Created via Rancher API</div>
+        <div class="ip">v1.31.6+k3s1</div>
+        <div class="tag tag-green">1 node cluster</div>
+      </div>
+    </div>
+
+    <div class="explain explain-green mt-16">
+      <strong>Rancher</strong> is a K8s management platform — it creates, monitors, and manages clusters.
+      It runs as a single Docker container on its own VM.
+      We used its <strong>REST API</strong> to create the cluster and get a <strong>registration command</strong>.
+      Running that command on <code>k8s-node</code> installed K3s and joined it to Rancher.
+      <strong>kubectl</strong> on your laptop talks to the cluster through Rancher (Rancher proxies the K8s API).
+    </div>
+  </div>
+
+  <!-- ════════════════════════════════════════════════════ -->
+  <!-- SECTION 5: KUBERNETES CLUSTER -->
+  <!-- ════════════════════════════════════════════════════ -->
+  <div class="section">
+    <div class="section-label s-label-purple">Kubernetes Cluster <span style="opacity:0.5">(on k8s-node)</span></div>
+
+    <div class="explain explain-purple mb-8">
+      The cluster has <strong>3 namespaces</strong> we created: <code>wanderer</code> (app + DB), <code>ingress-nginx</code> (Nginx controller), <code>logging</code> (Elasticsearch + Fluent Bit).
+      Each namespace isolates its resources. Components find each other via <strong>Labels &amp; Selectors</strong> and <strong>DNS</strong> names like <code>mongodb-service.wanderer.svc.cluster.local</code>.
+    </div>
+
+    <!-- NAMESPACE: wanderer -->
+    <div class="section mt-8" style="border-color: rgba(249,115,22,0.3); background: rgba(249,115,22,0.03);">
+      <div class="section-label s-label-orange">namespace: wanderer</div>
+
+      <!-- INGRESS + SERVICE -->
+      <div class="flow-row center gap-12 mt-8">
+        <div class="comp c-yellow d1" style="min-width:160px">
+          <div class="icon">🚪</div>
+          <div class="title">Ingress</div>
+          <div class="sub">ingressClassName: nginx<br>path: / → wanderer-service</div>
+          <div class="tag tag-yellow">routes http traffic</div>
+        </div>
+        <div class="arrow d2">
+          <div class="arrow-label">forwards to</div>
+          <div class="arrow-line-h" style="background: var(--yellow);"></div>
+        </div>
+        <div class="comp c-teal d3" style="min-width:160px">
+          <div class="icon">🔀</div>
+          <div class="title">wanderer-service</div>
+          <div class="sub">ClusterIP (internal)<br>port 80 → targetPort 3000</div>
+          <div class="ip">10.43.117.175:80</div>
+          <div class="tag tag-teal">load balancer</div>
+        </div>
+      </div>
+
+      <div class="divider"></div>
+
+      <!-- PODS -->
+      <div style="text-align:center;margin-bottom:8px">
+        <span style="font-size:11px;color:var(--text-dim);text-transform:uppercase;letter-spacing:1px">Pods (managed by Deployment, replicas: 1)</span>
+      </div>
+      <div class="flow-row center gap-12">
+        <div class="comp c-orange d4">
+          <div class="icon">📦</div>
+          <div class="title"><span class="pulse pulse-green"></span> wanderer</div>
+          <div class="sub">ghcr.io/kronoss14/wanderer:latest<br>Node.js + Express</div>
+          <div class="ip">containerPort: 3000</div>
+          <div class="tag tag-orange">deployment pod</div>
+        </div>
+      </div>
+
+      <div class="divider"></div>
+
+      <!-- CONFIG -->
+      <div style="text-align:center;margin-bottom:8px">
+        <span style="font-size:11px;color:var(--text-dim);text-transform:uppercase;letter-spacing:1px">Configuration (injected into Pods as env vars)</span>
+      </div>
+      <div class="grid-3">
+        <div class="comp c-purple d5">
+          <div class="icon">📋</div>
+          <div class="title">ConfigMap</div>
+          <div class="sub">wanderer-config<br>NODE_ENV, PORT, MONGODB_URI</div>
+          <div class="tag tag-purple">non-sensitive</div>
+        </div>
+        <div class="comp c-red d6">
+          <div class="icon">🔒</div>
+          <div class="title">Secret</div>
+          <div class="sub">wanderer-secret<br>passwords, session key</div>
+          <div class="tag tag-purple">base64 encoded</div>
+        </div>
+        <div class="comp c-red d7">
+          <div class="icon">🔑</div>
+          <div class="title">Secret</div>
+          <div class="sub">ghcr-secret<br>Docker registry credentials</div>
+          <div class="tag tag-purple">imagePullSecret</div>
+        </div>
+      </div>
+
+      <div class="divider"></div>
+
+      <!-- MONGODB -->
+      <div style="text-align:center;margin-bottom:8px">
+        <span style="font-size:11px;color:var(--text-dim);text-transform:uppercase;letter-spacing:1px">Database (StatefulSet — stable identity + persistent storage)</span>
+      </div>
+      <div class="flow-row center gap-12">
+        <div class="comp c-green d8" style="min-width:180px">
+          <div class="icon">🗄️</div>
+          <div class="title"><span class="pulse pulse-green"></span> mongodb-0</div>
+          <div class="sub">mongo:7<br>StatefulSet (not Deployment!)<br>Stable name: always mongodb-0</div>
+          <div class="ip">port: 27017</div>
+          <div class="tag tag-green">statefulset</div>
+        </div>
+        <div class="arrow d9">
+          <div class="arrow-label">stores data</div>
+          <div class="arrow-line-h" style="background: var(--green);"></div>
+        </div>
+        <div class="comp c-cyan d10" style="min-width:180px">
+          <div class="icon">💾</div>
+          <div class="title">PVC → PV</div>
+          <div class="sub">mongodb-data-mongodb-0<br>5Gi • ReadWriteOnce<br>StorageClass: local-path</div>
+          <div class="tag tag-cyan">survives pod restarts</div>
+        </div>
+      </div>
+
+      <div class="explain explain-orange mt-16">
+        <strong>Why StatefulSet?</strong> Unlike Deployment pods (wanderer-68d866b8bb-7mdlj — random hash),
+        StatefulSet pods get <strong>stable names</strong>: mongodb-0, mongodb-1, etc.
+        Each gets its <strong>own PersistentVolumeClaim</strong> — data survives restarts.
+        The <strong>headless Service</strong> (<code>clusterIP: None</code>) gives each pod a unique DNS name.
+        The app connects via the regular <strong>ClusterIP Service</strong>: <code>mongodb-service:27017</code>.
+      </div>
+    </div>
+
+    <!-- NAMESPACE: ingress-nginx -->
+    <div class="section mt-16" style="border-color: rgba(234,179,8,0.3); background: rgba(234,179,8,0.03);">
+      <div class="section-label s-label-yellow">namespace: ingress-nginx</div>
+
+      <div class="flow-row center gap-12 mt-8">
+        <div class="comp c-yellow d1" style="min-width:200px">
+          <div class="icon">🌐</div>
+          <div class="title"><span class="pulse pulse-green"></span> Nginx Ingress Controller</div>
+          <div class="sub">Installed via Helm chart<br>Evaluates all Ingress rules in the cluster<br>NodePort: 30080 (HTTP) / 30443 (HTTPS)</div>
+          <div class="tag tag-yellow">the actual traffic handler</div>
+        </div>
+      </div>
+
+      <div class="explain explain-yellow mt-16">
+        <strong>Ingress vs Ingress Controller:</strong> The <code>Ingress</code> resource (in the wanderer namespace) is just <strong>rules</strong> — "path / goes to wanderer-service".
+        The <strong>Ingress Controller</strong> is the actual Pod that <strong>reads those rules and routes traffic</strong>.
+        Without a controller, Ingress rules do nothing. We installed Nginx via <code>helm install</code>.
+        K3s came with Traefik, but we added Nginx because it's more common in production.
+      </div>
+    </div>
+
+    <!-- NAMESPACE: logging -->
+    <div class="section mt-16" style="border-color: rgba(167,139,250,0.3); background: rgba(167,139,250,0.03);">
+      <div class="section-label s-label-purple">namespace: logging</div>
+
+      <div class="flow-row center gap-12 mt-8">
+        <div class="comp c-orange d1">
+          <div class="icon">📦</div>
+          <div class="title">App Pods</div>
+          <div class="sub">Write logs to stdout</div>
+          <div class="tag tag-orange">any namespace</div>
+        </div>
+        <div class="arrow d2">
+          <div class="arrow-label">logs collected by</div>
+          <div class="arrow-line-h" style="background: var(--purple);"></div>
+        </div>
+        <div class="comp c-purple d3">
+          <div class="icon">📡</div>
+          <div class="title"><span class="pulse pulse-green"></span> Fluent Bit</div>
+          <div class="sub">DaemonSet — 1 per node<br>Reads /var/log/containers/*<br>Lightweight log shipper</div>
+          <div class="tag tag-purple">daemonset</div>
+        </div>
+        <div class="arrow d4">
+          <div class="arrow-label">ships to</div>
+          <div class="arrow-line-h" style="background: var(--purple);"></div>
+        </div>
+        <div class="comp c-purple d5" style="min-width:180px">
+          <div class="icon">🔍</div>
+          <div class="title"><span class="pulse pulse-green"></span> Elasticsearch</div>
+          <div class="sub">StatefulSet with PVC (5Gi)<br>Search/index all cluster logs<br>REST API on port 9200</div>
+          <div class="tag tag-purple">statefulset</div>
+        </div>
+      </div>
+
+      <div class="explain explain-purple mt-16">
+        <strong>Centralized logging:</strong> Instead of running <code>kubectl logs</code> on each pod,
+        <strong>Fluent Bit</strong> (a DaemonSet — runs on every node, remember Nana's video) reads ALL container logs from the node's filesystem
+        and ships them to <strong>Elasticsearch</strong>. Elasticsearch indexes them so you can search across all pods at once.
+        <strong>DaemonSet</strong> is perfect for this — log collectors, monitoring agents, anything that needs to run on every node.
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════════════════════════════════════════════════ -->
+  <!-- SECTION 6: TOOLS SUMMARY -->
+  <!-- ════════════════════════════════════════════════════ -->
+  <div class="section">
+    <div class="section-label s-label-pink">Tools We Used</div>
+
+    <div class="grid-4 mt-8">
+      <div class="comp c-orange d1">
+        <div class="title">Docker</div>
+        <div class="sub">Package app into a container image</div>
+      </div>
+      <div class="comp c-pink d2">
+        <div class="title">Terraform</div>
+        <div class="sub">Create cloud infrastructure from code</div>
+      </div>
+      <div class="comp c-pink d3">
+        <div class="title">Ansible</div>
+        <div class="sub">Configure servers over SSH</div>
+      </div>
+      <div class="comp c-cyan d4">
+        <div class="title">Azure</div>
+        <div class="sub">Cloud provider (VMs, network)</div>
+      </div>
+      <div class="comp c-green d5">
+        <div class="title">Rancher</div>
+        <div class="sub">Create & manage K8s clusters</div>
+      </div>
+      <div class="comp c-blue d6">
+        <div class="title">Kubernetes</div>
+        <div class="sub">Orchestrate containers at scale</div>
+      </div>
+      <div class="comp c-yellow d7">
+        <div class="title">Nginx</div>
+        <div class="sub">Ingress Controller (HTTP routing)</div>
+      </div>
+      <div class="comp c-yellow d8">
+        <div class="title">Helm</div>
+        <div class="sub">Package manager for K8s</div>
+      </div>
+      <div class="comp c-green d9">
+        <div class="title">MongoDB</div>
+        <div class="sub">Database (StatefulSet + PV)</div>
+      </div>
+      <div class="comp c-purple d10">
+        <div class="title">Elasticsearch</div>
+        <div class="sub">Centralized log storage & search</div>
+      </div>
+      <div class="comp c-purple d11">
+        <div class="title">Fluent Bit</div>
+        <div class="sub">Log collector (DaemonSet)</div>
+      </div>
+      <div class="comp c-purple d12">
+        <div class="title">GitHub (ghcr.io)</div>
+        <div class="sub">Source code + container registry</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════════════════════════════════════════════════ -->
+  <!-- SECTION 7: K8S CONCEPTS USED -->
+  <!-- ════════════════════════════════════════════════════ -->
+  <div class="section">
+    <div class="section-label s-label-blue">K8s Concepts in Action</div>
+
+    <div class="grid-4 mt-8">
+      <div class="comp c-blue d1">
+        <div class="title">Namespace</div>
+        <div class="sub">Logical isolation (wanderer, logging, ingress-nginx)</div>
+      </div>
+      <div class="comp c-orange d2">
+        <div class="title">Deployment</div>
+        <div class="sub">Manages app Pod replicas with rolling updates</div>
+      </div>
+      <div class="comp c-green d3">
+        <div class="title">StatefulSet</div>
+        <div class="sub">Stable pod names + persistent storage (MongoDB, ES)</div>
+      </div>
+      <div class="comp c-purple d4">
+        <div class="title">DaemonSet</div>
+        <div class="sub">One pod per node (Fluent Bit log collector)</div>
+      </div>
+      <div class="comp c-teal d5">
+        <div class="title">Service (ClusterIP)</div>
+        <div class="sub">Stable internal IP + load balancing</div>
+      </div>
+      <div class="comp c-teal d6">
+        <div class="title">Headless Service</div>
+        <div class="sub">Direct pod DNS (for StatefulSet)</div>
+      </div>
+      <div class="comp c-yellow d7">
+        <div class="title">Ingress</div>
+        <div class="sub">HTTP routing rules (path → service)</div>
+      </div>
+      <div class="comp c-purple d8">
+        <div class="title">ConfigMap</div>
+        <div class="sub">Non-sensitive config as env vars</div>
+      </div>
+      <div class="comp c-red d9">
+        <div class="title">Secret</div>
+        <div class="sub">Sensitive data (passwords, tokens)</div>
+      </div>
+      <div class="comp c-cyan d10">
+        <div class="title">PV / PVC</div>
+        <div class="sub">Persistent storage that survives pod death</div>
+      </div>
+      <div class="comp c-cyan d11">
+        <div class="title">StorageClass</div>
+        <div class="sub">Auto-provisions PVs (local-path)</div>
+      </div>
+      <div class="comp c-blue d12">
+        <div class="title">RBAC</div>
+        <div class="sub">ServiceAccount + Role for Fluent Bit</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+</body>
+</html>

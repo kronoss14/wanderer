@@ -18,6 +18,18 @@
     viewpoint: '\uD83D\uDC41\uFE0F',
     water: '\uD83D\uDCA7',
     campsite: '\u26FA',
+    pass: '\uD83C\uDFD4\uFE0F',
+    toilet: '\uD83D\uDEBB',
+    shelter: '\uD83D\uDED6',
+    danger: '\u26A0\uFE0F',
+    parking: '\uD83C\uDD7F\uFE0F',
+    food: '\uD83C\uDF7D\uFE0F',
+    start: '\uD83D\uDFE2',
+    end: '\uD83D\uDD34',
+    photo_spot: '\uD83D\uDCF8',
+    historical: '\uD83C\uDFDB\uFE0F',
+    bridge: '\uD83C\uDF09',
+    cave: '\uD83D\uDD73\uFE0F',
     marker: '\uD83D\uDCCD'
   };
 
@@ -87,7 +99,31 @@
     if (data.description) {
       html += '<p class="info-panel-desc">' + data.description + '</p>';
     }
-    if (data.link) {
+    if (data.photos && data.photos.length) {
+      html += '<div class="info-panel-photos">';
+      data.photos.forEach(function(url) {
+        html += '<img src="' + url + '" alt="" loading="lazy" class="info-panel-photo">';
+      });
+      html += '</div>';
+    }
+    if (data.linkedHike) {
+      var h = data.linkedHike;
+      html += '<div class="info-panel-hike-card">';
+      if (h.image) {
+        html += '<img src="' + h.image + '" alt="" class="info-panel-hike-img">';
+      }
+      html += '<div class="info-panel-hike-info">';
+      html += '<div class="info-panel-hike-name">' + h.name + '</div>';
+      if (h.difficulty) {
+        html += '<span class="info-panel-hike-badge">' + h.difficulty + '</span>';
+      }
+      if (h.duration) {
+        html += '<span class="info-panel-hike-meta">' + h.duration + '</span>';
+      }
+      html += '</div>';
+      html += '<a href="' + h.link + '" class="info-panel-link">View Hike <span>&rarr;</span></a>';
+      html += '</div>';
+    } else if (data.link) {
       html += '<a href="' + data.link + '" class="info-panel-link">View Details <span>&rarr;</span></a>';
     }
     body.innerHTML = html;
@@ -172,6 +208,21 @@
       })
     }).addTo(map).bindPopup('End');
 
+    // Trail points (new format from admin)
+    if (route.trailPoints) {
+      route.trailPoints.forEach(function (tp) {
+        var popupHtml = '<strong>' + tp.name + '</strong>';
+        if (tp.desc) popupHtml += '<br><span style="color:#94a3b8;font-size:0.85em">' + tp.desc + '</span>';
+        if (tp.photos && tp.photos.length) {
+          popupHtml += '<br><img src="' + tp.photos[0] + '" style="width:150px;border-radius:6px;margin-top:6px" loading="lazy">';
+        }
+        if (tp.elevation) popupHtml += '<br><span style="color:#E8811A;font-size:0.8em">' + tp.elevation + 'm</span>';
+        L.marker([tp.lat, tp.lng], { icon: createPOIIcon(tp.type) })
+          .addTo(map)
+          .bindPopup(popupHtml, { maxWidth: 200 });
+      });
+    }
+    // Legacy POI format
     if (route.pois) {
       route.pois.forEach(function (poi) {
         L.marker([poi.lat, poi.lng], { icon: createPOIIcon(poi.type) })
@@ -275,11 +326,23 @@
           });
 
           marker._category = point.c;
-          marker._markerData = {
+          var markerData = {
             name: point.n,
             category: point.c,
             description: point.d || ''
           };
+          if (point.ph) markerData.photos = point.ph;
+          if (point.lh) {
+            var langPath = langPrefix || '';
+            markerData.linkedHike = {
+              name: point.lh.n,
+              image: point.lh.i,
+              difficulty: point.lh.d,
+              duration: point.lh.du,
+              link: langPath + '/hikes/' + point.lh.id
+            };
+          }
+          marker._markerData = markerData;
 
           bindMarkerClick(marker, map, 13);
 

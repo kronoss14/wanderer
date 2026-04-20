@@ -736,4 +736,87 @@ router.post('/orders/:id/status', asyncHandler(async (req, res) => {
   res.redirect(`/admin/orders/${req.params.id}`);
 }));
 
+// ═══════════════════════════════════════════
+//  MAP & TRAILS
+// ═══════════════════════════════════════════
+
+router.get('/map', asyncHandler(async (req, res) => {
+  const [hikes, points] = await Promise.all([
+    readJSON('hikes.json'),
+    readJSON('map-points.json')
+  ]);
+  renderAdmin(res, join(__dirname, '..', 'views', 'admin', 'map.ejs'), {
+    title: 'Map & Trails', hikes, points
+  });
+}));
+
+router.post('/map/points', asyncHandler(async (req, res) => {
+  const points = await readJSON('map-points.json');
+  const b = req.body;
+  const point = {
+    id: b.id || `mp-${Date.now()}-${randomBytes(3).toString('hex')}`,
+    name: b.name || '',
+    name_en: b.name_en || '',
+    category: b.category || 'sightseeing',
+    lat: parseFloat(b.lat),
+    lng: parseFloat(b.lng),
+    desc: b.desc || '',
+    desc_en: b.desc_en || '',
+    linkedHikeId: b.linkedHikeId || '',
+    photos: Array.isArray(b.photos) ? b.photos : []
+  };
+
+  if (b.id) {
+    const idx = points.findIndex(p => p.id === b.id);
+    if (idx !== -1) {
+      points[idx] = point;
+    } else {
+      points.push(point);
+    }
+  } else {
+    points.push(point);
+  }
+
+  await writeJSON('map-points.json', points);
+  await audit('map.point.save', { id: point.id, name: point.name });
+  res.json({ ok: true, point });
+}));
+
+router.post('/map/points/delete/:id', asyncHandler(async (req, res) => {
+  const points = await readJSON('map-points.json');
+  const filtered = points.filter(p => p.id !== req.params.id);
+  await writeJSON('map-points.json', filtered);
+  await audit('map.point.delete', { id: req.params.id });
+  res.json({ ok: true });
+}));
+
+router.post('/map/trail', asyncHandler(async (req, res) => {
+  const { hikeId, trail, trailPoints } = req.body;
+  if (!hikeId) return res.status(400).json({ error: 'hikeId required' });
+
+  const hikes = await readJSON('hikes.json');
+  const idx = hikes.findIndex(h => h.id === hikeId);
+  if (idx === -1) return res.status(404).json({ error: 'Hike not found' });
+
+  hikes[idx].route = {
+    coordinates: Array.isArray(trail) ? trail : [],
+    trailPoints: Array.isArray(trailPoints) ? trailPoints : []
+  };
+
+  await writeJSON('hikes.json', hikes);
+  await audit('map.trail.save', { hikeId });
+  res.json({ ok: true });
+}));
+
+router.post('/map/trail/delete/:hikeId', asyncHandler(async (req, res) => {
+  const hikes = await readJSON('hikes.json');
+  const idx = hikes.findIndex(h => h.id === req.params.hikeId);
+  if (idx === -1) return res.status(404).json({ error: 'Hike not found' });
+
+  hikes[idx].route = {};
+  await writeJSON('hikes.json', hikes);
+  await audit('map.trail.delete', { hikeId: req.params.hikeId });
+  res.json({ ok: true });
+}));
+
 export default router;

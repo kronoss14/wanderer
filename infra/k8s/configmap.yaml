@@ -1,0 +1,17 @@
+# ── configmap.yaml ──────────────────────────────────────
+# Non-sensitive configuration. Same as the MongoDB demo —
+# ConfigMap for URLs and settings, Secret for passwords.
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: wanderer-config
+  namespace: wanderer
+data:
+  NODE_ENV: "production"
+  PORT: "3000"
+  # MongoDB connection string — points to our mongodb-service in the same namespace.
+  # Format: mongodb://username:password@service-name:port/database
+  # The service name "mongodb-service" works as a DNS hostname within the namespace
+  # (same concept as Nana's demo where ConfigMap held the DB URL).
+  MONGODB_URI: "mongodb://wanderer-admin:W4nd3r3r-M0ng0-2026!@mongodb-service:27017/wanderer?authSource=admin"

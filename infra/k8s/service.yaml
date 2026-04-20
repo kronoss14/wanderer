@@ -1,0 +1,30 @@
+# ── service.yaml ────────────────────────────────────────
+# The Service — provides a stable IP and load balances across Pods.
+#
+# Remember from Nana: Pods are ephemeral, their IPs change.
+# Service gives a permanent IP that routes to whatever Pods are alive.
+#
+# selector: app=wanderer → "send traffic to Pods with this label"
+# This is how Service finds the Pods from the Deployment.
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: wanderer-service
+  namespace: wanderer
+spec:
+  # ClusterIP = internal only (default type).
+  # We'll use Ingress in front for external access (not NodePort).
+  # This is the "right" way — Ingress handles external, Service stays internal.
+  type: ClusterIP
+
+  # selector — WHICH Pods to send traffic to
+  # Matches the Pod label from deployment.yaml
+  selector:
+    app: wanderer
+
+  ports:
+    - protocol: TCP
+      port: 80              # Service port — other services use this
+      targetPort: 3000      # Container port — where the app actually listens
+      # Traffic flow: something:80 → Service → Pod:3000

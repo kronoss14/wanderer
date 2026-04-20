@@ -2,3 +2,17 @@ node_modules/
 .env
 data/analytics/
 data/audit-log.json
+
+# Infrastructure secrets
+infra/terraform/.terraform/
+infra/terraform/terraform.tfstate
+infra/terraform/terraform.tfstate.backup
+infra/terraform/terraform.tfvars
+infra/terraform/wanderer-key.pem
+infra/terraform/.terraform.lock.hcl
+
+# Docker production files
+docker-compose.prod.yml
+nginx.conf
+nginx-initial.conf
+infra/k8s/secret.yaml
