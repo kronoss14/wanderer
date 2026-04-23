@@ -1,30 +1,45 @@
-<!-- PAGE HERO -->
-<section class="page-hero">
+<section class="page-hero" style="min-height: 300px">
   <div class="page-hero-bg" style="background-image: url('/images/hikes-hero.jpeg'); background-position: center 65%"></div>
-  <div class="page-hero-overlay" style="background: linear-gradient(135deg, rgba(13,13,13,0.45) 0%, rgba(26,26,46,0.35) 100%)"></div>
+  <div class="page-hero-overlay"></div>
   <div class="page-hero-content container">
-    <h1><%- t('shop.title') %></h1>
-    <p><%= t('shop.subtitle') %></p>
+    <p class="eyebrow"><%= lang === 'en' ? 'Gear shop' : 'მაღაზია' %></p>
+    <h1><%= lang === 'en' ? 'Hiking gear, tested on our trails' : 'სალაშქრო აღჭურვილობა' %></h1>
+    <p><%= lang === 'en' ? 'Equipment we personally use in the Caucasus. Backpacks, footwear, camping basics, clothing.' : 'აღჭურვილობა, რომელსაც თავად ვიყენებთ კავკასიონში.' %></p>
   </div>
 </section>
 
-<!-- FILTER + GRID -->
 <section class="section">
   <div class="container">
-    <div class="filter-bar">
-      <a href="<%= langPrefix %>/shop" class="filter-btn<%= activeCategory === 'all' ? ' active' : '' %>"><%= t('shop.filter_all') %></a>
-      <% categories.forEach(cat => { %>
-        <a href="<%= langPrefix %>/shop?category=<%= cat %>" class="filter-btn<%= activeCategory === cat ? ' active' : '' %>"><%= t('shop.category.' + cat) %></a>
-      <% }) %>
+
+    <div class="hikes-toolbar">
+      <strong style="font-size: var(--text-sm); color: var(--text-muted); letter-spacing: 0.08em; text-transform: uppercase; margin-right: var(--sp-4);"><%= lang === 'en' ? 'Category' : 'კატეგორია' %></strong>
+      <a href="<%= langPrefix %>/shop" class="chip<%= !(typeof activeCategory !== 'undefined' && activeCategory) || activeCategory === 'all' ? ' is-active' : '' %>"><%= lang === 'en' ? 'All' : 'ყველა' %></a>
+      <% const cats = ['backpacks','footwear','clothing','camping','accessories']; %>
+      <% cats.forEach(cat => { %>
+        <a href="<%= langPrefix %>/shop?category=<%= cat %>" class="chip<%= typeof activeCategory !== 'undefined' && activeCategory === cat ? ' is-active' : '' %>">
+          <%= lang === 'en'
+                ? (cat === 'backpacks' ? 'Backpacks' : cat === 'footwear' ? 'Footwear' : cat === 'clothing' ? 'Clothing' : cat === 'camping' ? 'Camping' : 'Accessories')
+                : (cat === 'backpacks' ? 'ზურგჩანთები' : cat === 'footwear' ? 'ფეხსაცმელი' : cat === 'clothing' ? 'ტანსაცმელი' : cat === 'camping' ? 'კემპინგი' : 'აქსესუარები') %>
+        </a>
+      <% }); %>
+      <span class="hikes-toolbar-count"><%= products.length %> <%= lang === 'en' ? (products.length === 1 ? 'item' : 'items') : 'პროდუქტი' %></span>
     </div>
-    <% if (products.length === 0) { %>
-      <p class="text-center" style="color: var(--text-secondary); padding: 3rem 0;"><%= t('shop.empty') %></p>
-    <% } else { %>
-      <div class="product-grid">
+
+    <% if (products && products.length) { %>
+      <div class="shop-grid">
         <% products.forEach(product => { %>
           <%- include('../partials/_product-card', { product }) %>
-        <% }) %>
+        <% }); %>
+      </div>
+    <% } else { %>
+      <div class="alert alert-info" style="max-width: 480px; margin: var(--sp-12) auto;">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        <div>
+          <strong><%= lang === 'en' ? 'No products in this category yet' : 'ამ კატეგორიაში ჯერ არაა პროდუქტი' %></strong>
+          <p style="margin: 4px 0 0; font-size: var(--text-sm);"><a href="<%= langPrefix %>/shop"><%= lang === 'en' ? 'See all products' : 'ყველა პროდუქტი' %></a></p>
+        </div>
       </div>
     <% } %>
+
   </div>
 </section>

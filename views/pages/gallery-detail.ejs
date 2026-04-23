@@ -1,53 +1,56 @@
-<!-- DETAIL HERO -->
-<section class="detail-hero">
-  <div class="detail-hero-bg" style="background-image: url('<%= item.mainImage %>')"></div>
-  <div class="detail-hero-overlay"></div>
-  <div class="detail-hero-content container">
-    <a href="<%= langPrefix %>/gallery" class="back-link">
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
-      <%= t('gallery.back') %>
-    </a>
+<section class="page-hero" style="min-height: 400px">
+  <div class="page-hero-bg" style="background-image: url('<%= item.mainImage %>')"></div>
+  <div class="page-hero-overlay"></div>
+  <div class="page-hero-content container">
+    <nav class="crumbs" style="color: rgba(255,255,255,0.7)">
+      <a href="<%= langPrefix %>/" style="color: rgba(255,255,255,0.7)"><%= lang === 'en' ? 'Home' : 'მთავარი' %></a>
+      <span class="crumbs-sep">/</span>
+      <a href="<%= langPrefix %>/gallery" style="color: rgba(255,255,255,0.7)"><%= lang === 'en' ? 'Gallery' : 'გალერეა' %></a>
+      <span class="crumbs-sep">/</span>
+      <span style="color: var(--white)"><%= l(item, 'title') %></span>
+    </nav>
     <h1><%= l(item, 'title') %></h1>
-    <p class="detail-region"><%= item.date %></p>
+    <p style="margin-top: var(--sp-3); color: rgba(255,255,255,0.85)"><%= item.date %></p>
   </div>
 </section>
 
-<!-- DESCRIPTION -->
-<% if (item.description) { %>
+<% if (l(item, 'description')) { %>
 <section class="section">
-  <div class="container" style="max-width: 800px;">
-    <p class="detail-description"><%= l(item, 'description') %></p>
+  <div class="container container-narrow">
+    <p class="lead"><%= l(item, 'description') %></p>
   </div>
 </section>
 <% } %>
 
-<!-- PHOTO GALLERY -->
 <% if (item.images && item.images.length) { %>
-<section class="section section-dark">
+<section class="section">
   <div class="container">
-    <h2 class="section-title text-center" style="margin-bottom: 2rem;"><%- t('hike.photo_gallery') %></h2>
+    <div class="text-center" style="margin-bottom: var(--sp-8)">
+      <p class="eyebrow" style="justify-content: center; display: inline-flex"><%= lang === 'en' ? 'Photos from this trip' : 'ფოტოები ამ მოგზაურობიდან' %></p>
+      <h2><%= lang === 'en' ? 'The Journey in Pictures' : 'მოგზაურობა ფოტოებში' %></h2>
+    </div>
     <div class="gallery-grid">
       <% item.images.forEach((img, idx) => { %>
-        <div class="gallery-item" data-full="<%= img %>" data-title="<%= l(item, 'title') %>" data-location="">
+        <div class="gallery-item" data-full="<%= img %>" data-title="<%= l(item, 'title') %>">
           <img src="<%= img %>" alt="<%= l(item, 'title') %>" loading="lazy">
         </div>
-      <% }) %>
+      <% }); %>
     </div>
   </div>
 </section>
-
-<!-- Lightbox is in layout.ejs -->
 <% } %>
 
-<!-- REVIEWS FROM LINKED HIKE -->
-<% if (reviews.length > 0) { %>
-<section class="section">
+<% if (reviews && reviews.length > 0) { %>
+<section class="section section-alt">
   <div class="container">
-    <h2 class="section-title text-center" style="margin-bottom: 2rem;"><%- t('hike.reviews_title') %></h2>
-    <div class="review-grid">
+    <div class="text-center" style="margin-bottom: var(--sp-8)">
+      <p class="eyebrow" style="justify-content: center; display: inline-flex"><%= lang === 'en' ? 'From this adventure' : 'ამ თავგადასავლიდან' %></p>
+      <h2><%= lang === 'en' ? 'What they said' : 'რას ამბობდნენ' %></h2>
+    </div>
+    <div class="grid grid-3">
       <% reviews.forEach(review => { %>
-        <%- include('../partials/_review-card', { review, hikeName: '' }) %>
-      <% }) %>
+        <%- include('../partials/_review-card', { review, hikeName: null }) %>
+      <% }); %>
     </div>
   </div>
 </section>

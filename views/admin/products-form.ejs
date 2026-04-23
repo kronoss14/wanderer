@@ -1,89 +1,73 @@
-<div class="admin-header">
-  <h1><%= editing ? 'Edit Product' : 'New Product' %></h1>
+<div class="admin-page-head">
+  <div class="admin-page-head-text">
+    <div class="admin-crumbs"><a href="/admin">Admin</a> <span>/</span> <a href="/admin/products">Products</a> <span>/</span> <span><%= editing ? 'Edit' : 'New' %></span></div>
+    <h1><%= editing ? 'Edit product' : 'New product' %></h1>
+  </div>
+  <div class="admin-page-head-actions">
+    <a href="/admin/products" class="admin-btn admin-btn-ghost">← Back to list</a>
+  </div>
 </div>
 
 <% if (typeof errors !== 'undefined' && errors && errors.length) { %>
-  <div class="flash flash-error">
-    <ul style="margin:0;padding-left:1.5rem;">
-      <% errors.forEach(e => { %><li><%= e.msg %></li><% }) %>
-    </ul>
+  <div class="admin-flash admin-flash-error">
+    <ul style="margin: 0; padding-left: 18px"><% errors.forEach(e => { %><li><%= e.msg %></li><% }) %></ul>
   </div>
 <% } %>
 
-<form class="admin-form" method="POST" action="<%= editing ? '/admin/products/edit/' + product.id : '/admin/products' %>">
+<form method="POST" action="<%= editing ? '/admin/products/edit/' + product.id : '/admin/products' %>">
   <input type="hidden" name="_csrf" value="<%= csrfToken %>">
 
-  <div class="form-lang-row">
-    <div class="form-group">
-      <label for="name">Name (KA)</label>
-      <input type="text" id="name" name="name" value="<%= product.name || '' %>" required>
+  <div class="admin-card">
+    <h2>Product info</h2>
+    <div class="admin-field-row">
+      <div class="admin-field"><label for="name">Name (KA)</label><input type="text" id="name" name="name" class="admin-input" value="<%= product.name || '' %>" required></div>
+      <div class="admin-field"><label for="name_en">Name (EN)</label><input type="text" id="name_en" name="name_en" class="admin-input" value="<%= product.name_en || '' %>"></div>
     </div>
-    <div class="form-group">
-      <label for="name_en">Name (EN)</label>
-      <input type="text" id="name_en" name="name_en" value="<%= product.name_en || '' %>">
-    </div>
-  </div>
 
-  <div class="form-group">
-    <label for="category">Category</label>
-    <select id="category" name="category">
-      <option value="gear" <%= product.category === 'gear' ? 'selected' : '' %>>Gear</option>
-      <option value="clothing" <%= product.category === 'clothing' ? 'selected' : '' %>>Clothing</option>
-      <option value="accessories" <%= product.category === 'accessories' ? 'selected' : '' %>>Accessories</option>
-      <option value="equipment" <%= product.category === 'equipment' ? 'selected' : '' %>>Equipment</option>
-    </select>
-  </div>
-
-  <div class="form-lang-row">
-    <div class="form-group">
-      <label for="price">Current Price (&#8382;)</label>
-      <input type="number" id="price" name="price" value="<%= product.price || '' %>" min="0" step="0.01">
+    <div class="admin-field">
+      <label for="category">Category</label>
+      <select id="category" name="category" class="admin-select">
+        <option value="gear" <%= product.category === 'gear' ? 'selected' : '' %>>Gear</option>
+        <option value="backpacks" <%= product.category === 'backpacks' ? 'selected' : '' %>>Backpacks</option>
+        <option value="footwear" <%= product.category === 'footwear' ? 'selected' : '' %>>Footwear</option>
+        <option value="clothing" <%= product.category === 'clothing' ? 'selected' : '' %>>Clothing</option>
+        <option value="camping" <%= product.category === 'camping' ? 'selected' : '' %>>Camping</option>
+        <option value="accessories" <%= product.category === 'accessories' ? 'selected' : '' %>>Accessories</option>
+        <option value="equipment" <%= product.category === 'equipment' ? 'selected' : '' %>>Equipment</option>
+      </select>
     </div>
-    <div class="form-group">
-      <label for="originalPrice">Original Price (&#8382;)</label>
-      <div class="hint">Leave empty or 0 if no discount</div>
-      <input type="number" id="originalPrice" name="originalPrice" value="<%= product.originalPrice || '' %>" min="0" step="0.01">
+
+    <div class="admin-field-row">
+      <div class="admin-field"><label for="price">Price (₾)</label><input type="number" id="price" name="price" class="admin-input" value="<%= product.price || '' %>" min="0" step="0.01"></div>
+      <div class="admin-field"><label for="originalPrice">Original price (₾)</label><input type="number" id="originalPrice" name="originalPrice" class="admin-input" value="<%= product.originalPrice || '' %>" min="0" step="0.01"><div class="admin-field-help">For discount display. Leave empty if not on sale.</div></div>
+    </div>
+
+    <div class="admin-field-row">
+      <div class="admin-field"><label for="description">Description (KA)</label><textarea id="description" name="description" class="admin-textarea" rows="5"><%= product.description || '' %></textarea></div>
+      <div class="admin-field"><label for="description_en">Description (EN)</label><textarea id="description_en" name="description_en" class="admin-textarea" rows="5"><%= product.description_en || '' %></textarea></div>
     </div>
   </div>
 
-  <div class="form-lang-row">
-    <div class="form-group">
-      <label for="description">Description (KA)</label>
-      <textarea id="description" name="description" rows="5"><%= product.description || '' %></textarea>
-    </div>
-    <div class="form-group">
-      <label for="description_en">Description (EN)</label>
-      <textarea id="description_en" name="description_en" rows="5"><%= product.description_en || '' %></textarea>
-    </div>
+  <div class="admin-card">
+    <h2>Media</h2>
+    <div class="admin-field"><label for="image">Main image URL</label><input type="text" id="image" name="image" class="admin-input" value="<%= product.image || '' %>" data-upload="single"></div>
+    <div class="admin-field"><label for="images">Additional images</label><textarea id="images" name="images" class="admin-textarea" rows="4" data-upload="multi"><%= (product.images || []).join('\n') %></textarea><div class="admin-field-help">One URL per line.</div></div>
   </div>
 
-  <div class="form-group">
-    <label for="image">Main Image URL</label>
-    <input type="text" id="image" name="image" value="<%= product.image || '' %>" data-upload="single">
-  </div>
-
-  <div class="form-group">
-    <label for="images">Additional Images</label>
-    <div class="hint">One URL per line</div>
-    <textarea id="images" name="images" rows="4" data-upload="multi"><%= (product.images || []).join('\n') %></textarea>
-  </div>
-
-  <div class="form-group">
-    <label class="checkbox-label">
+  <div class="admin-card">
+    <h2>Status</h2>
+    <label class="admin-check">
       <input type="checkbox" name="inStock" value="true" <%= product.inStock !== false ? 'checked' : '' %>>
-      In Stock
+      <div><strong>In stock</strong><div style="color: var(--a-text-muted); font-size: 12px">Uncheck to show "out of stock" to customers.</div></div>
     </label>
-  </div>
-
-  <div class="form-group">
-    <label class="checkbox-label">
+    <label class="admin-check">
       <input type="checkbox" name="featured" value="true" <%= product.featured ? 'checked' : '' %>>
-      Featured
+      <div><strong>Featured</strong><div style="color: var(--a-text-muted); font-size: 12px">Shown in the homepage gear preview strip.</div></div>
     </label>
   </div>
 
-  <div class="form-actions">
-    <button type="submit" class="btn btn-primary"><%= editing ? 'Update Product' : 'Create Product' %></button>
-    <a href="/admin/products" class="btn btn-secondary">Cancel</a>
+  <div class="admin-form-actions">
+    <button type="submit" class="admin-btn admin-btn-primary"><%= editing ? 'Update product' : 'Create product' %></button>
+    <a href="/admin/products" class="admin-btn admin-btn-ghost">Cancel</a>
   </div>
 </form>

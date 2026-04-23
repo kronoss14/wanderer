@@ -1,36 +1,52 @@
-<div class="admin-header">
-  <h1>Blog Posts</h1>
-  <a href="/admin/blog/new" class="btn btn-primary">+ New Post</a>
+<div class="admin-page-head">
+  <div class="admin-page-head-text">
+    <div class="admin-crumbs"><a href="/admin">Admin</a> <span>/</span> <span>Blog</span></div>
+    <h1>Blog posts</h1>
+    <p>Stories, trail guides, and content marketing.</p>
+  </div>
+  <div class="admin-page-head-actions">
+    <a href="/admin/blog/new" class="admin-btn admin-btn-primary">+ New post</a>
+  </div>
 </div>
 
-<table class="admin-table">
-  <thead>
-    <tr>
-      <th>ID</th>
-      <th>Title</th>
-      <th>Published</th>
-      <th>Date</th>
-      <th>Actions</th>
-    </tr>
-  </thead>
-  <tbody>
-    <% if (posts.length === 0) { %>
-      <tr><td colspan="5" style="text-align:center;padding:2rem;">No blog posts yet.</td></tr>
-    <% } %>
-    <% posts.forEach(post => { %>
+<% if (posts && posts.length) { %>
+<div class="admin-table-wrap">
+  <table class="admin-table">
+    <thead>
       <tr>
-        <td><%= post.id %></td>
-        <td><%= post.title %></td>
-        <td><%= post.published ? 'Yes' : 'Draft' %></td>
-        <td><%= post.publishedAt %></td>
-        <td>
-          <a href="/admin/blog/edit/<%= post.id %>" class="btn btn-secondary btn-sm">Edit</a>
-          <form method="POST" action="/admin/blog/delete/<%= post.id %>" style="display:inline" onsubmit="return confirm('Delete this post?')">
-            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-            <button type="submit" class="btn btn-danger btn-sm">Delete</button>
-          </form>
-        </td>
+        <th>Title</th>
+        <th>Status</th>
+        <th>Published</th>
+        <th style="text-align: right">Actions</th>
       </tr>
-    <% }) %>
-  </tbody>
-</table>
+    </thead>
+    <tbody>
+      <% posts.forEach(post => { %>
+        <tr>
+          <td>
+            <div style="font-weight: 600"><a href="/admin/blog/edit/<%= post.id %>"><%= post.title %></a></div>
+            <div style="font-size: 12px; color: var(--a-text-muted)">ID: <code style="font-family: 'JetBrains Mono', monospace"><%= post.id %></code></div>
+          </td>
+          <td><% if (post.published) { %><span class="admin-badge admin-badge-success">Published</span><% } else { %><span class="admin-badge admin-badge-warn">Draft</span><% } %></td>
+          <td style="font-size: 12px; color: var(--a-text-muted)"><%= post.publishedAt || '—' %></td>
+          <td>
+            <div class="admin-table-actions">
+              <a href="/admin/blog/edit/<%= post.id %>" class="admin-btn admin-btn-outline admin-btn-sm">Edit</a>
+              <form method="POST" action="/admin/blog/delete/<%= post.id %>" style="display:inline" onsubmit="return confirm('Delete this post?')">
+                <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                <button type="submit" class="admin-btn admin-btn-danger admin-btn-sm">Delete</button>
+              </form>
+            </div>
+          </td>
+        </tr>
+      <% }); %>
+    </tbody>
+  </table>
+</div>
+<% } else { %>
+  <div class="admin-card"><div class="admin-empty">
+    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+    <p>No blog posts yet.</p>
+    <a href="/admin/blog/new" class="admin-btn admin-btn-primary" style="margin-top: 16px">+ New post</a>
+  </div></div>
+<% } %>

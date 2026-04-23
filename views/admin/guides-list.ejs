@@ -1,38 +1,61 @@
-<div class="admin-header">
-  <h1>Guides</h1>
-  <a href="/admin/guides/new" class="btn btn-primary">+ New Guide</a>
+<div class="admin-page-head">
+  <div class="admin-page-head-text">
+    <div class="admin-crumbs"><a href="/admin">Admin</a> <span>/</span> <span>Guides</span></div>
+    <h1>Guides</h1>
+    <p>Team members who lead hikes.</p>
+  </div>
+  <div class="admin-page-head-actions">
+    <a href="/admin/guides/new" class="admin-btn admin-btn-primary">+ New guide</a>
+  </div>
 </div>
 
+<% if (guides && guides.length) { %>
 <div class="admin-table-wrap">
   <table class="admin-table">
     <thead>
       <tr>
-        <th>ID</th>
-        <th>Name</th>
+        <th>Guide</th>
         <th>Role</th>
         <th>Specialties</th>
-        <th>Actions</th>
+        <th style="text-align: right">Actions</th>
       </tr>
     </thead>
     <tbody>
       <% guides.forEach(g => { %>
         <tr>
-          <td><%= g.id %></td>
-          <td><%= g.name %></td>
-          <td><%= g.role %></td>
-          <td><%= (g.specialties || []).join(', ') %></td>
-          <td class="actions">
-            <a href="/admin/guides/edit/<%= g.id %>" class="btn btn-secondary btn-sm">Edit</a>
-            <form method="POST" action="/admin/guides/delete/<%= g.id %>" onsubmit="return confirm('Delete this guide?')">
-              <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-              <button type="submit" class="btn btn-danger btn-sm">Delete</button>
-            </form>
+          <td>
+            <div style="display: flex; gap: 12px; align-items: center">
+              <% if (g.image) { %><img src="<%= g.image %>" alt="" class="admin-table-thumb" style="border-radius: 50%; width: 36px; height: 36px"><% } %>
+              <div>
+                <div style="font-weight: 600"><a href="/admin/guides/edit/<%= g.id %>"><%= g.name %></a></div>
+                <div style="font-size: 12px; color: var(--a-text-muted)">ID: <code style="font-family: 'JetBrains Mono', monospace"><%= g.id %></code></div>
+              </div>
+            </div>
+          </td>
+          <td style="font-size: 13px"><%= g.role || '—' %></td>
+          <td style="font-size: 12px">
+            <% (g.specialties || []).slice(0, 3).forEach(s => { %>
+              <span class="admin-badge" style="margin-right: 4px"><%= s %></span>
+            <% }); %>
+          </td>
+          <td>
+            <div class="admin-table-actions">
+              <a href="/admin/guides/edit/<%= g.id %>" class="admin-btn admin-btn-outline admin-btn-sm">Edit</a>
+              <form method="POST" action="/admin/guides/delete/<%= g.id %>" onsubmit="return confirm('Delete this guide?')" style="display: inline">
+                <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                <button type="submit" class="admin-btn admin-btn-danger admin-btn-sm">Delete</button>
+              </form>
+            </div>
           </td>
         </tr>
-      <% }) %>
-      <% if (!guides.length) { %>
-        <tr><td colspan="5" style="text-align:center;color:var(--admin-text-muted)">No guides yet</td></tr>
-      <% } %>
+      <% }); %>
     </tbody>
   </table>
 </div>
+<% } else { %>
+  <div class="admin-card"><div class="admin-empty">
+    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
+    <p>No guides yet.</p>
+    <a href="/admin/guides/new" class="admin-btn admin-btn-primary" style="margin-top: 16px">+ New guide</a>
+  </div></div>
+<% } %>

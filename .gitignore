@@ -3,6 +3,10 @@ node_modules/
 data/analytics/
 data/audit-log.json
 
+# Local backups (redesign snapshots)
+public/css.backup-*/
+views.backup-*/
+
 # Infrastructure secrets
 infra/terraform/.terraform/
 infra/terraform/terraform.tfstate

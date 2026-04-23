@@ -1,19 +1,30 @@
 <section class="section">
-  <div class="container">
-    <h1 style="margin-bottom:2rem;"><%= t('checkout.title') %></h1>
+  <div class="container container-narrow">
+
+    <nav class="crumbs">
+      <a href="<%= langPrefix %>/"><%= lang === 'en' ? 'Home' : 'მთავარი' %></a>
+      <span class="crumbs-sep">/</span>
+      <a href="<%= langPrefix %>/cart"><%= lang === 'en' ? 'Cart' : 'კალათა' %></a>
+      <span class="crumbs-sep">/</span>
+      <span><%= lang === 'en' ? 'Checkout' : 'გადახდა' %></span>
+    </nav>
+
+    <h1 style="margin-bottom: var(--sp-8)"><%= lang === 'en' ? 'Checkout' : 'გადახდა' %></h1>
 
     <% if (typeof errors !== 'undefined' && errors && errors.length) { %>
-      <div class="flash flash-error" style="background:rgba(220,53,69,0.1);border:1px solid rgba(220,53,69,0.3);border-radius:var(--radius);padding:1rem;margin-bottom:1.5rem;">
-        <ul style="margin:0;padding-left:1.5rem;color:#dc3545;">
-          <% errors.forEach(e => { %><li><%= e.msg %></li><% }) %>
-        </ul>
+      <div class="alert alert-error" style="margin-bottom: var(--sp-5)">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/></svg>
+        <ul style="margin:0;padding-left:20px"><% errors.forEach(e => { %><li><%= e.msg %></li><% }); %></ul>
       </div>
     <% } %>
 
     <div id="checkout-empty" style="display:none;">
-      <p class="text-center" style="color:var(--text-secondary);padding:3rem 0;"><%= t('cart.empty') %></p>
-      <div class="text-center">
-        <a href="<%= langPrefix %>/shop" class="btn btn-primary"><%= t('cart.continue_shopping') %></a>
+      <div class="alert alert-info">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 002 1.61h9.72a2 2 0 002-1.61L23 6H6"/></svg>
+        <div>
+          <strong><%= lang === 'en' ? 'Your cart is empty' : 'კალათა ცარიელია' %></strong>
+          <p style="margin: 4px 0 0"><a href="<%= langPrefix %>/shop"><%= lang === 'en' ? 'Browse the shop' : 'მაღაზიაში' %></a></p>
+        </div>
       </div>
     </div>
 
@@ -21,137 +32,105 @@
       <input type="hidden" name="_csrf" value="<%= csrfToken %>">
       <input type="hidden" name="items" id="checkout-items" value="">
 
-      <div class="checkout-layout">
-        <div class="checkout-form-section">
-          <h2 style="font-size:1.2rem;margin-bottom:1.25rem;"><%= t('checkout.contact_info') %></h2>
-
-          <div class="form-group" style="margin-bottom:1rem;">
-            <label class="form-label" for="checkout-name"><%= t('checkout.name') %> *</label>
-            <input type="text" id="checkout-name" name="name" class="form-input" required value="<%= typeof formData !== 'undefined' && formData ? formData.name || '' : '' %>">
-          </div>
-
-          <div class="form-group" style="margin-bottom:1rem;">
-            <label class="form-label" for="checkout-email"><%= t('checkout.email') %> *</label>
-            <input type="email" id="checkout-email" name="email" class="form-input" required value="<%= typeof formData !== 'undefined' && formData ? formData.email || '' : '' %>">
-          </div>
-
-          <div class="form-group" style="margin-bottom:1rem;">
-            <label class="form-label" for="checkout-phone"><%= t('checkout.phone') %> *</label>
-            <input type="tel" id="checkout-phone" name="phone" class="form-input" required value="<%= typeof formData !== 'undefined' && formData ? formData.phone || '' : '' %>">
-          </div>
-
-          <div class="form-group" style="margin-bottom:1.5rem;">
-            <label class="form-label" for="checkout-address"><%= t('checkout.address') %></label>
-            <textarea id="checkout-address" name="address" class="form-input" rows="3"><%= typeof formData !== 'undefined' && formData ? formData.address || '' : '' %></textarea>
-          </div>
-
-          <h2 style="font-size:1.2rem;margin-bottom:1.25rem;"><%= t('checkout.payment_method') %></h2>
-
-          <div class="payment-options">
-            <label class="payment-option">
-              <input type="radio" name="paymentMethod" value="bank_transfer" checked>
-              <div class="payment-option-body">
-                <strong><%= t('checkout.bank_transfer') %></strong>
-                <span><%= t('checkout.bank_transfer_desc') %></span>
+      <div style="display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(280px, 1fr); gap: var(--sp-8)" class="checkout-layout">
+        <div>
+          <div class="card" style="padding: var(--sp-6); display: block">
+            <h2 style="font-family: var(--font-body); font-weight: 700; font-size: var(--text-lg); margin-bottom: var(--sp-5)"><%= lang === 'en' ? 'Contact information' : 'საკონტაქტო ინფორმაცია' %></h2>
+            <div class="stack stack-sm">
+              <div class="field">
+                <label for="checkout-name"><%= lang === 'en' ? 'Full name' : 'სახელი გვარი' %> *</label>
+                <input type="text" id="checkout-name" name="name" class="input" required value="<%= typeof formData !== 'undefined' && formData ? formData.name || '' : '' %>">
               </div>
-            </label>
-            <label class="payment-option">
-              <input type="radio" name="paymentMethod" value="on_delivery">
-              <div class="payment-option-body">
-                <strong><%= t('checkout.on_delivery') %></strong>
-                <span><%= t('checkout.on_delivery_desc') %></span>
+              <div class="field">
+                <label for="checkout-email"><%= lang === 'en' ? 'Email' : 'ელ. ფოსტა' %> *</label>
+                <input type="email" id="checkout-email" name="email" class="input" required value="<%= typeof formData !== 'undefined' && formData ? formData.email || '' : '' %>">
               </div>
-            </label>
-            <label class="payment-option">
-              <input type="radio" name="paymentMethod" value="on_pickup">
-              <div class="payment-option-body">
-                <strong><%= t('checkout.on_pickup') %></strong>
-                <span><%= t('checkout.on_pickup_desc') %></span>
+              <div class="field">
+                <label for="checkout-phone"><%= lang === 'en' ? 'Phone' : 'ტელეფონი' %> *</label>
+                <input type="tel" id="checkout-phone" name="phone" class="input" required value="<%= typeof formData !== 'undefined' && formData ? formData.phone || '' : '' %>">
               </div>
-            </label>
+              <div class="field">
+                <label for="checkout-address"><%= lang === 'en' ? 'Delivery address' : 'მიწოდების მისამართი' %></label>
+                <textarea id="checkout-address" name="address" class="textarea" rows="3"><%= typeof formData !== 'undefined' && formData ? formData.address || '' : '' %></textarea>
+              </div>
+            </div>
+          </div>
+
+          <div class="card" style="padding: var(--sp-6); display: block; margin-top: var(--sp-5)">
+            <h2 style="font-family: var(--font-body); font-weight: 700; font-size: var(--text-lg); margin-bottom: var(--sp-5)"><%= lang === 'en' ? 'Payment method' : 'გადახდის მეთოდი' %></h2>
+            <div class="stack stack-sm">
+              <label class="card" style="padding: var(--sp-4); cursor: pointer; display: flex; gap: var(--sp-3); align-items: center">
+                <input type="radio" name="paymentMethod" value="bank_transfer" checked style="accent-color: var(--forest-700)">
+                <div>
+                  <strong><%= lang === 'en' ? 'Bank transfer' : 'ბანკის გადარიცხვა' %></strong>
+                  <div style="font-size: var(--text-sm); color: var(--text-muted)"><%= lang === 'en' ? 'We\'ll email bank details and QR after ordering.' : 'დეტალებს გამოგიგზავნით ელ. ფოსტით.' %></div>
+                </div>
+              </label>
+              <label class="card" style="padding: var(--sp-4); cursor: pointer; display: flex; gap: var(--sp-3); align-items: center">
+                <input type="radio" name="paymentMethod" value="on_delivery" style="accent-color: var(--forest-700)">
+                <div>
+                  <strong><%= lang === 'en' ? 'Cash on delivery' : 'ნაღდი მიტანისას' %></strong>
+                  <div style="font-size: var(--text-sm); color: var(--text-muted)"><%= lang === 'en' ? 'Pay the courier in cash.' : 'გადაიხადე მიტანისას ნაღდი ფულით.' %></div>
+                </div>
+              </label>
+              <label class="card" style="padding: var(--sp-4); cursor: pointer; display: flex; gap: var(--sp-3); align-items: center">
+                <input type="radio" name="paymentMethod" value="on_pickup" style="accent-color: var(--forest-700)">
+                <div>
+                  <strong><%= lang === 'en' ? 'Pay at pickup' : 'აღებისას' %></strong>
+                  <div style="font-size: var(--text-sm); color: var(--text-muted)"><%= lang === 'en' ? 'Pick up in Tbilisi, pay in person.' : 'აღება თბილისში.' %></div>
+                </div>
+              </label>
+            </div>
           </div>
         </div>
 
-        <div class="checkout-summary">
-          <h2 style="font-size:1.2rem;margin-bottom:1.25rem;"><%= t('checkout.order_summary') %></h2>
-          <div id="checkout-summary-items"></div>
-          <div class="checkout-total">
-            <strong><%= t('cart.total') %></strong>
-            <strong id="checkout-total">&#8382;0</strong>
-          </div>
-          <div class="terms-accept" style="margin-top:1.25rem;">
-            <label style="display:flex;gap:0.6rem;align-items:flex-start;cursor:pointer;font-size:0.85rem;color:var(--text-secondary);line-height:1.5;">
-              <input type="checkbox" id="accept-terms" required style="margin-top:0.25rem;accent-color:var(--accent-orange);flex-shrink:0;">
-              <span><%- t('checkout.terms_text') %></span>
+        <aside>
+          <div class="cart-summary" style="position: sticky; top: calc(var(--header-h) + var(--sp-6))">
+            <h3 style="font-family: var(--font-body); font-weight: 700; font-size: var(--text-lg)"><%= lang === 'en' ? 'Order summary' : 'შეკვეთის ჯამი' %></h3>
+            <div id="checkout-summary-items" style="display: flex; flex-direction: column; gap: var(--sp-3)"></div>
+            <hr class="divider divider-tight">
+            <div class="cart-summary-row total"><span><%= lang === 'en' ? 'Total' : 'ჯამი' %></span><span id="checkout-total">₾0</span></div>
+            <label style="display: flex; gap: var(--sp-3); align-items: flex-start; font-size: var(--text-sm); color: var(--text-muted); cursor: pointer; line-height: 1.5">
+              <input type="checkbox" id="accept-terms" required style="margin-top: 3px; accent-color: var(--forest-700); flex-shrink: 0">
+              <span><%= lang === 'en' ? 'I have read and agree to the' : 'ვეთანხმები' %> <a href="#" class="terms-link"><%= lang === 'en' ? 'terms &amp; conditions' : 'წესებსა და პირობებს' %></a>.</span>
             </label>
+            <button type="submit" class="btn btn-primary btn-block btn-lg" id="place-order-btn"><%= lang === 'en' ? 'Place order' : 'შეკვეთის გაკეთება' %></button>
+            <p class="form-note" style="text-align: center">🔒 <%= lang === 'en' ? 'Your information is safe' : 'თქვენი ინფორმაცია უსაფრთხოდაა' %></p>
           </div>
-          <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center;margin-top:1rem;" id="place-order-btn">
-            <%= t('checkout.place_order') %>
-          </button>
-        </div>
+        </aside>
       </div>
     </form>
   </div>
 </section>
 
-<!-- Terms & Conditions Modal -->
-<dialog id="terms-modal">
-  <div class="terms-modal-inner">
-    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1.5rem;">
-      <h2 style="font-size:1.3rem;"><%= t('terms.title') %></h2>
-      <button class="terms-close-btn" aria-label="Close">&times;</button>
+<dialog id="terms-modal" style="max-width: 650px; width: 90vw; border-radius: var(--r-lg); border: 1px solid var(--border); background: var(--white); padding: 0">
+  <div style="padding: var(--sp-8)">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom: var(--sp-5);">
+      <h2 style="font-size: var(--text-xl)"><%= lang === 'en' ? 'Terms &amp; Conditions' : 'წესები და პირობები' %></h2>
+      <button class="terms-close-btn" aria-label="Close" style="font-size: 24px; color: var(--text-muted)">&times;</button>
     </div>
-
-    <div style="color:var(--text-secondary);font-size:0.9rem;line-height:1.8;">
-      <h3 style="color:var(--text-primary);font-size:1rem;margin:1.25rem 0 0.5rem;"><%= t('terms.general_title') %></h3>
-      <p><%= t('terms.general_text') %></p>
-
-      <h3 style="color:var(--text-primary);font-size:1rem;margin:1.25rem 0 0.5rem;"><%= t('terms.payment_title') %></h3>
-      <p><%= t('terms.payment_text') %></p>
-
-      <h3 style="color:var(--text-primary);font-size:1rem;margin:1.25rem 0 0.5rem;"><%= t('terms.delivery_title') %></h3>
-      <p><%= t('terms.delivery_text') %></p>
-
-      <h3 style="color:var(--text-primary);font-size:1rem;margin:1.25rem 0 0.5rem;"><%= t('terms.returns_title') %></h3>
-      <p><%= t('terms.returns_text') %></p>
-
-      <h3 style="color:var(--text-primary);font-size:1rem;margin:1.25rem 0 0.5rem;"><%= t('terms.privacy_title') %></h3>
-      <p><%= t('terms.privacy_text') %></p>
+    <div style="color: var(--text-muted); font-size: var(--text-sm); line-height: 1.75; max-height: 50vh; overflow-y: auto">
+      <p><%= lang === 'en' ? 'By placing an order you agree to our shipping and return policy. Products can be returned within 14 days if unused and in original packaging. Delivery within Tbilisi typically 1–2 days; other regions 3–5 days. Refunds processed to the original payment method within 7 working days.' : 'შეკვეთით ეთანხმებით მიტანის და დაბრუნების პოლიტიკას.' %></p>
     </div>
-
-    <button class="btn btn-primary terms-close-btn" style="width:100%;justify-content:center;margin-top:1.5rem;"><%= t('terms.close') %></button>
+    <button class="btn btn-primary btn-block terms-close-btn" style="margin-top: var(--sp-5)"><%= lang === 'en' ? 'Got it' : 'კარგი' %></button>
   </div>
 </dialog>
 
 <style>
-  #terms-modal { max-width:650px;width:90vw;max-height:80vh;border-radius:var(--radius-lg);border:1px solid var(--border-color);background:var(--bg-card);color:var(--text-primary);padding:0;margin:auto;overflow:hidden; }
-  #terms-modal::backdrop { background:rgba(0,0,0,0.7); }
-  .terms-modal-inner { padding:2rem;overflow-y:auto;max-height:calc(80vh - 4px); }
-  .terms-close-btn { background:none;border:none;color:var(--text-muted);font-size:1.5rem;cursor:pointer;line-height:1; }
-  .terms-link { color:var(--accent-orange) !important;text-decoration:underline !important; }
+  @media (max-width: 800px) {
+    .checkout-layout { grid-template-columns: 1fr !important; }
+  }
+  #terms-modal::backdrop { background: rgba(0,0,0,0.5); }
 </style>
 
 <script>
   document.addEventListener('DOMContentLoaded', function() {
     var modal = document.getElementById('terms-modal');
     if (!modal) return;
-
-    // Open modal when terms link is clicked
     document.addEventListener('click', function(e) {
-      if (e.target.classList.contains('terms-link')) {
-        e.preventDefault();
-        modal.showModal();
-      }
+      if (e.target.classList.contains('terms-link')) { e.preventDefault(); modal.showModal(); }
     });
-
-    // Close modal buttons
-    modal.querySelectorAll('.terms-close-btn').forEach(function(btn) {
-      btn.addEventListener('click', function() { modal.close(); });
-    });
-
-    // Close on backdrop click
-    modal.addEventListener('click', function(e) {
-      if (e.target === modal) modal.close();
-    });
+    modal.querySelectorAll('.terms-close-btn').forEach(btn => btn.addEventListener('click', () => modal.close()));
+    modal.addEventListener('click', e => { if (e.target === modal) modal.close(); });
   });
 </script>

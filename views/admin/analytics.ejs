@@ -1,195 +1,155 @@
-<div class="admin-header">
-  <h1>Analytics</h1>
+<div class="admin-page-head">
+  <div class="admin-page-head-text">
+    <div class="admin-crumbs"><a href="/admin">Admin</a> <span>/</span> <span>Analytics</span></div>
+    <h1>Analytics</h1>
+    <p>Traffic, sources, devices, user journeys.</p>
+  </div>
 </div>
 
-<!-- Date Filters -->
-<div class="analytics-filters">
-  <button class="btn btn-secondary btn-sm active" data-range="today">Today</button>
-  <button class="btn btn-secondary btn-sm" data-range="7d">Last 7 Days</button>
-  <button class="btn btn-secondary btn-sm" data-range="30d">Last 30 Days</button>
-  <input type="date" id="analytics-from">
-  <span style="line-height:2">&mdash;</span>
-  <input type="date" id="analytics-to">
-  <button class="btn btn-secondary btn-sm" id="analytics-custom">Apply</button>
+<div class="admin-card">
+  <div style="display: flex; gap: 8px; flex-wrap: wrap; align-items: center">
+    <button class="admin-btn admin-btn-outline admin-btn-sm is-active" data-range="today">Today</button>
+    <button class="admin-btn admin-btn-outline admin-btn-sm" data-range="7d">Last 7 days</button>
+    <button class="admin-btn admin-btn-outline admin-btn-sm" data-range="30d">Last 30 days</button>
+    <span class="admin-muted" style="margin-left: 16px; font-size: 12px">Custom range:</span>
+    <input type="date" id="analytics-from" class="admin-input" style="width: 160px; min-height: 32px">
+    <span class="admin-muted">—</span>
+    <input type="date" id="analytics-to" class="admin-input" style="width: 160px; min-height: 32px">
+    <button class="admin-btn admin-btn-outline admin-btn-sm" id="analytics-custom">Apply</button>
+  </div>
 </div>
 
-<!-- Loading State -->
-<div class="analytics-loading" id="analytics-loading">Loading analytics data...</div>
+<div id="analytics-loading" class="admin-muted" style="padding: 40px; text-align: center">Loading analytics data…</div>
 
-<!-- Dashboard Content (hidden until data loads) -->
 <div id="analytics-content" style="display:none">
 
-<!-- Stat Cards -->
-<div class="stats-grid" id="stats-cards"></div>
+  <div class="admin-stats" id="stats-cards"></div>
 
-<!-- Traffic Sources -->
-<div class="analytics-section">
-  <h2>Traffic Sources</h2>
-  <div class="admin-table-wrap">
-    <table class="admin-table">
-      <thead><tr><th>Source</th><th>Visits</th><th>%</th></tr></thead>
-      <tbody id="sources-table"></tbody>
-    </table>
-  </div>
-</div>
-
-<!-- UTM Campaigns -->
-<div class="analytics-section" id="campaigns-section" style="display:none">
-  <h2>UTM Campaigns</h2>
-  <div class="admin-table-wrap">
-    <table class="admin-table">
-      <thead><tr><th>Campaign</th><th>Source</th><th>Medium</th><th>Visits</th></tr></thead>
-      <tbody id="campaigns-table"></tbody>
-    </table>
-  </div>
-</div>
-
-<!-- Top Pages -->
-<div class="analytics-section">
-  <h2>Top Pages</h2>
-  <div class="admin-table-wrap">
-    <table class="admin-table">
-      <thead><tr><th>Page</th><th>Views</th><th>Avg. Duration</th><th>Entries</th><th>Exits</th></tr></thead>
-      <tbody id="pages-table"></tbody>
-    </table>
-  </div>
-</div>
-
-<!-- Devices & Tech -->
-<div class="analytics-section">
-  <h2>Devices &amp; Tech</h2>
-  <div class="analytics-grid-2">
-    <div>
-      <h3 style="font-size:0.95rem;margin-bottom:0.75rem">Device Types</h3>
-      <div id="devices-bars"></div>
-    </div>
-    <div>
-      <h3 style="font-size:0.95rem;margin-bottom:0.75rem">Browsers</h3>
-      <div id="browsers-bars"></div>
+  <div class="admin-card">
+    <div class="admin-card-head"><h2>Traffic sources</h2></div>
+    <div class="admin-table-wrap" style="margin-bottom: 0">
+      <table class="admin-table">
+        <thead><tr><th>Source</th><th>Visits</th><th>%</th></tr></thead>
+        <tbody id="sources-table"></tbody>
+      </table>
     </div>
   </div>
-  <div class="analytics-grid-2" style="margin-top:1rem">
-    <div>
-      <h3 style="font-size:0.95rem;margin-bottom:0.75rem">Operating Systems</h3>
-      <div id="os-bars"></div>
-    </div>
-    <div>
-      <h3 style="font-size:0.95rem;margin-bottom:0.75rem">Connections</h3>
-      <div id="connections-bars"></div>
+
+  <div class="admin-card" id="campaigns-section" style="display:none">
+    <div class="admin-card-head"><h2>UTM campaigns</h2></div>
+    <div class="admin-table-wrap" style="margin-bottom: 0">
+      <table class="admin-table">
+        <thead><tr><th>Campaign</th><th>Source</th><th>Medium</th><th>Visits</th></tr></thead>
+        <tbody id="campaigns-table"></tbody>
+      </table>
     </div>
   </div>
+
+  <div class="admin-card">
+    <div class="admin-card-head"><h2>Top pages</h2></div>
+    <div class="admin-table-wrap" style="margin-bottom: 0">
+      <table class="admin-table">
+        <thead><tr><th>Page</th><th>Views</th><th>Avg. duration</th><th>Entries</th><th>Exits</th></tr></thead>
+        <tbody id="pages-table"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="admin-card">
+    <div class="admin-card-head"><h2>Devices &amp; tech</h2></div>
+    <div class="admin-grid-2">
+      <div><h3>Device types</h3><div id="devices-bars"></div></div>
+      <div><h3>Browsers</h3><div id="browsers-bars"></div></div>
+    </div>
+    <div class="admin-grid-2" style="margin-top: 20px">
+      <div><h3>Operating systems</h3><div id="os-bars"></div></div>
+      <div><h3>Connections</h3><div id="connections-bars"></div></div>
+    </div>
+  </div>
+
+  <div class="admin-card">
+    <div class="admin-card-head"><h2>Visitor languages</h2></div>
+    <div id="languages-bars"></div>
+  </div>
+
+  <div class="admin-card">
+    <div class="admin-card-head"><h2>User journeys</h2></div>
+    <div id="journeys-list"></div>
+  </div>
+
 </div>
 
-<!-- Languages -->
-<div class="analytics-section">
-  <h2>Visitor Languages</h2>
-  <div id="languages-bars"></div>
-</div>
-
-<!-- User Journeys -->
-<div class="analytics-section">
-  <h2>User Journeys</h2>
-  <div id="journeys-list"></div>
-</div>
-
-</div><!-- /analytics-content -->
+<style>
+  .admin-btn.is-active { background: var(--a-accent); color: var(--a-bg); border-color: var(--a-accent); }
+  .analytics-bar { display: flex; align-items: center; gap: 12px; margin-bottom: 8px; font-size: 13px; }
+  .analytics-bar-label { flex-shrink: 0; width: 140px; color: var(--a-text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .analytics-bar-track { flex: 1; height: 8px; background: var(--a-bg); border-radius: 4px; overflow: hidden; }
+  .analytics-bar-fill { height: 100%; background: var(--a-accent); border-radius: 4px; }
+  .analytics-bar-value { flex-shrink: 0; color: var(--a-text-muted); font-size: 12px; min-width: 100px; text-align: right; }
+  .journey-item { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid var(--a-border); font-size: 13px; }
+  .journey-item:last-child { border-bottom: none; }
+  .journey-path { color: var(--a-text); font-family: 'JetBrains Mono', monospace; font-size: 12px; }
+  .journey-count { color: var(--a-accent); font-weight: 600; }
+  .stat-trend { margin-top: 4px; font-size: 11px; }
+  .stat-trend.up { color: var(--a-green); }
+  .stat-trend.down { color: var(--a-red); }
+  .stat-trend.neutral { color: var(--a-text-dim); }
+</style>
 
 <script>
 (function() {
   var loading = document.getElementById('analytics-loading');
   var content = document.getElementById('analytics-content');
-
   function today() { return new Date().toISOString().slice(0, 10); }
-
-  function daysAgo(n) {
-    var d = new Date();
-    d.setDate(d.getDate() - n);
-    return d.toISOString().slice(0, 10);
-  }
-
-  function formatDuration(s) {
-    if (s < 60) return s + 's';
-    var m = Math.floor(s / 60);
-    return m + 'm ' + (s % 60) + 's';
-  }
-
-  function trendHTML(current, previous, label) {
-    if (previous === 0 && current === 0) return '<div class="stat-trend neutral">&mdash;</div>';
-    if (previous === 0) return '<div class="stat-trend up">&uarr; new</div>';
+  function daysAgo(n) { var d = new Date(); d.setDate(d.getDate() - n); return d.toISOString().slice(0, 10); }
+  function formatDuration(s) { if (s < 60) return s + 's'; var m = Math.floor(s / 60); return m + 'm ' + (s % 60) + 's'; }
+  function trendHTML(current, previous) {
+    if (previous === 0 && current === 0) return '<div class="stat-trend neutral">—</div>';
+    if (previous === 0) return '<div class="stat-trend up">↑ new</div>';
     var pct = Math.round(((current - previous) / previous) * 100);
-    if (pct > 0) return '<div class="stat-trend up">&uarr; ' + pct + '% vs yesterday</div>';
-    if (pct < 0) return '<div class="stat-trend down">&darr; ' + Math.abs(pct) + '% vs yesterday</div>';
-    return '<div class="stat-trend neutral">&mdash; same as yesterday</div>';
+    if (pct > 0) return '<div class="stat-trend up">↑ ' + pct + '% vs prev</div>';
+    if (pct < 0) return '<div class="stat-trend down">↓ ' + Math.abs(pct) + '% vs prev</div>';
+    return '<div class="stat-trend neutral">— same</div>';
   }
-
-  function escapeHTML(str) {
-    var div = document.createElement('div');
-    div.textContent = str;
-    return div.innerHTML;
-  }
-
-  function renderBars(containerId, items) {
-    var el = document.getElementById(containerId);
-    if (!items || items.length === 0) { el.innerHTML = '<div style="color:var(--admin-text-muted);font-size:0.85rem">No data</div>'; return; }
-    el.innerHTML = items.slice(0, 8).map(function(item) {
-      return '<div class="analytics-bar">' +
-        '<span class="analytics-bar-label" title="' + escapeHTML(item.name) + '">' + escapeHTML(item.name) + '</span>' +
-        '<div class="analytics-bar-track"><div class="analytics-bar-fill" style="width:' + item.pct + '%"></div></div>' +
-        '<span class="analytics-bar-value">' + item.count + ' (' + item.pct + '%)</span>' +
-      '</div>';
+  function escapeHTML(str) { var d = document.createElement('div'); d.textContent = str; return d.innerHTML; }
+  function renderBars(id, items) {
+    var el = document.getElementById(id);
+    if (!items || !items.length) { el.innerHTML = '<div class="admin-muted" style="font-size:12px">No data</div>'; return; }
+    el.innerHTML = items.slice(0, 8).map(function(i) {
+      return '<div class="analytics-bar"><span class="analytics-bar-label" title="' + escapeHTML(i.name) + '">' + escapeHTML(i.name) + '</span><div class="analytics-bar-track"><div class="analytics-bar-fill" style="width:' + i.pct + '%"></div></div><span class="analytics-bar-value">' + i.count + ' (' + i.pct + '%)</span></div>';
     }).join('');
   }
-
   function render(data) {
     loading.style.display = 'none';
     content.style.display = 'block';
-
-    // Stat cards
     document.getElementById('stats-cards').innerHTML =
-      '<div class="stat-card"><div class="stat-value">' + data.totalPageviews + '</div><div class="stat-label">Page Views</div>' + trendHTML(data.totalPageviews, data.yesterday.totalPageviews) + '</div>' +
-      '<div class="stat-card"><div class="stat-value">' + data.uniqueVisitors + '</div><div class="stat-label">Unique Visitors</div>' + trendHTML(data.uniqueVisitors, data.yesterday.uniqueVisitors) + '</div>' +
-      '<div class="stat-card"><div class="stat-value">' + formatDuration(data.avgDuration) + '</div><div class="stat-label">Avg. Time on Page</div></div>' +
-      '<div class="stat-card"><div class="stat-value">' + data.bounceRate + '%</div><div class="stat-label">Bounce Rate</div></div>';
-
-    // Sources table
+      '<div class="admin-stat"><div class="admin-stat-label">Page views</div><div class="admin-stat-value">' + data.totalPageviews + '</div>' + trendHTML(data.totalPageviews, data.yesterday.totalPageviews) + '</div>' +
+      '<div class="admin-stat"><div class="admin-stat-label">Unique visitors</div><div class="admin-stat-value">' + data.uniqueVisitors + '</div>' + trendHTML(data.uniqueVisitors, data.yesterday.uniqueVisitors) + '</div>' +
+      '<div class="admin-stat"><div class="admin-stat-label">Avg. time on page</div><div class="admin-stat-value">' + formatDuration(data.avgDuration) + '</div></div>' +
+      '<div class="admin-stat"><div class="admin-stat-label">Bounce rate</div><div class="admin-stat-value">' + data.bounceRate + '%</div></div>';
     document.getElementById('sources-table').innerHTML = data.sources.length === 0
-      ? '<tr><td colspan="3" style="color:var(--admin-text-muted)">No data yet</td></tr>'
+      ? '<tr><td colspan="3" class="admin-muted">No data yet</td></tr>'
       : data.sources.map(function(s) { return '<tr><td>' + escapeHTML(s.name) + '</td><td>' + s.count + '</td><td>' + s.pct + '%</td></tr>'; }).join('');
-
-    // Campaigns table
     var cs = document.getElementById('campaigns-section');
     if (data.campaigns.length > 0) {
       cs.style.display = 'block';
       document.getElementById('campaigns-table').innerHTML = data.campaigns.map(function(c) {
-        return '<tr><td>' + escapeHTML(c.campaign) + '</td><td>' + escapeHTML(c.source || '\u2014') + '</td><td>' + escapeHTML(c.medium || '\u2014') + '</td><td>' + c.count + '</td></tr>';
+        return '<tr><td>' + escapeHTML(c.campaign) + '</td><td>' + escapeHTML(c.source || '—') + '</td><td>' + escapeHTML(c.medium || '—') + '</td><td>' + c.count + '</td></tr>';
       }).join('');
-    } else {
-      cs.style.display = 'none';
-    }
-
-    // Pages table
+    } else { cs.style.display = 'none'; }
     document.getElementById('pages-table').innerHTML = data.pages.length === 0
-      ? '<tr><td colspan="5" style="color:var(--admin-text-muted)">No data yet</td></tr>'
-      : data.pages.map(function(p) { return '<tr><td>' + escapeHTML(p.path) + '</td><td>' + p.views + '</td><td>' + formatDuration(p.avgDuration) + '</td><td>' + p.entries + '</td><td>' + p.exits + '</td></tr>'; }).join('');
-
-    // Bar charts
+      ? '<tr><td colspan="5" class="admin-muted">No data yet</td></tr>'
+      : data.pages.map(function(p) { return '<tr><td style="font-family: \'JetBrains Mono\', monospace; font-size: 12px">' + escapeHTML(p.path) + '</td><td>' + p.views + '</td><td>' + formatDuration(p.avgDuration) + '</td><td>' + p.entries + '</td><td>' + p.exits + '</td></tr>'; }).join('');
     renderBars('devices-bars', data.devices);
     renderBars('browsers-bars', data.browsers);
     renderBars('os-bars', data.operatingSystems);
     renderBars('connections-bars', data.connections);
     renderBars('languages-bars', data.languages);
-
-    // Journeys
     var jl = document.getElementById('journeys-list');
-    if (data.journeys.length === 0) {
-      jl.innerHTML = '<div style="color:var(--admin-text-muted);font-size:0.85rem">No data yet</div>';
-    } else {
-      jl.innerHTML = data.journeys.map(function(j) {
-        return '<div class="journey-item"><span class="journey-path">' + escapeHTML(j.path) + '</span><span class="journey-count">' + j.count + 'x</span></div>';
-      }).join('');
-    }
+    jl.innerHTML = data.journeys.length === 0
+      ? '<div class="admin-muted" style="font-size:12px">No data yet</div>'
+      : data.journeys.map(function(j) { return '<div class="journey-item"><span class="journey-path">' + escapeHTML(j.path) + '</span><span class="journey-count">' + j.count + 'x</span></div>'; }).join('');
   }
-
   function loadData(from, to) {
     loading.style.display = 'block';
     content.style.display = 'none';
@@ -198,31 +158,22 @@
       .then(render)
       .catch(function() { loading.textContent = 'Failed to load analytics data.'; });
   }
-
-  // Date filter buttons
   var buttons = document.querySelectorAll('[data-range]');
   buttons.forEach(function(btn) {
     btn.addEventListener('click', function() {
-      buttons.forEach(function(b) { b.classList.remove('active'); });
-      btn.classList.add('active');
+      buttons.forEach(function(b) { b.classList.remove('is-active'); });
+      btn.classList.add('is-active');
       var range = btn.getAttribute('data-range');
       if (range === 'today') loadData(today(), today());
       else if (range === '7d') loadData(daysAgo(6), today());
       else if (range === '30d') loadData(daysAgo(29), today());
     });
   });
-
-  // Custom date range
   document.getElementById('analytics-custom').addEventListener('click', function() {
     var from = document.getElementById('analytics-from').value;
     var to = document.getElementById('analytics-to').value;
-    if (from && to) {
-      buttons.forEach(function(b) { b.classList.remove('active'); });
-      loadData(from, to);
-    }
+    if (from && to) { buttons.forEach(function(b) { b.classList.remove('is-active'); }); loadData(from, to); }
   });
-
-  // Initial load: today
   loadData(today(), today());
 })();
 </script>

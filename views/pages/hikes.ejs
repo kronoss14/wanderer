@@ -1,30 +1,48 @@
-<!-- PAGE HERO -->
 <section class="page-hero">
-  <div class="page-hero-bg" style="background-image: url('/images/hikes-hero.jpeg'); background-position: center 65%"></div>
-  <div class="page-hero-overlay" style="background: linear-gradient(135deg, rgba(13,13,13,0.45) 0%, rgba(26,26,46,0.35) 100%)"></div>
+  <div class="page-hero-bg" style="background-image: url('/images/hikes-hero.jpeg');"></div>
+  <div class="page-hero-overlay"></div>
   <div class="page-hero-content container">
-    <h1><%- t('hikes.title') %></h1>
-    <p><%= t('hikes.subtitle') %></p>
+    <p class="eyebrow"><%= lang === 'en' ? 'Hiking adventures' : 'სალაშქრო თავგადასავლები' %></p>
+    <h1><%= lang === 'en' ? 'Hiking Tours Across Georgia' : 'ლაშქრობა საქართველოში' %></h1>
+    <p><%= lang === 'en' ? 'Guided day hikes, multi-day treks, and mountain adventures across the Caucasus — from beginner-friendly walks to advanced alpine routes.' : 'ერთდღიანი და მრავალდღიანი ტრეკინგი კავკასიონში — დამწყებთათვის ადვილი ბილიკებიდან რთული ალპური მარშრუტებამდე.' %></p>
   </div>
 </section>
 
-<!-- FILTER + GRID -->
 <section class="section">
   <div class="container">
-    <div class="filter-bar">
-      <a href="<%= langPrefix %>/hikes" class="filter-btn<%= activeType === 'all' ? ' active' : '' %>"><%= t('hikes.filter_all') %></a>
-      <a href="<%= langPrefix %>/hikes?type=day" class="filter-btn<%= activeType === 'day' ? ' active' : '' %>"><%= t('hikes.filter_day') %></a>
-      <a href="<%= langPrefix %>/hikes?type=multi-day" class="filter-btn<%= activeType === 'multi-day' ? ' active' : '' %>"><%= t('hikes.filter_multi') %></a>
-      <a href="<%= langPrefix %>/hikes?type=cultural" class="filter-btn<%= activeType === 'cultural' ? ' active' : '' %>"><%= t('hikes.filter_cultural') %></a>
+
+    <div class="hikes-toolbar">
+      <strong style="font-size: var(--text-sm); color: var(--text-muted); letter-spacing: 0.08em; text-transform: uppercase; margin-right: var(--sp-4);"><%= lang === 'en' ? 'Filter' : 'ფილტრი' %></strong>
+
+      <a href="<%= langPrefix %>/hikes" class="chip<%= !activeType || activeType === 'all' ? ' is-active' : '' %>"><%= lang === 'en' ? 'All tours' : 'ყველა' %></a>
+      <a href="<%= langPrefix %>/hikes?type=day" class="chip<%= activeType === 'day' ? ' is-active' : '' %>"><%= lang === 'en' ? 'Day hikes' : 'ერთდღიანი' %></a>
+      <a href="<%= langPrefix %>/hikes?type=multi-day" class="chip<%= activeType === 'multi-day' ? ' is-active' : '' %>"><%= lang === 'en' ? 'Multi-day' : 'მრავალდღიანი' %></a>
+      <a href="<%= langPrefix %>/hikes?type=cultural" class="chip<%= activeType === 'cultural' ? ' is-active' : '' %>"><%= lang === 'en' ? 'Cultural' : 'კულტურული' %></a>
+
+      <span style="height: 20px; width: 1px; background: var(--border); margin: 0 var(--sp-2);"></span>
+
+      <a href="<%= langPrefix %>/hikes?difficulty=easy" class="chip"><%= lang === 'en' ? 'Easy' : 'მარტივი' %></a>
+      <a href="<%= langPrefix %>/hikes?difficulty=medium" class="chip"><%= lang === 'en' ? 'Moderate' : 'საშუალო' %></a>
+      <a href="<%= langPrefix %>/hikes?difficulty=hard" class="chip"><%= lang === 'en' ? 'Advanced' : 'რთული' %></a>
+
+      <span class="hikes-toolbar-count"><%= hikes.length %> <%= lang === 'en' ? (hikes.length === 1 ? 'tour' : 'tours') : 'ლაშქრობა' %></span>
     </div>
-    <% if (hikes.length === 0) { %>
-      <p class="text-center" style="color: var(--text-secondary); padding: 3rem 0;"><%= t('hikes.empty') %></p>
-    <% } else { %>
-      <div class="hike-grid">
+
+    <% if (hikes && hikes.length) { %>
+      <div class="grid hikes-grid">
         <% hikes.forEach(hike => { %>
           <%- include('../partials/_hike-card', { hike }) %>
-        <% }) %>
+        <% }); %>
+      </div>
+    <% } else { %>
+      <div class="alert alert-info" style="max-width: 480px; margin: var(--sp-12) auto;">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        <div>
+          <strong><%= lang === 'en' ? 'No tours match those filters' : 'ფილტრს არცერთი ლაშქრობა არ ემთხვევა' %></strong>
+          <p style="margin: 4px 0 0; font-size: var(--text-sm);"><a href="<%= langPrefix %>/hikes"><%= lang === 'en' ? 'Clear filters and see all tours' : 'გასუფთავება' %></a></p>
+        </div>
       </div>
     <% } %>
+
   </div>
 </section>

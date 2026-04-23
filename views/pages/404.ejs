@@ -1,11 +1,12 @@
-<section class="error-page">
-  <div class="container text-center">
-    <h1 class="error-code">404</h1>
-    <h2 class="error-title"><%= t('page.not_found') %></h2>
-    <p class="error-text"><%= t('page.not_found_text') %></p>
-    <div class="error-actions">
-      <a href="<%= langPrefix %>/" class="btn btn-primary"><%= t('page.back_home') %></a>
-      <a href="<%= langPrefix %>/hikes" class="btn btn-secondary"><%= t('page.view_hikes') %></a>
+<section class="notfound">
+  <div class="container container-narrow">
+    <p class="eyebrow" style="justify-content: center; display: inline-flex"><%= lang === 'en' ? 'Off trail' : 'გზიდან გადახვედით' %></p>
+    <h1>404</h1>
+    <h2 style="font-size: var(--text-3xl); margin-bottom: var(--sp-4)"><%= lang === 'en' ? 'This page wandered off' : 'ეს გვერდი დაიკარგა' %></h2>
+    <p><%= lang === 'en' ? 'Looks like the trail you were looking for isn\'t here. Let\'s head back.' : 'ბილიკი, რომელსაც ეძებთ, აქ არ არის.' %></p>
+    <div style="display: flex; gap: var(--sp-3); justify-content: center; flex-wrap: wrap">
+      <a href="<%= langPrefix %>/" class="btn btn-primary"><%= lang === 'en' ? 'Back home' : 'მთავარზე დაბრუნება' %></a>
+      <a href="<%= langPrefix %>/hikes" class="btn btn-outline"><%= lang === 'en' ? 'Browse hikes' : 'ყველა ლაშქრობა' %></a>
     </div>
   </div>
 </section>

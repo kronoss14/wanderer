@@ -1,95 +1,98 @@
-<!-- PAGE HERO -->
 <section class="page-hero">
   <div class="page-hero-bg" style="background-image: url('/images/about-hero.jpeg'); background-position: center 55%"></div>
   <div class="page-hero-overlay"></div>
   <div class="page-hero-content container">
-    <h1><%- t('about.hero_title') %></h1>
-    <p><%= t('about.hero_sub') %></p>
+    <p class="eyebrow"><%= lang === 'en' ? 'About Wanderer' : 'Wanderer-ის შესახებ' %></p>
+    <h1><%= lang === 'en' ? 'Mountain people, showing you our mountains' : 'მთის ხალხი, რომელიც გაჩვენებთ თავის მთებს' %></h1>
+    <p><%= lang === 'en' ? 'A team of Georgian mountain guides, hikers, and storytellers — sharing routes we\'ve walked our whole lives.' : 'ქართული გუნდი, მთის გამყოლები და მოლაშქრეები, რომლებიც ამ ბილიკებზე დაიზარდნენ.' %></p>
   </div>
 </section>
 
-<!-- OUR STORY -->
 <section class="section">
   <div class="container">
-    <div class="about-story">
-      <div class="about-story-text">
-        <h2 class="section-title"><%- t('about.story_title') %></h2>
-        <p><%= t('about.story_p1') %></p>
-        <p><%= t('about.story_p2') %></p>
-        <p><%= t('about.story_p3') %></p>
-        <p><%= t('about.story_p4') %></p>
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--sp-12); align-items: center" class="about-row">
+      <div>
+        <p class="eyebrow"><%= lang === 'en' ? 'Our story' : 'ჩვენი ისტორია' %></p>
+        <h2 style="margin-bottom: var(--sp-5)"><%= lang === 'en' ? 'Born in the Caucasus, built for hikers' : 'დაბადებული კავკასიონში' %></h2>
+        <div class="stack" style="font-size: var(--text-md); line-height: 1.75; color: var(--text)">
+          <p><%= lang === 'en' ? 'Wanderer started the way most good adventure brands do: a handful of friends who\'d spent years guiding other people\'s tours decided we could do it better.' : 'Wanderer ისე დაიწყო, როგორც კარგი თავგადასავლობის კომპანიები: რამდენიმე მეგობარმა, რომლებმაც წლები გაატარა სხვისი ტურების წაყვანაში, გადაწყვიტა — უკეთ შეუძლიათ.' %></p>
+          <p><%= lang === 'en' ? 'We run small groups. We use the same routes we hiked as teenagers. We speak the languages our guests speak. And we charge fair prices because our team is local.' : 'პატარა ჯგუფები. ჩვენივე ბილიკები. სამართლიანი ფასები.' %></p>
+          <p><%= lang === 'en' ? 'Ten years later we\'ve guided 2,300+ travelers from over 40 countries. Most find us through referrals — which is still the highest compliment we can get.' : 'ათი წლის შემდეგ — 2300+ მოგზაური 40+ ქვეყნიდან.' %></p>
+        </div>
       </div>
-      <div class="about-story-image">
-        <img src="/images/logo.jpg" alt="Wanderer">
+      <div style="border-radius: var(--r-lg); overflow: hidden; aspect-ratio: 4 / 5; background: var(--stone-100)">
+        <img src="/images/about-hero.jpeg" alt="Wanderer team on the trail" loading="lazy" style="width: 100%; height: 100%; object-fit: cover;">
       </div>
     </div>
   </div>
 </section>
 
-<!-- VALUES -->
-<section class="section section-dark">
+<section class="why-us">
   <div class="container">
-    <div class="text-center" style="margin-bottom: 3rem;">
-      <h2 class="section-title"><%- t('about.values_title') %></h2>
+    <div class="text-center" style="max-width: 720px; margin: 0 auto var(--sp-12)">
+      <p class="eyebrow" style="color: var(--amber-300); justify-content: center; display: inline-flex"><%= lang === 'en' ? 'What we stand for' : 'რას დავფუძნებით' %></p>
+      <h2 style="margin: var(--sp-3) 0"><%= lang === 'en' ? 'Values that show on every trail' : 'ღირებულებები, რომლებიც ყოველ ბილიკზე ჩანს' %></h2>
     </div>
-    <div class="values-grid">
-      <div class="value-card">
-        <div class="value-icon">
-          <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="var(--accent-emerald)" stroke-width="1.5"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg>
-        </div>
-        <h3><%= t('about.value1_title') %></h3>
-        <p><%= t('about.value1_text') %></p>
+
+    <div class="grid grid-2" style="gap: var(--sp-8)">
+      <div class="feature">
+        <div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></div>
+        <h3><%= lang === 'en' ? 'Safety — without shortcuts' : 'უსაფრთხოება — ყოველთვის' %></h3>
+        <p><%= lang === 'en' ? 'Every guide is first-aid certified. Every route has a weather check. We turn back when we need to.' : 'ყველა გამყოლი სერტიფიცირებულია.' %></p>
       </div>
-      <div class="value-card">
-        <div class="value-icon">
-          <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="var(--accent-emerald)" stroke-width="1.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-        </div>
-        <h3><%= t('about.value2_title') %></h3>
-        <p><%= t('about.value2_text') %></p>
+      <div class="feature">
+        <div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L15 8H9L12 2z"/><path d="M9 8h6v13H9z"/></svg></div>
+        <h3><%= lang === 'en' ? 'Respect the mountain' : 'პატივი უნდა გვქონდეს მთისადმი' %></h3>
+        <p><%= lang === 'en' ? 'Leave no trace. Pack out your trash. Listen to locals. The trails we use today should be there in 50 years.' : 'არც კვალი — აარ ნაგავი. ადგილობრივებს უსმინეთ.' %></p>
       </div>
-      <div class="value-card">
-        <div class="value-icon">
-          <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="var(--accent-emerald)" stroke-width="1.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
-        </div>
-        <h3><%= t('about.value3_title') %></h3>
-        <p><%= t('about.value3_text') %></p>
+      <div class="feature">
+        <div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/></svg></div>
+        <h3><%= lang === 'en' ? 'Small groups, real connections' : 'მცირე ჯგუფები, ნამდვილი ურთიერთობები' %></h3>
+        <p><%= lang === 'en' ? 'Max 12 hikers. You\'ll know everyone\'s name by the second day.' : 'მაქს. 12 მოლაშქრე. მეორე დღეს უკვე ყველას სახელი იცით.' %></p>
       </div>
-      <div class="value-card">
-        <div class="value-icon">
-          <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="var(--accent-emerald)" stroke-width="1.5"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
-        </div>
-        <h3><%= t('about.value4_title') %></h3>
-        <p><%= t('about.value4_text') %></p>
+      <div class="feature">
+        <div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
+        <h3><%= lang === 'en' ? 'Support local villages' : 'ადგილობრივი სოფლების მხარდაჭერა' %></h3>
+        <p><%= lang === 'en' ? 'We stay in family guesthouses, eat at village kitchens, hire local muleteers. The money you pay stays here.' : 'ოჯახურ სასტუმროებში, სოფლის სამზარეულოებში.' %></p>
       </div>
     </div>
   </div>
 </section>
 
-<!-- OUR GUIDES -->
+<% if (typeof guides !== 'undefined' && guides && guides.length) { %>
 <section class="section">
   <div class="container">
-    <div class="text-center" style="margin-bottom: 3rem;">
-      <h2 class="section-title"><%- t('about.guides_title') %></h2>
-      <p class="section-subtitle centered"><%= t('about.guides_sub') %></p>
+    <div class="text-center" style="max-width: 620px; margin: 0 auto var(--sp-10)">
+      <p class="eyebrow"><%= lang === 'en' ? 'Meet the team' : 'ჩვენი გუნდი' %></p>
+      <h2><%= lang === 'en' ? 'Guides who know every bend' : 'გამყოლები, რომლებმაც ყველა მოსახვევი იციან' %></h2>
     </div>
-    <div class="guides-grid">
+    <div class="grid grid-3">
       <% guides.forEach(guide => { %>
-        <div class="guide-card">
-          <div class="guide-image">
-            <img src="<%= guide.image %>" alt="<%= l(guide, 'name') %>">
+        <article class="card" style="padding: 0">
+          <div class="card-media" style="aspect-ratio: 1 / 1">
+            <img src="<%= guide.image %>" alt="<%= l(guide, 'name') %>" loading="lazy">
           </div>
-          <div class="guide-info">
-            <h3><%= l(guide, 'name') %></h3>
-            <p class="guide-role"><%= l(guide, 'role') %></p>
-            <p class="guide-bio"><%= l(guide, 'bio') %></p>
-            <div class="guide-specialties">
-              <% guide.specialties.forEach(s => { %>
-                <span class="specialty-tag"><%= s %></span>
-              <% }) %>
-            </div>
+          <div class="card-body">
+            <h3 class="card-title"><%= l(guide, 'name') %></h3>
+            <p class="text-muted" style="font-size: var(--text-sm); margin-bottom: var(--sp-2)"><%= l(guide, 'role') %></p>
+            <p class="card-excerpt"><%= l(guide, 'bio') %></p>
+            <% if (guide.specialties && guide.specialties.length) { %>
+              <div class="card-meta" style="border-top: none; padding-top: var(--sp-2); gap: var(--sp-2)">
+                <% guide.specialties.forEach(s => { %>
+                  <span class="badge badge-outline"><%= s %></span>
+                <% }); %>
+              </div>
+            <% } %>
           </div>
-        </div>
-      <% }) %>
+        </article>
+      <% }); %>
     </div>
   </div>
 </section>
+<% } %>
+
+<style>
+  @media (max-width: 760px) {
+    .about-row { grid-template-columns: 1fr !important; }
+  }
+</style>

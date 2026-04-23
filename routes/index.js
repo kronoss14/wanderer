@@ -8,7 +8,9 @@ const router = Router();
 router.get('/', asyncHandler(async (req, res) => {
   const hikes = await readJSON('hikes.json');
   const reviews = await readJSON('reviews.json');
+  const products = await readJSON('products.json').catch(() => []);
   const featured = hikes.filter(h => h.featured);
+  const featuredProducts = products.filter(p => p.featured || p.inStock !== false).slice(0, 4);
   const topReviews = reviews.filter(r => r.rating === 5).slice(0, 3);
   const lang = res.locals.lang;
   res.locals.seo = buildSeo({
@@ -19,7 +21,7 @@ router.get('/', asyncHandler(async (req, res) => {
     path: '/',
     lang
   });
-  res.render('pages/home', { title: 'Home', featured, topReviews, hikes });
+  res.render('pages/home', { title: 'Home', featured, topReviews, hikes, featuredProducts });
 }));
 
 export default router;

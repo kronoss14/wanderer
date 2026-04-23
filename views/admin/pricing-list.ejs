@@ -1,40 +1,54 @@
-<div class="admin-header">
-  <h1>Pricing</h1>
-  <a href="/admin/pricing/new" class="btn btn-primary">+ New Tier</a>
+<div class="admin-page-head">
+  <div class="admin-page-head-text">
+    <div class="admin-crumbs"><a href="/admin">Admin</a> <span>/</span> <span>Pricing</span></div>
+    <h1>Pricing tiers</h1>
+    <p>Package pricing displayed on the public site.</p>
+  </div>
+  <div class="admin-page-head-actions">
+    <a href="/admin/pricing/new" class="admin-btn admin-btn-primary">+ New tier</a>
+  </div>
 </div>
 
+<% if (pricing && pricing.length) { %>
 <div class="admin-table-wrap">
   <table class="admin-table">
     <thead>
       <tr>
-        <th>ID</th>
         <th>Tier</th>
         <th>Price</th>
-        <th>Highlighted</th>
         <th>Features</th>
-        <th>Actions</th>
+        <th>Highlighted</th>
+        <th style="text-align: right">Actions</th>
       </tr>
     </thead>
     <tbody>
       <% pricing.forEach(p => { %>
         <tr>
-          <td><%= p.id %></td>
-          <td><%= p.tier %></td>
-          <td><%= p.priceLabel %></td>
-          <td><%= p.highlighted ? 'Yes' : 'No' %></td>
-          <td><%= (p.features || []).length %> items</td>
-          <td class="actions">
-            <a href="/admin/pricing/edit/<%= p.id %>" class="btn btn-secondary btn-sm">Edit</a>
-            <form method="POST" action="/admin/pricing/delete/<%= p.id %>" onsubmit="return confirm('Delete this tier?')">
-              <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-              <button type="submit" class="btn btn-danger btn-sm">Delete</button>
-            </form>
+          <td>
+            <div style="font-weight: 600"><a href="/admin/pricing/edit/<%= p.id %>"><%= p.tier %></a></div>
+            <div style="font-size: 12px; color: var(--a-text-muted)">ID: <code style="font-family: 'JetBrains Mono', monospace"><%= p.id %></code></div>
+          </td>
+          <td style="font-weight: 600; color: var(--a-accent)"><%= p.priceLabel %></td>
+          <td style="font-size: 12px; color: var(--a-text-muted)"><%= (p.features || []).length %> items</td>
+          <td><% if (p.highlighted) { %><span class="admin-badge admin-badge-accent">★ Highlighted</span><% } else { %><span class="admin-muted">—</span><% } %></td>
+          <td>
+            <div class="admin-table-actions">
+              <a href="/admin/pricing/edit/<%= p.id %>" class="admin-btn admin-btn-outline admin-btn-sm">Edit</a>
+              <form method="POST" action="/admin/pricing/delete/<%= p.id %>" onsubmit="return confirm('Delete this tier?')" style="display: inline">
+                <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                <button type="submit" class="admin-btn admin-btn-danger admin-btn-sm">Delete</button>
+              </form>
+            </div>
           </td>
         </tr>
-      <% }) %>
-      <% if (!pricing.length) { %>
-        <tr><td colspan="6" style="text-align:center;color:var(--admin-text-muted)">No pricing tiers yet</td></tr>
-      <% } %>
+      <% }); %>
     </tbody>
   </table>
 </div>
+<% } else { %>
+  <div class="admin-card"><div class="admin-empty">
+    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+    <p>No pricing tiers yet.</p>
+    <a href="/admin/pricing/new" class="admin-btn admin-btn-primary" style="margin-top: 16px">+ New tier</a>
+  </div></div>
+<% } %>

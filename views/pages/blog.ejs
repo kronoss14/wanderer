@@ -1,51 +1,52 @@
-<section class="page-hero" style="min-height: 200px">
+<section class="page-hero" style="min-height: 260px">
   <div class="page-hero-bg" style="background-image: url('/images/hikes-hero.jpeg'); background-position: center 65%"></div>
-  <div class="page-hero-overlay" style="background: linear-gradient(180deg, rgba(13,13,13,0.7) 0%, rgba(13,13,13,0.5) 100%)"></div>
+  <div class="page-hero-overlay"></div>
   <div class="page-hero-content container">
-    <h1><%= t('blog.title') %></h1>
+    <p class="eyebrow"><%= lang === 'en' ? 'Stories from the trail' : 'ისტორიები ბილიკიდან' %></p>
+    <h1><%= lang === 'en' ? 'Blog &amp; Trail Guides' : 'ბლოგი' %></h1>
+    <p><%= lang === 'en' ? 'Route notes, gear tips, seasonal advice, and the stories behind our favourite trails.' : 'მარშრუტების შესახებ, აღჭურვილობის რჩევები, სეზონური ინფორმაცია.' %></p>
   </div>
 </section>
 
 <section class="section">
   <div class="container">
-    <% if (allTags.length) { %>
-    <div class="blog-tags-filter">
-      <a href="<%= langPrefix %>/blog" class="tag-btn<%= !activeTag ? ' active' : '' %>"><%= lang === 'en' ? 'All' : 'ყველა' %></a>
-      <% allTags.forEach(function(tag) { %>
-        <a href="<%= langPrefix %>/blog?tag=<%= encodeURIComponent(tag) %>" class="tag-btn<%= activeTag === tag ? ' active' : '' %>"><%= tag %></a>
-      <% }) %>
-    </div>
+    <% if (allTags && allTags.length) { %>
+      <div class="hikes-toolbar" style="margin-bottom: var(--sp-8)">
+        <strong style="font-size: var(--text-sm); color: var(--text-muted); letter-spacing: 0.08em; text-transform: uppercase; margin-right: var(--sp-4);"><%= lang === 'en' ? 'Topics' : 'თემები' %></strong>
+        <a href="<%= langPrefix %>/blog" class="chip<%= !activeTag ? ' is-active' : '' %>"><%= lang === 'en' ? 'All' : 'ყველა' %></a>
+        <% allTags.forEach(function(tag) { %>
+          <a href="<%= langPrefix %>/blog?tag=<%= encodeURIComponent(tag) %>" class="chip<%= activeTag === tag ? ' is-active' : '' %>"><%= tag %></a>
+        <% }); %>
+      </div>
     <% } %>
 
-    <% if (posts.length) { %>
-    <div class="blog-grid">
-      <% posts.forEach(function(post) { %>
-      <article class="blog-card">
-        <% if (post.coverImage) { %>
-        <a href="<%= langPrefix %>/blog/<%= post.slug %>" class="blog-card-image">
-          <img src="<%= post.coverImage %>" alt="<%= l(post, 'title') %>" loading="lazy">
-        </a>
-        <% } %>
-        <div class="blog-card-body">
-          <div class="blog-card-meta">
-            <time><%= new Date(post.publishedAt).toLocaleDateString(lang === 'en' ? 'en-US' : 'ka-GE', { year: 'numeric', month: 'long', day: 'numeric' }) %></time>
-            <% if (post.tags && post.tags.length) { %>
-              <% post.tags.forEach(function(tag) { %>
-                <span class="blog-tag"><%= tag %></span>
-              <% }) %>
+    <% if (posts && posts.length) { %>
+      <div class="blog-grid">
+        <% posts.forEach(function(post) { %>
+          <article class="blog-post">
+            <% if (post.coverImage) { %>
+              <a href="<%= langPrefix %>/blog/<%= post.slug %>" class="blog-post-media">
+                <img src="<%= post.coverImage %>" alt="<%= l(post, 'title') %>" loading="lazy">
+              </a>
             <% } %>
-          </div>
-          <h2 class="blog-card-title">
-            <a href="<%= langPrefix %>/blog/<%= post.slug %>"><%= l(post, 'title') %></a>
-          </h2>
-          <p class="blog-card-excerpt"><%= (l(post, 'content') || '').split('\n')[0].replace(/^#+\s*/, '').substring(0, 200) %></p>
-          <a href="<%= langPrefix %>/blog/<%= post.slug %>" class="btn btn-secondary btn-sm"><%= t('blog.read_more') %></a>
-        </div>
-      </article>
-      <% }) %>
-    </div>
+            <div class="blog-post-body">
+              <div class="blog-post-date"><%= new Date(post.publishedAt).toLocaleDateString(lang === 'en' ? 'en-US' : 'ka-GE', { year: 'numeric', month: 'long', day: 'numeric' }) %></div>
+              <h2 class="blog-post-title"><a href="<%= langPrefix %>/blog/<%= post.slug %>"><%= l(post, 'title') %></a></h2>
+              <p class="card-excerpt"><%= (l(post, 'content') || '').split('\n')[0].replace(/^#+\s*/, '').substring(0, 180) %></p>
+              <% if (post.tags && post.tags.length) { %>
+                <div style="display: flex; gap: var(--sp-2); flex-wrap: wrap; margin-top: auto; padding-top: var(--sp-3); border-top: 1px dashed var(--border)">
+                  <% post.tags.slice(0, 3).forEach(function(tag) { %><span class="badge badge-outline"><%= tag %></span><% }); %>
+                </div>
+              <% } %>
+            </div>
+          </article>
+        <% }); %>
+      </div>
     <% } else { %>
-    <p class="text-center" style="color: var(--text-muted); padding: 3rem 0;"><%= lang === 'en' ? 'No posts yet.' : 'პოსტები ჯერ არ არის.' %></p>
+      <div class="alert alert-info" style="max-width: 560px; margin: var(--sp-12) auto">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/></svg>
+        <div><%= lang === 'en' ? 'New stories coming soon. Follow us on Instagram in the meantime.' : 'მალე გამოჩნდება ახალი ისტორიები.' %></div>
+      </div>
     <% } %>
   </div>
 </section>

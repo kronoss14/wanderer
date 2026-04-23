@@ -1,59 +1,46 @@
-<div class="admin-header">
-  <h1><%= editing ? 'Edit Adventure' : 'New Adventure' %></h1>
+<div class="admin-page-head">
+  <div class="admin-page-head-text">
+    <div class="admin-crumbs"><a href="/admin">Admin</a> <span>/</span> <a href="/admin/gallery">Gallery</a> <span>/</span> <span><%= editing ? 'Edit' : 'New' %></span></div>
+    <h1><%= editing ? 'Edit adventure' : 'New adventure' %></h1>
+  </div>
+  <div class="admin-page-head-actions">
+    <a href="/admin/gallery" class="admin-btn admin-btn-ghost">← Back to list</a>
+  </div>
 </div>
 
-<form class="admin-form" method="POST" action="<%= editing ? '/admin/gallery/edit/' + item.id : '/admin/gallery' %>">
+<form method="POST" action="<%= editing ? '/admin/gallery/edit/' + item.id : '/admin/gallery' %>">
   <input type="hidden" name="_csrf" value="<%= csrfToken %>">
 
-  <div class="form-lang-row">
-    <div class="form-group">
-      <label for="title">Title (KA)</label>
-      <input type="text" id="title" name="title" value="<%= item.title || '' %>" required>
+  <div class="admin-card">
+    <h2>Adventure info</h2>
+    <div class="admin-field-row">
+      <div class="admin-field"><label for="title">Title (KA)</label><input type="text" id="title" name="title" class="admin-input" value="<%= item.title || '' %>" required></div>
+      <div class="admin-field"><label for="title_en">Title (EN)</label><input type="text" id="title_en" name="title_en" class="admin-input" value="<%= item.title_en || '' %>"></div>
     </div>
-    <div class="form-group">
-      <label for="title_en">Title (EN)</label>
-      <input type="text" id="title_en" name="title_en" value="<%= item.title_en || '' %>">
+    <div class="admin-field"><label for="date">Date</label><input type="date" id="date" name="date" class="admin-input" value="<%= item.date || '' %>" required></div>
+    <div class="admin-field-row">
+      <div class="admin-field"><label for="description">Description (KA)</label><textarea id="description" name="description" class="admin-textarea" rows="4"><%= item.description || '' %></textarea></div>
+      <div class="admin-field"><label for="description_en">Description (EN)</label><textarea id="description_en" name="description_en" class="admin-textarea" rows="4"><%= item.description_en || '' %></textarea></div>
     </div>
-  </div>
-
-  <div class="form-group">
-    <label for="date">Date</label>
-    <input type="date" id="date" name="date" value="<%= item.date || '' %>" required>
-  </div>
-
-  <div class="form-lang-row">
-    <div class="form-group">
-      <label for="description">Description (KA)</label>
-      <textarea id="description" name="description" rows="4"><%= item.description || '' %></textarea>
-    </div>
-    <div class="form-group">
-      <label for="description_en">Description (EN)</label>
-      <textarea id="description_en" name="description_en" rows="4"><%= item.description_en || '' %></textarea>
+    <div class="admin-field">
+      <label for="hikeId">Linked hike (optional)</label>
+      <select id="hikeId" name="hikeId" class="admin-select">
+        <option value="">— None —</option>
+        <% (typeof hikes !== 'undefined' ? hikes : []).forEach(h => { %>
+          <option value="<%= h.id %>" <%= item.hikeId === h.id ? 'selected' : '' %>><%= h.name %></option>
+        <% }) %>
+      </select>
     </div>
   </div>
 
-  <div class="form-group">
-    <label for="mainImage">Main Image URL</label>
-    <input type="text" id="mainImage" name="mainImage" value="<%= item.mainImage || '' %>" required data-upload="single">
+  <div class="admin-card">
+    <h2>Photos</h2>
+    <div class="admin-field"><label for="mainImage">Main image URL</label><input type="text" id="mainImage" name="mainImage" class="admin-input" value="<%= item.mainImage || '' %>" required data-upload="single"></div>
+    <div class="admin-field"><label for="images">Additional images</label><textarea id="images" name="images" class="admin-textarea" rows="6" data-upload="multi"><%= Array.isArray(item.images) ? item.images.join('\n') : (item.images || '') %></textarea><div class="admin-field-help">One URL per line.</div></div>
   </div>
 
-  <div class="form-group">
-    <label for="images">Additional Images (one URL per line)</label>
-    <textarea id="images" name="images" rows="6" data-upload="multi"><%= Array.isArray(item.images) ? item.images.join('\n') : (item.images || '') %></textarea>
-  </div>
-
-  <div class="form-group">
-    <label for="hikeId">Linked Hike (optional)</label>
-    <select id="hikeId" name="hikeId">
-      <option value="">— None —</option>
-      <% (typeof hikes !== 'undefined' ? hikes : []).forEach(h => { %>
-        <option value="<%= h.id %>" <%= item.hikeId === h.id ? 'selected' : '' %>><%= h.name %></option>
-      <% }) %>
-    </select>
-  </div>
-
-  <div class="form-actions">
-    <button type="submit" class="btn btn-primary"><%= editing ? 'Update Adventure' : 'Create Adventure' %></button>
-    <a href="/admin/gallery" class="btn btn-secondary">Cancel</a>
+  <div class="admin-form-actions">
+    <button type="submit" class="admin-btn admin-btn-primary"><%= editing ? 'Update' : 'Create' %></button>
+    <a href="/admin/gallery" class="admin-btn admin-btn-ghost">Cancel</a>
   </div>
 </form>
