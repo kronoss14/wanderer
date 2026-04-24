@@ -1,54 +1,45 @@
-<% if (post.coverImage) { %>
-<section class="page-hero" style="min-height: 420px">
+<section class="page-hero" style="min-height: 300px">
+  <% if (post.coverImage) { %>
   <div class="page-hero-bg" style="background-image: url('<%= post.coverImage %>'); background-position: center 50%"></div>
-  <div class="page-hero-overlay"></div>
+  <% } %>
+  <div class="page-hero-overlay" style="background: linear-gradient(180deg, rgba(13,13,13,0.8) 0%, rgba(13,13,13,0.5) 100%)"></div>
   <div class="page-hero-content container">
-    <p class="eyebrow" style="color: var(--amber-300)"><%= lang === 'en' ? 'Blog' : 'ბლოგი' %></p>
-    <h1 style="max-width: 900px"><%= l(post, 'title') %></h1>
-    <div style="color: rgba(255,255,255,0.82); font-size: var(--text-sm); margin-top: var(--sp-4)">
+    <h1><%= l(post, 'title') %></h1>
+    <div class="blog-detail-meta">
       <time><%= new Date(post.publishedAt).toLocaleDateString(lang === 'en' ? 'en-US' : 'ka-GE', { year: 'numeric', month: 'long', day: 'numeric' }) %></time>
       <% if (author) { %>
-        &nbsp;·&nbsp; <span><%= lang === 'en' ? 'by' : 'ავტორი:' %> <%= l(author, 'name') %></span>
+        <span>&middot; <%= t('blog.by') %> <%= l(author, 'name') %></span>
       <% } %>
     </div>
   </div>
 </section>
-<% } %>
 
 <section class="section">
-  <article class="blog-detail" style="padding: var(--sp-12) var(--sp-6) 0">
-    <% if (!post.coverImage) { %>
-      <h1><%= l(post, 'title') %></h1>
-      <p class="meta">
-        <%= new Date(post.publishedAt).toLocaleDateString(lang === 'en' ? 'en-US' : 'ka-GE', { year: 'numeric', month: 'long', day: 'numeric' }) %>
-        <% if (author) { %> · <%= lang === 'en' ? 'by' : 'ავტორი:' %> <%= l(author, 'name') %><% } %>
-      </p>
-    <% } %>
-
-    <%- renderedContent %>
+  <div class="container blog-content-wrap">
+    <article class="blog-content">
+      <%- renderedContent %>
+    </article>
 
     <% if (post.tags && post.tags.length) { %>
-      <hr class="divider">
-      <div style="display: flex; gap: var(--sp-2); align-items: center; flex-wrap: wrap">
-        <strong style="font-size: var(--text-sm); color: var(--text-muted)"><%= lang === 'en' ? 'Tags:' : 'ტეგები:' %></strong>
-        <% post.tags.forEach(function(tag) { %>
-          <a href="<%= langPrefix %>/blog?tag=<%= encodeURIComponent(tag) %>" class="badge badge-outline"><%= tag %></a>
-        <% }); %>
-      </div>
+    <div class="blog-detail-tags">
+      <strong><%= t('blog.tags') %>:</strong>
+      <% post.tags.forEach(function(tag) { %>
+        <a href="<%= langPrefix %>/blog?tag=<%= encodeURIComponent(tag) %>" class="blog-tag"><%= tag %></a>
+      <% }) %>
+    </div>
     <% } %>
 
-    <% if (relatedHikes && relatedHikes.length) { %>
-      <hr class="divider">
-      <h2 style="font-size: var(--text-2xl); margin-bottom: var(--sp-5)"><%= lang === 'en' ? 'Related hikes' : 'მსგავსი ლაშქრობები' %></h2>
-      <div class="grid hikes-grid">
+    <% if (relatedHikes.length) { %>
+    <div class="blog-related">
+      <h3><%= t('blog.related_hikes') %></h3>
+      <div class="hike-grid">
         <% relatedHikes.forEach(function(hike) { %>
           <%- include('../partials/_hike-card', { hike }) %>
-        <% }); %>
+        <% }) %>
       </div>
+    </div>
     <% } %>
 
-    <div style="margin-top: var(--sp-10)">
-      <a href="<%= langPrefix %>/blog" class="btn btn-outline">← <%= lang === 'en' ? 'All posts' : 'ყველა პოსტი' %></a>
-    </div>
-  </article>
+    <a href="<%= langPrefix %>/blog" class="btn btn-secondary" style="margin-top: 2rem">&larr; <%= t('blog.title') %></a>
+  </div>
 </section>

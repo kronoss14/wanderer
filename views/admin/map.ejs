@@ -229,48 +229,14 @@
             <option value="<%= h.id %>"><%= h.name_en || h.name %></option>
           <% }); %>
         </select>
-        <button class="btn btn-secondary btn-sm" id="quickAddHikeBtn" style="margin-top:0.4rem;width:100%">+ Quick Add Hike</button>
       </div>
-
-      <!-- Quick add hike inline form (hidden by default) -->
-      <div id="quickHikeForm" style="display:none;padding:0.75rem;background:var(--admin-input-bg);border-radius:6px;margin-bottom:0.5rem;border:1px solid var(--admin-border)">
-        <div style="font-size:0.8rem;font-weight:600;margin-bottom:0.5rem;">New Hike</div>
-        <input type="text" id="qhId" placeholder="ID (slug, e.g. kazbegi-trek)" style="width:100%;padding:0.4rem;margin-bottom:0.3rem;background:var(--admin-surface);border:1px solid var(--admin-border);border-radius:4px;color:var(--admin-text);font-size:0.8rem">
-        <input type="text" id="qhName" placeholder="სახელი (ქართულად)" style="width:100%;padding:0.4rem;margin-bottom:0.3rem;background:var(--admin-surface);border:1px solid var(--admin-border);border-radius:4px;color:var(--admin-text);font-size:0.8rem">
-        <input type="text" id="qhNameEn" placeholder="Name (English)" style="width:100%;padding:0.4rem;margin-bottom:0.3rem;background:var(--admin-surface);border:1px solid var(--admin-border);border-radius:4px;color:var(--admin-text);font-size:0.8rem">
-        <select id="qhType" style="width:100%;padding:0.4rem;margin-bottom:0.3rem;background:var(--admin-surface);border:1px solid var(--admin-border);border-radius:4px;color:var(--admin-text);font-size:0.8rem">
-          <option value="day">Day Hike</option>
-          <option value="multi-day">Multi-Day</option>
-          <option value="cultural">Cultural</option>
-        </select>
-        <input type="text" id="qhDifficulty" placeholder="Difficulty (easy/medium/hard)" value="medium" style="width:100%;padding:0.4rem;margin-bottom:0.5rem;background:var(--admin-surface);border:1px solid var(--admin-border);border-radius:4px;color:var(--admin-text);font-size:0.8rem">
-        <div style="display:flex;gap:0.3rem">
-          <button class="btn btn-primary btn-sm" id="qhSaveBtn" style="flex:1">Create</button>
-          <button class="btn btn-secondary btn-sm" id="qhCancelBtn" style="flex:1">Cancel</button>
-        </div>
-      </div>
-
       <div class="trail-controls">
         <button class="btn btn-primary btn-sm" id="drawTrailBtn" disabled>Draw Trail</button>
-        <button class="btn btn-secondary btn-sm" id="undoTrailBtn" disabled title="Undo last point">Undo</button>
         <button class="btn btn-secondary btn-sm" id="clearTrailBtn" disabled>Clear</button>
         <button class="btn btn-primary btn-sm" id="saveTrailBtn" disabled>Save Trail</button>
         <button class="btn btn-danger btn-sm" id="deleteTrailBtn" disabled>Delete Trail</button>
       </div>
       <div class="trail-info" id="trailInfo">Select a hike to begin.</div>
-      <div id="trailStats" style="display:none;font-size:0.75rem;color:var(--admin-text-muted);padding:0.5rem 0;border-top:1px solid var(--admin-border);margin-top:0.5rem">
-        <div>Points: <span id="trailPointCount">0</span></div>
-        <div>Est. distance: <span id="trailDistance">0</span> km</div>
-      </div>
-      <div style="font-size:0.7rem;color:var(--admin-text-muted);margin-top:0.5rem;line-height:1.5;padding:0.5rem;background:rgba(232,129,26,0.05);border-radius:4px;border:1px solid rgba(232,129,26,0.15)">
-        <strong style="color:var(--admin-primary)">How to draw:</strong><br>
-        1. Select a hike → click "Draw Trail"<br>
-        2. Click on the map point by point along the path<br>
-        3. Click as many points as needed for curves<br>
-        4. Double-click to finish<br>
-        5. Drag any vertex to refine<br>
-        6. Click "Save Trail"
-      </div>
     </div>
 
     <!-- Tab 3: Trail Points -->
@@ -453,31 +419,6 @@
 <script>
   window.__MAP_POINTS__ = <%- JSON.stringify(points) %>;
   window.__HIKES__ = <%- JSON.stringify(hikes.map(function(h) { return { id: h.id, name: h.name, name_en: h.name_en, route: h.route || {} }; })) %>;
-  window.__CSRF_TOKEN__ = '<%= csrfToken %>';
-
-  // Load scripts after Leaflet is ready (Leaflet loads from layout.ejs at bottom of body)
-  document.addEventListener('DOMContentLoaded', function() {
-    function loadScript(src, cb) {
-      var s = document.createElement('script');
-      s.src = src;
-      s.onload = cb;
-      document.body.appendChild(s);
-    }
-    // Leaflet should already be loaded from layout, load Draw then admin-map
-    if (window.L) {
-      loadScript('https://unpkg.com/leaflet-draw@1.0.4/dist/leaflet.draw.js', function() {
-        loadScript('/js/admin-map.js', function() {});
-      });
-    } else {
-      // Fallback: wait for Leaflet
-      var check = setInterval(function() {
-        if (window.L) {
-          clearInterval(check);
-          loadScript('https://unpkg.com/leaflet-draw@1.0.4/dist/leaflet.draw.js', function() {
-            loadScript('/js/admin-map.js', function() {});
-          });
-        }
-      }, 50);
-    }
-  });
 </script>
+<script src="https://unpkg.com/leaflet-draw@1.0.4/dist/leaflet.draw.js"></script>
+<script src="/js/admin-map.js"></script>

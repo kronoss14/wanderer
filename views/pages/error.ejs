@@ -1,9 +1,7 @@
-<section class="notfound">
-  <div class="container container-narrow">
-    <p class="eyebrow" style="justify-content: center; display: inline-flex">Error</p>
-    <h1>500</h1>
-    <h2 style="font-size: var(--text-3xl); margin-bottom: var(--sp-4)"><%= lang === 'en' ? 'Something went wrong' : 'რაღაც შეცდომა მოხდა' %></h2>
-    <p><%= lang === 'en' ? 'We\'re on it. Please try again in a moment, or head back home.' : 'ვცდილობთ მოვაგვაროთ. სცადეთ ცოტა ხანში.' %></p>
-    <a href="<%= langPrefix %>/" class="btn btn-primary"><%= lang === 'en' ? 'Back home' : 'მთავარზე' %></a>
+<section class="page-hero" style="min-height: 60vh; display: flex; align-items: center; justify-content: center;">
+  <div class="container" style="text-align: center;">
+    <h1 style="font-size: 2rem; margin-bottom: 1rem;">Something went wrong</h1>
+    <p style="color: var(--text-muted); margin-bottom: 2rem;">We're sorry, something unexpected happened. Please try again later.</p>
+    <a href="/" class="btn btn-primary">Go Home</a>
   </div>
 </section>

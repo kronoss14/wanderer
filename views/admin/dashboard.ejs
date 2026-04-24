@@ -1,82 +1,48 @@
-<div class="admin-page-head">
-  <div class="admin-page-head-text">
-    <div class="admin-crumbs"><span>Admin</span> <span>/</span> <span>Dashboard</span></div>
-    <h1>Welcome back</h1>
-    <p>Overview of your Wanderer content and shop.</p>
+<div class="admin-header">
+  <h1>Dashboard</h1>
+</div>
+
+<div class="stats-grid">
+  <div class="stat-card">
+    <div class="stat-value"><%= counts.hikes %></div>
+    <div class="stat-label">Hikes</div>
   </div>
-  <div class="admin-page-head-actions">
-    <a href="/" target="_blank" rel="noopener noreferrer" class="admin-btn admin-btn-outline">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-      View public site
-    </a>
+  <div class="stat-card">
+    <div class="stat-value"><%= counts.guides %></div>
+    <div class="stat-label">Guides</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-value"><%= counts.pricing %></div>
+    <div class="stat-label">Pricing Tiers</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-value"><%= counts.gallery %></div>
+    <div class="stat-label">Gallery Items</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-value"><%= counts.blog %></div>
+    <div class="stat-label">Blog Posts</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-value"><%= counts.products %></div>
+    <div class="stat-label">Products</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-value"><%= counts.orders %></div>
+    <div class="stat-label">Orders</div>
   </div>
 </div>
 
-<div class="admin-stats">
-  <div class="admin-stat">
-    <div class="admin-stat-label">Hikes</div>
-    <div class="admin-stat-value"><%= counts.hikes %></div>
-    <div class="admin-stat-delta admin-muted">Total published</div>
-  </div>
-  <div class="admin-stat">
-    <div class="admin-stat-label">Products</div>
-    <div class="admin-stat-value"><%= counts.products %></div>
-    <div class="admin-stat-delta admin-muted">In shop</div>
-  </div>
-  <div class="admin-stat">
-    <div class="admin-stat-label">Orders</div>
-    <div class="admin-stat-value"><%= counts.orders %></div>
-    <div class="admin-stat-delta admin-muted">All-time</div>
-  </div>
-  <div class="admin-stat">
-    <div class="admin-stat-label">Guides</div>
-    <div class="admin-stat-value"><%= counts.guides %></div>
-    <div class="admin-stat-delta admin-muted">On the team</div>
-  </div>
-  <div class="admin-stat">
-    <div class="admin-stat-label">Gallery</div>
-    <div class="admin-stat-value"><%= counts.gallery %></div>
-    <div class="admin-stat-delta admin-muted">Adventures</div>
-  </div>
-  <div class="admin-stat">
-    <div class="admin-stat-label">Blog</div>
-    <div class="admin-stat-value"><%= counts.blog %></div>
-    <div class="admin-stat-delta admin-muted">Posts published</div>
-  </div>
-  <div class="admin-stat">
-    <div class="admin-stat-label">Pricing tiers</div>
-    <div class="admin-stat-value"><%= counts.pricing %></div>
-    <div class="admin-stat-delta admin-muted">Configured</div>
-  </div>
+<div class="admin-header">
+  <h2 style="font-size:1.1rem">Quick Actions</h2>
 </div>
 
-<div class="admin-card">
-  <div class="admin-card-head">
-    <h2>Quick actions</h2>
-  </div>
-  <div style="display: flex; gap: 12px; flex-wrap: wrap">
-    <a href="/admin/hikes/new" class="admin-btn admin-btn-primary">+ New hike</a>
-    <a href="/admin/products/new" class="admin-btn admin-btn-primary">+ New product</a>
-    <a href="/admin/blog/new" class="admin-btn admin-btn-primary">+ New blog post</a>
-    <a href="/admin/gallery/new" class="admin-btn admin-btn-outline">+ Gallery item</a>
-    <a href="/admin/guides/new" class="admin-btn admin-btn-outline">+ Guide</a>
-    <a href="/admin/pricing/new" class="admin-btn admin-btn-outline">+ Pricing tier</a>
-    <a href="/admin/orders" class="admin-btn admin-btn-ghost">View orders →</a>
-  </div>
-</div>
-
-<div class="admin-grid-2">
-  <div class="admin-card">
-    <div class="admin-card-head"><h2>Recent activity</h2></div>
-    <p class="admin-muted" style="font-size: 13px">See the audit log for the full history of changes.</p>
-    <a href="/admin/analytics" class="admin-btn admin-btn-outline admin-btn-sm" style="margin-top: 12px">View analytics</a>
-  </div>
-  <div class="admin-card">
-    <div class="admin-card-head"><h2>System</h2></div>
-    <div class="admin-muted" style="font-size: 13px; line-height: 1.7">
-      <div>Data directory: <code style="color: var(--a-accent); font-family: 'JetBrains Mono', monospace">/data/*.json</code></div>
-      <div>Server: <code style="color: var(--a-accent); font-family: 'JetBrains Mono', monospace">Express + EJS + MongoDB</code></div>
-      <div>Map tiles: <code style="color: var(--a-accent); font-family: 'JetBrains Mono', monospace">CARTO Voyager (English)</code></div>
-    </div>
-  </div>
+<div style="display:flex;gap:0.75rem;flex-wrap:wrap">
+  <a href="/admin/hikes/new" class="btn btn-primary">+ New Hike</a>
+  <a href="/admin/guides/new" class="btn btn-primary">+ New Guide</a>
+  <a href="/admin/pricing/new" class="btn btn-primary">+ New Pricing Tier</a>
+  <a href="/admin/gallery/new" class="btn btn-primary">+ New Gallery Item</a>
+  <a href="/admin/blog/new" class="btn btn-primary">+ New Blog Post</a>
+  <a href="/admin/products/new" class="btn btn-primary">+ New Product</a>
+  <a href="/admin/orders" class="btn btn-secondary">View Orders</a>
 </div>

@@ -1,39 +1,63 @@
-<div class="admin-page-head">
-  <div class="admin-page-head-text">
-    <div class="admin-crumbs"><a href="/admin">Admin</a> <span>/</span> <a href="/admin/guides">Guides</a> <span>/</span> <span><%= editing ? 'Edit' : 'New' %></span></div>
-    <h1><%= editing ? 'Edit guide' : 'New guide' %></h1>
-  </div>
-  <div class="admin-page-head-actions">
-    <a href="/admin/guides" class="admin-btn admin-btn-ghost">← Back to list</a>
-  </div>
+<div class="admin-header">
+  <h1><%= editing ? 'Edit Guide' : 'New Guide' %></h1>
 </div>
 
-<form method="POST" action="<%= editing ? '/admin/guides/edit/' + guide.id : '/admin/guides' %>">
+<form class="admin-form" method="POST" action="<%= editing ? '/admin/guides/edit/' + guide.id : '/admin/guides' %>">
   <input type="hidden" name="_csrf" value="<%= csrfToken %>">
 
-  <div class="admin-card">
-    <h2>Guide profile</h2>
-    <div class="admin-field-row">
-      <div class="admin-field"><label for="name">Name (KA)</label><input type="text" id="name" name="name" class="admin-input" value="<%= guide.name || '' %>" required></div>
-      <div class="admin-field"><label for="name_en">Name (EN)</label><input type="text" id="name_en" name="name_en" class="admin-input" value="<%= guide.name_en || '' %>"></div>
+  <div class="form-lang-row">
+    <div class="form-group">
+      <label for="name">Name (KA)</label>
+      <input type="text" id="name" name="name" value="<%= guide.name || '' %>" required>
     </div>
-    <div class="admin-field-row">
-      <div class="admin-field"><label for="role">Role (KA)</label><input type="text" id="role" name="role" class="admin-input" value="<%= guide.role || '' %>" required></div>
-      <div class="admin-field"><label for="role_en">Role (EN)</label><input type="text" id="role_en" name="role_en" class="admin-input" value="<%= guide.role_en || '' %>"></div>
+    <div class="form-group">
+      <label for="name_en">Name (EN)</label>
+      <input type="text" id="name_en" name="name_en" value="<%= guide.name_en || '' %>">
     </div>
-    <div class="admin-field-row">
-      <div class="admin-field"><label for="bio">Bio (KA)</label><textarea id="bio" name="bio" class="admin-textarea" rows="5"><%= guide.bio || '' %></textarea></div>
-      <div class="admin-field"><label for="bio_en">Bio (EN)</label><textarea id="bio_en" name="bio_en" class="admin-textarea" rows="5"><%= guide.bio_en || '' %></textarea></div>
-    </div>
-    <div class="admin-field-row">
-      <div class="admin-field"><label for="specialties">Specialties (KA)</label><textarea id="specialties" name="specialties" class="admin-textarea" rows="3"><%= (guide.specialties || []).join('\n') %></textarea><div class="admin-field-help">One per line.</div></div>
-      <div class="admin-field"><label for="specialties_en">Specialties (EN)</label><textarea id="specialties_en" name="specialties_en" class="admin-textarea" rows="3"><%= (guide.specialties_en || []).join('\n') %></textarea><div class="admin-field-help">One per line.</div></div>
-    </div>
-    <div class="admin-field"><label for="image">Photo URL</label><input type="text" id="image" name="image" class="admin-input" value="<%= guide.image || '' %>" data-upload="single"></div>
   </div>
 
-  <div class="admin-form-actions">
-    <button type="submit" class="admin-btn admin-btn-primary"><%= editing ? 'Update' : 'Create' %></button>
-    <a href="/admin/guides" class="admin-btn admin-btn-ghost">Cancel</a>
+  <div class="form-lang-row">
+    <div class="form-group">
+      <label for="role">Role (KA)</label>
+      <input type="text" id="role" name="role" value="<%= guide.role || '' %>" required>
+    </div>
+    <div class="form-group">
+      <label for="role_en">Role (EN)</label>
+      <input type="text" id="role_en" name="role_en" value="<%= guide.role_en || '' %>">
+    </div>
+  </div>
+
+  <div class="form-lang-row">
+    <div class="form-group">
+      <label for="bio">Bio (KA)</label>
+      <textarea id="bio" name="bio" rows="5"><%= guide.bio || '' %></textarea>
+    </div>
+    <div class="form-group">
+      <label for="bio_en">Bio (EN)</label>
+      <textarea id="bio_en" name="bio_en" rows="5"><%= guide.bio_en || '' %></textarea>
+    </div>
+  </div>
+
+  <div class="form-lang-row">
+    <div class="form-group">
+      <label for="specialties">Specialties (KA)</label>
+      <div class="hint">One per line</div>
+      <textarea id="specialties" name="specialties" rows="3"><%= (guide.specialties || []).join('\n') %></textarea>
+    </div>
+    <div class="form-group">
+      <label for="specialties_en">Specialties (EN)</label>
+      <div class="hint">One per line</div>
+      <textarea id="specialties_en" name="specialties_en" rows="3"><%= (guide.specialties_en || []).join('\n') %></textarea>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="image">Image URL</label>
+    <input type="text" id="image" name="image" value="<%= guide.image || '' %>" data-upload="single">
+  </div>
+
+  <div class="form-actions">
+    <button type="submit" class="btn btn-primary"><%= editing ? 'Update Guide' : 'Create Guide' %></button>
+    <a href="/admin/guides" class="btn btn-secondary">Cancel</a>
   </div>
 </form>

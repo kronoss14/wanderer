@@ -1,113 +1,114 @@
+<!-- PAGE HERO -->
 <section class="page-hero">
   <div class="page-hero-bg" style="background-image: url('/images/reviews-hero.jpeg'); background-position: center 80%"></div>
-  <div class="page-hero-overlay"></div>
+  <div class="page-hero-overlay" style="background: linear-gradient(135deg, rgba(13,13,13,0.45) 0%, rgba(26,26,46,0.35) 100%)"></div>
   <div class="page-hero-content container">
-    <p class="eyebrow"><%= lang === 'en' ? 'Honest reviews' : 'გულწრფელი მიმოხილვები' %></p>
-    <h1><%= lang === 'en' ? 'What Our Hikers Say' : 'რას ამბობენ ჩვენი მოლაშქრეები' %></h1>
-    <p><%= lang === 'en' ? 'Real feedback from travelers who walked our trails. Good and critical — we publish it all.' : 'ნამდვილი შეფასებები, კარგიც და კრიტიკულიც.' %></p>
+    <h1><%- t('reviews.title') %></h1>
+    <p><%= t('reviews.subtitle') %></p>
   </div>
 </section>
 
+<!-- RATING STATS -->
 <section class="section">
   <div class="container">
-
-    <div class="card" style="padding: var(--sp-8); display: grid; grid-template-columns: auto 1fr; gap: var(--sp-10); align-items: center; margin-bottom: var(--sp-10)" id="rating-stats">
-      <div class="text-center">
-        <div style="font-family: var(--font-display); font-size: 64px; font-weight: 700; color: var(--forest-800); line-height: 1"><%= avgRating ? avgRating.toFixed(1) : '5.0' %></div>
-        <div class="rating" style="margin-top: var(--sp-2); justify-content: center">
+    <div class="rating-stats">
+      <div class="rating-big">
+        <span class="rating-number"><%= avgRating.toFixed(1) %></span>
+        <div class="rating-stars-big">
           <% for (let i = 0; i < 5; i++) { %>
-            <% if (i < Math.round(avgRating || 5)) { %>
-              <svg viewBox="0 0 24 24" width="18" height="18"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-            <% } else { %>
-              <svg viewBox="0 0 24 24" width="18" height="18" class="rating-empty"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-            <% } %>
+            <svg class="star" width="24" height="24" viewBox="0 0 24 24" fill="<%= i < Math.round(avgRating) ? '#F59E0B' : 'none' %>" stroke="<%= i < Math.round(avgRating) ? '#F59E0B' : '#718096' %>" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
           <% } %>
         </div>
-        <p class="text-muted" style="font-size: var(--text-sm); margin-top: var(--sp-2)"><%= reviews.length %> <%= lang === 'en' ? 'reviews' : 'მიმოხილვა' %></p>
+        <p class="rating-count"><%= reviews.length %> <%= t('reviews.based_on') %></p>
       </div>
-      <div class="stack stack-sm">
+      <div class="rating-breakdown">
         <% for (let stars = 5; stars >= 1; stars--) { %>
           <% const count = reviews.filter(r => r.rating === stars).length; %>
           <% const pct = reviews.length ? (count / reviews.length * 100) : 0; %>
-          <div style="display: grid; grid-template-columns: 40px 1fr 40px; gap: var(--sp-3); align-items: center; font-size: var(--text-sm)">
-            <span><%= stars %> ★</span>
-            <div style="height: 8px; background: var(--stone-100); border-radius: var(--r-full); overflow: hidden">
-              <div style="height: 100%; width: <%= pct %>%; background: var(--amber-500); border-radius: var(--r-full);"></div>
+          <div class="rating-bar-row">
+            <span class="rating-bar-label"><%= stars %> <%= t('reviews.stars') %></span>
+            <div class="rating-bar">
+              <div class="rating-bar-fill" style="width: <%= pct %>%"></div>
             </div>
-            <span class="text-muted" style="text-align: right"><%= count %></span>
+            <span class="rating-bar-count"><%= count %></span>
           </div>
         <% } %>
       </div>
     </div>
 
+    <!-- REVIEW GRID -->
     <% if (reviews.length) { %>
-      <div class="grid grid-3">
+      <div class="review-grid">
         <% reviews.forEach(review => { %>
           <% const hike = hikes.find(h => h.id === review.hikeId); %>
-          <%- include('../partials/_review-card', { review, hikeName: hike ? l(hike, 'name') : null }) %>
-        <% }); %>
+          <%- include('../partials/_review-card', { review, hikeName: hike ? l(hike, 'name') : '' }) %>
+        <% }) %>
       </div>
     <% } else { %>
-      <div class="alert alert-info" style="max-width: 560px; margin: 0 auto"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/></svg><div><%= lang === 'en' ? 'No reviews yet — be the first to share your experience.' : 'მიმოხილვები ჯერ არ არის.' %></div></div>
+      <p style="text-align:center;color:var(--text-muted);padding:2rem 0;"><%= t('reviews.empty') %></p>
     <% } %>
-
   </div>
 </section>
 
-<section class="section section-alt">
-  <div class="container container-narrow">
-
-    <% if (typeof success !== 'undefined' && success) { %>
-      <div class="alert alert-success" style="margin-bottom: var(--sp-6)">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-        <div><strong><%= lang === 'en' ? 'Thanks for your review!' : 'გმადლობთ მიმოხილვისთვის!' %></strong><p style="margin: 4px 0 0"><%= lang === 'en' ? 'It will appear once our team approves it.' : 'გამოჩნდება მოდერაციის შემდეგ.' %></p></div>
+<!-- REVIEW FORM -->
+<section class="section">
+  <div class="container" style="max-width: 720px;">
+    <% if (success) { %>
+      <div class="success-message">
+        <h3><%= t('review.form_success_title') %></h3>
+        <p><%= t('review.form_success_text') %></p>
       </div>
     <% } %>
 
-    <% if (typeof errors !== 'undefined' && errors && errors.length) { %>
-      <div class="alert alert-error" style="margin-bottom: var(--sp-6)">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/></svg>
-        <ul style="margin:0;padding-left:20px"><% errors.forEach(e => { %><li><%= e.msg %></li><% }); %></ul>
+    <% if (errors.length) { %>
+      <div class="form-errors" style="background: rgba(239,68,68,0.1); border: 1px solid rgba(239,68,68,0.3); border-radius: var(--radius); padding: 1rem 1.5rem; margin-bottom: 1.5rem;">
+        <% errors.forEach(err => { %>
+          <p style="color: #ef4444; font-size: 0.9rem; margin-bottom: 0.25rem;"><%= err.msg %></p>
+        <% }) %>
       </div>
     <% } %>
 
-    <div class="text-center" style="margin-bottom: var(--sp-8)">
-      <p class="eyebrow" style="justify-content: center; display: inline-flex"><%= lang === 'en' ? 'Share your adventure' : 'გაიზიარე შენი თავგადასავალი' %></p>
-      <h2><%= lang === 'en' ? 'Write a Review' : 'დაწერე მიმოხილვა' %></h2>
-    </div>
-
-    <div class="card" style="padding: var(--sp-8); display: block">
-      <form action="<%= langPrefix %>/reviews" method="POST" class="stack stack-sm" id="review-form" novalidate>
-        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--sp-4)" class="fields-row">
-          <div class="field"><label for="review-name"><%= lang === 'en' ? 'Your name' : 'სახელი' %></label><input type="text" id="review-name" name="name" class="input" required></div>
-          <div class="field"><label for="review-email"><%= lang === 'en' ? 'Email' : 'ელ. ფოსტა' %></label><input type="email" id="review-email" name="email" class="input" required></div>
+    <h2 class="section-title"><%- t('review.form_title') %></h2>
+    <form action="<%= langPrefix %>/reviews" method="POST" class="review-form" id="review-form" novalidate>
+      <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label" for="review-name"><%= t('review.form_name_label') %></label>
+          <input type="text" id="review-name" name="name" class="form-input" required>
+          <p class="form-error"><%= t('review.form_name_error') %></p>
         </div>
-        <div class="field">
-          <label><%= lang === 'en' ? 'Rating' : 'შეფასება' %></label>
-          <input type="hidden" name="rating" id="review-rating" required>
-          <div id="star-picker" style="display: inline-flex; gap: 4px; cursor: pointer">
-            <% for (let i = 1; i <= 5; i++) { %>
-              <svg data-value="<%= i %>" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="var(--stone-400)" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-            <% } %>
-          </div>
+        <div class="form-group">
+          <label class="form-label" for="review-email"><%= t('review.form_email_label') %></label>
+          <input type="email" id="review-email" name="email" class="form-input" required>
+          <p class="form-error"><%= t('review.form_email_error') %></p>
         </div>
-        <div class="field">
-          <label for="review-hike"><%= lang === 'en' ? 'Which hike? (optional)' : 'რომელი ლაშქრობა? (არასავალდ.)' %></label>
-          <select id="review-hike" name="hikeId" class="select">
-            <option value=""><%= lang === 'en' ? '— Any hike —' : '— ნებისმიერი —' %></option>
-            <% hikes.forEach(hike => { %>
-              <option value="<%= hike.id %>"><%= l(hike, 'name') %></option>
-            <% }); %>
-          </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label"><%= t('review.form_rating_label') %></label>
+        <input type="hidden" name="rating" id="review-rating" required>
+        <div class="star-rating-picker" id="star-picker">
+          <% for (let i = 1; i <= 5; i++) { %>
+            <svg class="star" data-value="<%= i %>" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#718096" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <% } %>
         </div>
-        <div class="field">
-          <label for="review-text"><%= lang === 'en' ? 'Your review' : 'თქვენი მიმოხილვა' %></label>
-          <textarea id="review-text" name="text" class="textarea" rows="6" required></textarea>
-        </div>
-        <button type="submit" class="btn btn-primary btn-lg"><%= lang === 'en' ? 'Submit review' : 'გაგზავნა' %></button>
-      </form>
-    </div>
+        <p class="form-error"><%= t('review.form_rating_error') %></p>
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="review-hike"><%= t('review.form_hike_label') %></label>
+        <select id="review-hike" name="hikeId" class="form-input form-select">
+          <option value=""><%= t('review.form_hike_placeholder') %></option>
+          <% hikes.forEach(hike => { %>
+            <option value="<%= hike.id %>"><%= l(hike, 'name') %></option>
+          <% }) %>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="review-text"><%= t('review.form_text_label') %></label>
+        <textarea id="review-text" name="text" class="form-textarea" rows="5" required></textarea>
+        <p class="form-error"><%= t('review.form_text_error') %></p>
+      </div>
+      <button type="submit" class="btn btn-primary"><%= t('review.form_submit') %></button>
+    </form>
   </div>
 </section>
 
@@ -115,32 +116,49 @@
 (function() {
   var picker = document.getElementById('star-picker');
   var input = document.getElementById('review-rating');
-  if (!picker || !input) return;
-  var stars = picker.querySelectorAll('svg');
+  var stars = picker.querySelectorAll('.star');
   var selected = 0;
+
   function highlight(n) {
     stars.forEach(function(s, i) {
-      s.setAttribute('fill', i < n ? '#d4a574' : 'none');
-      s.setAttribute('stroke', i < n ? '#c98a35' : 'var(--stone-400)');
+      if (i < n) {
+        s.setAttribute('fill', '#F59E0B');
+        s.setAttribute('stroke', '#F59E0B');
+      } else {
+        s.setAttribute('fill', 'none');
+        s.setAttribute('stroke', '#718096');
+      }
     });
   }
+
   stars.forEach(function(star) {
+    star.style.cursor = 'pointer';
+
     star.addEventListener('click', function() {
       selected = parseInt(this.getAttribute('data-value'));
       input.value = selected;
       highlight(selected);
+      // Clear error on rating group
+      var group = picker.closest('.form-group');
+      if (group) group.classList.remove('error');
     });
+
     star.addEventListener('mouseenter', function() {
       highlight(parseInt(this.getAttribute('data-value')));
     });
   });
-  picker.addEventListener('mouseleave', function() { highlight(selected); });
+
+  picker.addEventListener('mouseleave', function() {
+    highlight(selected);
+  });
+
+  // Hook into form validation for the rating field
+  var form = document.getElementById('review-form');
+  form.addEventListener('submit', function(e) {
+    if (!input.value) {
+      var group = picker.closest('.form-group');
+      if (group) group.classList.add('error');
+    }
+  });
 })();
 </script>
-
-<style>
-  @media (max-width: 560px) {
-    #rating-stats { grid-template-columns: 1fr !important; text-align: center; }
-    .fields-row { grid-template-columns: 1fr !important; }
-  }
-</style>

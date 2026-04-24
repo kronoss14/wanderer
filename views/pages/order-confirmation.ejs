@@ -1,31 +1,21 @@
 <section class="section">
-  <div class="container container-narrow">
-
-    <div class="text-center" style="padding: var(--sp-10) 0">
-      <div style="width: 84px; height: 84px; background: #ebf7ef; border-radius: var(--r-full); display: inline-flex; align-items: center; justify-content: center; margin-bottom: var(--sp-5)">
-        <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="var(--success)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-      </div>
-      <h1 style="margin-bottom: var(--sp-3)"><%= lang === 'en' ? 'Order confirmed!' : 'შეკვეთა დადასტურდა!' %></h1>
-      <p class="lead"><%= lang === 'en' ? 'Thanks — we\'ve received your order and will process it shortly.' : 'გმადლობთ, შეკვეთა მიღებულია.' %></p>
+  <div class="container" style="max-width:700px;">
+    <div class="text-center" style="margin-bottom:2rem;">
+      <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="var(--accent-emerald)" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="9 12 12 15 16 10"/></svg>
+      <h1 style="margin-top:1rem;"><%= t('order.success_title') %></h1>
+      <p style="color:var(--text-secondary);"><%= t('order.success_text') %></p>
     </div>
 
-    <div class="card" style="padding: var(--sp-8); display: block">
-      <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: var(--sp-3); margin-bottom: var(--sp-5)">
-        <div>
-          <p class="text-muted" style="font-size: var(--text-xs); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 4px"><%= lang === 'en' ? 'Order ID' : 'შეკვეთის ID' %></p>
-          <strong style="font-family: var(--font-mono); font-size: var(--text-lg)"><%= order.id %></strong>
-        </div>
-        <div style="color: var(--text-muted); font-size: var(--text-sm)">
-          <%= new Date(order.createdAt).toLocaleString(lang === 'en' ? 'en-US' : 'ka-GE') %>
-        </div>
-      </div>
+    <div class="order-confirmation-card">
+      <h3><%= t('order.order_id') %>: <%= order.id %></h3>
+      <p style="color:var(--text-muted);font-size:0.9rem;"><%= new Date(order.createdAt).toLocaleString() %></p>
 
-      <table class="cart-table" style="margin-bottom: var(--sp-4)">
+      <table class="cart-table" style="margin:1.5rem 0;">
         <thead>
           <tr>
-            <th><%= lang === 'en' ? 'Product' : 'პროდუქტი' %></th>
-            <th><%= lang === 'en' ? 'Qty' : 'რაოდ.' %></th>
-            <th style="text-align: right"><%= lang === 'en' ? 'Subtotal' : 'ჯამი' %></th>
+            <th><%= t('cart.product') %></th>
+            <th><%= t('cart.quantity') %></th>
+            <th><%= t('cart.subtotal') %></th>
           </tr>
         </thead>
         <tbody>
@@ -33,45 +23,65 @@
             <tr>
               <td><%= item.name %></td>
               <td><%= item.quantity %></td>
-              <td style="text-align: right">₾<%= (item.price * item.quantity).toFixed(2) %></td>
+              <td>&#8382;<%= (item.price * item.quantity).toFixed(2) %></td>
             </tr>
-          <% }); %>
+          <% }) %>
         </tbody>
         <tfoot>
           <tr>
-            <td colspan="2" style="text-align: right; font-weight: 700"><%= lang === 'en' ? 'Total' : 'ჯამი' %></td>
-            <td style="text-align: right; font-weight: 700; font-size: var(--text-lg); color: var(--forest-800)">₾<%= order.total.toFixed(2) %></td>
+            <td colspan="2" style="text-align:right;font-weight:700;"><%= t('cart.total') %></td>
+            <td style="font-weight:700;color:var(--accent-emerald);">&#8382;<%= order.total.toFixed(2) %></td>
           </tr>
         </tfoot>
       </table>
 
       <% if (order.paymentMethod === 'bank_transfer') { %>
-        <div class="card" style="padding: var(--sp-5); display: block; background: var(--forest-50); border-color: var(--forest-100)">
-          <h3 style="font-family: var(--font-body); font-weight: 700; font-size: var(--text-base); margin-bottom: var(--sp-3)">💳 <%= lang === 'en' ? 'Bank transfer details' : 'ბანკის გადარიცხვის დეტალები' %></h3>
-          <div class="stack stack-sm" style="font-size: var(--text-sm)">
-            <div style="display: flex; justify-content: space-between"><span class="text-muted"><%= lang === 'en' ? 'Recipient' : 'მიმღები' %></span><strong><%= bankDetails.bog.holder %></strong></div>
-            <div style="display: flex; justify-content: space-between"><span class="text-muted">IBAN (BOG)</span><strong style="font-family: var(--font-mono)"><%= bankDetails.bog.iban %></strong></div>
-            <div style="display: flex; justify-content: space-between"><span class="text-muted">IBAN (TBC)</span><strong style="font-family: var(--font-mono)"><%= bankDetails.tbc.iban %></strong></div>
-            <div style="display: flex; justify-content: space-between"><span class="text-muted"><%= lang === 'en' ? 'Amount' : 'თანხა' %></span><strong>₾<%= order.total.toFixed(2) %></strong></div>
-            <div style="display: flex; justify-content: space-between"><span class="text-muted"><%= lang === 'en' ? 'Reference' : 'საფუძველი' %></span><strong style="font-family: var(--font-mono)"><%= order.id %></strong></div>
+        <div class="qr-payment-section">
+          <h3><%= t('payment.bank_transfer_title') %></h3>
+          <div class="bank-details">
+            <h4><%= t('payment.bank_details') %></h4>
+            <div class="bank-detail-row">
+              <span><%= t('payment.recipient') %>:</span>
+              <strong><%= bankDetails.bog.holder %></strong>
+            </div>
+            <div class="bank-detail-row">
+              <span>IBAN (BOG):</span>
+              <strong><%= bankDetails.bog.iban %></strong>
+            </div>
+            <div class="bank-detail-row">
+              <span>IBAN (TBC):</span>
+              <strong><%= bankDetails.tbc.iban %></strong>
+            </div>
+            <div class="bank-detail-row">
+              <span><%= t('payment.amount') %>:</span>
+              <strong>&#8382;<%= order.total.toFixed(2) %></strong>
+            </div>
+            <div class="bank-detail-row">
+              <span><%= t('payment.reference') %>:</span>
+              <strong><%= order.id %></strong>
+            </div>
           </div>
         </div>
       <% } else if (order.paymentMethod === 'on_delivery') { %>
-        <div class="alert alert-info"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/></svg><div><%= lang === 'en' ? 'Pay in cash when your order arrives.' : 'გადაიხადეთ მიტანისას ნაღდი ფულით.' %></div></div>
+        <div class="payment-info-box">
+          <p><%= t('payment.on_delivery_info') %></p>
+        </div>
       <% } else if (order.paymentMethod === 'on_pickup') { %>
-        <div class="alert alert-info"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/></svg><div><%= lang === 'en' ? 'Pay at our pickup location in Tbilisi.' : 'გადაიხადეთ თბილისში აღებისას.' %></div></div>
+        <div class="payment-info-box">
+          <p><%= t('payment.on_pickup_info') %></p>
+        </div>
       <% } %>
     </div>
 
-    <div class="text-center" style="margin-top: var(--sp-8)">
-      <a href="<%= langPrefix %>/shop" class="btn btn-outline"><%= lang === 'en' ? 'Continue shopping' : 'განვაგრძოთ' %></a>
-      <a href="<%= langPrefix %>/" class="btn btn-ghost"><%= lang === 'en' ? 'Back home' : 'მთავარზე დაბრუნება' %></a>
+    <div class="text-center" style="margin-top:2rem;">
+      <a href="<%= langPrefix %>/shop" class="btn btn-primary"><%= t('cart.continue_shopping') %></a>
     </div>
-
   </div>
 </section>
 
 <script>
+  // Clear cart after successful order
   localStorage.removeItem('wanderer_cart');
+  // Update cart badge
   if (typeof updateCartBadge === 'function') updateCartBadge();
 </script>

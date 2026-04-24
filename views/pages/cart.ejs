@@ -1,63 +1,42 @@
 <section class="section">
-  <div class="container container-narrow">
-
-    <nav class="crumbs">
-      <a href="<%= langPrefix %>/"><%= lang === 'en' ? 'Home' : 'მთავარი' %></a>
-      <span class="crumbs-sep">/</span>
-      <a href="<%= langPrefix %>/shop"><%= lang === 'en' ? 'Shop' : 'მაღაზია' %></a>
-      <span class="crumbs-sep">/</span>
-      <span><%= lang === 'en' ? 'Cart' : 'კალათა' %></span>
-    </nav>
-
-    <h1 style="margin-bottom: var(--sp-8)"><%= lang === 'en' ? 'Your Cart' : 'თქვენი კალათა' %></h1>
+  <div class="container">
+    <h1 style="margin-bottom:2rem;"><%= t('cart.title') %></h1>
 
     <div id="cart-empty" style="display:none;">
-      <div class="text-center" style="padding: var(--sp-16) 0">
-        <div style="width: 100px; height: 100px; background: var(--stone-100); border-radius: var(--r-full); display: inline-flex; align-items: center; justify-content: center; margin-bottom: var(--sp-6)">
-          <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="var(--stone-500)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 002 1.61h9.72a2 2 0 002-1.61L23 6H6"/></svg>
-        </div>
-        <h2 style="font-size: var(--text-2xl); margin-bottom: var(--sp-3)"><%= lang === 'en' ? 'Your cart is empty' : 'კალათა ცარიელია' %></h2>
-        <p class="text-muted" style="margin-bottom: var(--sp-6)"><%= lang === 'en' ? 'Find gear tested on real Caucasus trails.' : 'აღმოაჩინე კავკასიონზე გამოცდილი აღჭურვილობა.' %></p>
-        <a href="<%= langPrefix %>/shop" class="btn btn-primary"><%= lang === 'en' ? 'Browse the shop' : 'მაღაზიაში' %></a>
+      <p class="text-center" style="color:var(--text-secondary);padding:3rem 0;"><%= t('cart.empty') %></p>
+      <div class="text-center">
+        <a href="<%= langPrefix %>/shop" class="btn btn-primary"><%= t('cart.continue_shopping') %></a>
       </div>
     </div>
 
     <div id="cart-content" style="display:none;">
-      <div style="display: grid; grid-template-columns: minmax(0, 2fr) minmax(280px, 1fr); gap: var(--sp-8)" class="cart-layout">
-        <div>
-          <table class="cart-table">
-            <thead>
-              <tr>
-                <th colspan="2"><%= lang === 'en' ? 'Product' : 'პროდუქტი' %></th>
-                <th><%= lang === 'en' ? 'Price' : 'ფასი' %></th>
-                <th><%= lang === 'en' ? 'Qty' : 'რაოდ.' %></th>
-                <th><%= lang === 'en' ? 'Subtotal' : 'ჯამი' %></th>
-                <th></th>
-              </tr>
-            </thead>
-            <tbody id="cart-items"></tbody>
-          </table>
-        </div>
-
-        <aside>
-          <div class="cart-summary">
-            <h3 style="font-family: var(--font-body); font-weight: 700; font-size: var(--text-lg)"><%= lang === 'en' ? 'Order summary' : 'შეკვეთის ჯამი' %></h3>
-            <div class="cart-summary-row"><span><%= lang === 'en' ? 'Subtotal' : 'ქვეჯამი' %></span><span id="cart-subtotal">₾0</span></div>
-            <div class="cart-summary-row"><span><%= lang === 'en' ? 'Delivery' : 'მიტანა' %></span><span style="color: var(--success)"><%= lang === 'en' ? 'Calculated at checkout' : 'გადახდისას' %></span></div>
-            <div class="cart-summary-row total"><span><%= lang === 'en' ? 'Total' : 'ჯამი' %></span><span id="cart-total">₾0</span></div>
-            <a href="<%= langPrefix %>/cart/checkout" class="btn btn-primary btn-block btn-lg" id="checkout-btn"><%= lang === 'en' ? 'Proceed to checkout' : 'გადახდაზე გადასვლა' %></a>
-            <a href="<%= langPrefix %>/shop" class="btn btn-ghost btn-block"><%= lang === 'en' ? 'Continue shopping' : 'განვაგრძოთ შოპინგი' %></a>
-            <p class="form-note" style="text-align: center">🔒 <%= lang === 'en' ? 'Secure checkout · Local cards accepted' : 'უსაფრთხო გადახდა' %></p>
-          </div>
-        </aside>
+      <div class="cart-table-wrap">
+        <table class="cart-table">
+          <thead>
+            <tr>
+              <th></th>
+              <th><%= t('cart.product') %></th>
+              <th><%= t('cart.price') %></th>
+              <th><%= t('cart.quantity') %></th>
+              <th><%= t('cart.subtotal') %></th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody id="cart-items">
+          </tbody>
+          <tfoot>
+            <tr>
+              <td colspan="4" style="text-align:right;font-weight:700;"><%= t('cart.total') %></td>
+              <td style="font-weight:700;color:var(--accent-emerald);" id="cart-total">&#8382;0</td>
+              <td></td>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+      <div style="display:flex;gap:1rem;justify-content:flex-end;margin-top:1.5rem;flex-wrap:wrap;">
+        <a href="<%= langPrefix %>/shop" class="btn btn-secondary"><%= t('cart.continue_shopping') %></a>
+        <a href="<%= langPrefix %>/cart/checkout" class="btn btn-primary" id="checkout-btn"><%= t('cart.checkout') %></a>
       </div>
     </div>
-
   </div>
 </section>
-
-<style>
-  @media (max-width: 800px) {
-    .cart-layout { grid-template-columns: 1fr !important; }
-  }
-</style>

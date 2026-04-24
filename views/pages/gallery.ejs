@@ -1,34 +1,32 @@
+<!-- PAGE HERO -->
 <section class="page-hero">
   <div class="page-hero-bg" style="background-image: url('/images/adventures-hero.jpeg'); background-position: center 70%"></div>
   <div class="page-hero-overlay"></div>
   <div class="page-hero-content container">
-    <p class="eyebrow"><%= lang === 'en' ? 'Past adventures' : 'წარსული თავგადასავლები' %></p>
-    <h1><%= lang === 'en' ? 'Photo Journal' : 'ფოტო-ჟურნალი' %></h1>
-    <p><%= lang === 'en' ? 'Real moments from real trips — the people, the weather, the views you rarely see in brochures.' : 'ნამდვილი მომენტები, ნამდვილი მოგზაურობები.' %></p>
+    <h1><%- t('gallery.title') %></h1>
+    <p><%= t('gallery.subtitle') %></p>
   </div>
 </section>
 
+<!-- ADVENTURES GRID -->
 <section class="section">
   <div class="container">
-    <% if (gallery && gallery.length) { %>
-      <div class="gallery-grid">
-        <% gallery.forEach((item, i) => { %>
-          <a href="<%= langPrefix %>/gallery/<%= item.id %>" class="gallery-item<%= i === 0 ? ' wide' : '' %>">
-            <img src="<%= item.mainImage %>" alt="<%= l(item, 'title') %>" loading="lazy">
-            <div class="gallery-item-body">
-              <% if (item.date) { %>
-                <div class="gallery-item-meta"><%= new Date(item.date).toLocaleDateString(lang === 'en' ? 'en-US' : 'ka-GE', { year: 'numeric', month: 'short' }) %></div>
-              <% } %>
-              <h3 class="gallery-item-title"><%= l(item, 'title') %></h3>
+    <% if (gallery.length) { %>
+      <div class="adventures-grid">
+        <% gallery.forEach(item => { %>
+          <a href="<%= langPrefix %>/gallery/<%= item.id %>" class="adventure-card">
+            <div class="adventure-card-img">
+              <img src="<%= item.mainImage %>" alt="<%= l(item, 'title') %>" loading="lazy">
+            </div>
+            <div class="adventure-card-overlay">
+              <h3><%= l(item, 'title') %></h3>
+              <span class="adventure-card-date"><%= item.date %></span>
             </div>
           </a>
-        <% }); %>
+        <% }) %>
       </div>
     <% } else { %>
-      <div class="alert alert-info" style="max-width: 560px; margin: var(--sp-12) auto">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
-        <div><%= lang === 'en' ? 'New adventures coming soon.' : 'მალე გამოჩნდება ახალი თავგადასავლები.' %></div>
-      </div>
+      <p style="text-align:center;color:var(--text-muted);padding:3rem 0;"><%= t('gallery.empty') %></p>
     <% } %>
   </div>
 </section>

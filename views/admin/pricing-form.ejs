@@ -1,51 +1,94 @@
-<div class="admin-page-head">
-  <div class="admin-page-head-text">
-    <div class="admin-crumbs"><a href="/admin">Admin</a> <span>/</span> <a href="/admin/pricing">Pricing</a> <span>/</span> <span><%= editing ? 'Edit' : 'New' %></span></div>
-    <h1><%= editing ? 'Edit pricing tier' : 'New pricing tier' %></h1>
-  </div>
-  <div class="admin-page-head-actions">
-    <a href="/admin/pricing" class="admin-btn admin-btn-ghost">← Back to list</a>
-  </div>
+<div class="admin-header">
+  <h1><%= editing ? 'Edit Pricing Tier' : 'New Pricing Tier' %></h1>
 </div>
 
-<form method="POST" action="<%= editing ? '/admin/pricing/edit/' + tier.id : '/admin/pricing' %>">
+<form class="admin-form" method="POST" action="<%= editing ? '/admin/pricing/edit/' + tier.id : '/admin/pricing' %>">
   <input type="hidden" name="_csrf" value="<%= csrfToken %>">
 
-  <div class="admin-card">
-    <h2>Tier</h2>
-    <div class="admin-field-row">
-      <div class="admin-field"><label for="tier">Name (KA)</label><input type="text" id="tier" name="tier" class="admin-input" value="<%= tier.tier || '' %>" required></div>
-      <div class="admin-field"><label for="tier_en">Name (EN)</label><input type="text" id="tier_en" name="tier_en" class="admin-input" value="<%= tier.tier_en || '' %>"></div>
+  <div class="form-lang-row">
+    <div class="form-group">
+      <label for="tier">Tier Name (KA)</label>
+      <input type="text" id="tier" name="tier" value="<%= tier.tier || '' %>" required>
     </div>
-    <div class="admin-field"><label for="price">Numeric price (leave empty for custom)</label><input type="number" id="price" name="price" class="admin-input" value="<%= tier.price != null ? tier.price : '' %>"></div>
-    <div class="admin-field-row">
-      <div class="admin-field"><label for="priceLabel">Price label (KA)</label><input type="text" id="priceLabel" name="priceLabel" class="admin-input" value="<%= tier.priceLabel || '' %>" required></div>
-      <div class="admin-field"><label for="priceLabel_en">Price label (EN)</label><input type="text" id="priceLabel_en" name="priceLabel_en" class="admin-input" value="<%= tier.priceLabel_en || '' %>"></div>
+    <div class="form-group">
+      <label for="tier_en">Tier Name (EN)</label>
+      <input type="text" id="tier_en" name="tier_en" value="<%= tier.tier_en || '' %>">
     </div>
-    <div class="admin-field-row">
-      <div class="admin-field"><label for="unit">Unit (KA)</label><input type="text" id="unit" name="unit" class="admin-input" value="<%= tier.unit || '' %>"></div>
-      <div class="admin-field"><label for="unit_en">Unit (EN)</label><input type="text" id="unit_en" name="unit_en" class="admin-input" value="<%= tier.unit_en || '' %>"></div>
+  </div>
+
+  <div class="form-group">
+    <label for="price">Price (number, leave empty for custom)</label>
+    <input type="number" id="price" name="price" value="<%= tier.price != null ? tier.price : '' %>">
+  </div>
+
+  <div class="form-lang-row">
+    <div class="form-group">
+      <label for="priceLabel">Price Label (KA)</label>
+      <div class="hint">e.g. "&#8382;45-dan" or "Custom"</div>
+      <input type="text" id="priceLabel" name="priceLabel" value="<%= tier.priceLabel || '' %>" required>
     </div>
-    <div class="admin-field-row">
-      <div class="admin-field"><label for="description">Description (KA)</label><textarea id="description" name="description" class="admin-textarea" rows="3"><%= tier.description || '' %></textarea></div>
-      <div class="admin-field"><label for="description_en">Description (EN)</label><textarea id="description_en" name="description_en" class="admin-textarea" rows="3"><%= tier.description_en || '' %></textarea></div>
+    <div class="form-group">
+      <label for="priceLabel_en">Price Label (EN)</label>
+      <div class="hint">e.g. "From &#8382;45" or "Custom"</div>
+      <input type="text" id="priceLabel_en" name="priceLabel_en" value="<%= tier.priceLabel_en || '' %>">
     </div>
-    <div class="admin-field-row">
-      <div class="admin-field"><label for="features">Features (KA)</label><textarea id="features" name="features" class="admin-textarea" rows="5"><%= (tier.features || []).join('\n') %></textarea><div class="admin-field-help">One per line.</div></div>
-      <div class="admin-field"><label for="features_en">Features (EN)</label><textarea id="features_en" name="features_en" class="admin-textarea" rows="5"><%= (tier.features_en || []).join('\n') %></textarea><div class="admin-field-help">One per line.</div></div>
+  </div>
+
+  <div class="form-lang-row">
+    <div class="form-group">
+      <label for="unit">Unit (KA)</label>
+      <input type="text" id="unit" name="unit" value="<%= tier.unit || '' %>">
     </div>
-    <div class="admin-field-row">
-      <div class="admin-field"><label for="cta">CTA text (KA)</label><input type="text" id="cta" name="cta" class="admin-input" value="<%= tier.cta || '' %>"></div>
-      <div class="admin-field"><label for="cta_en">CTA text (EN)</label><input type="text" id="cta_en" name="cta_en" class="admin-input" value="<%= tier.cta_en || '' %>"></div>
+    <div class="form-group">
+      <label for="unit_en">Unit (EN)</label>
+      <input type="text" id="unit_en" name="unit_en" value="<%= tier.unit_en || '' %>">
     </div>
-    <label class="admin-check">
+  </div>
+
+  <div class="form-lang-row">
+    <div class="form-group">
+      <label for="description">Description (KA)</label>
+      <textarea id="description" name="description" rows="3"><%= tier.description || '' %></textarea>
+    </div>
+    <div class="form-group">
+      <label for="description_en">Description (EN)</label>
+      <textarea id="description_en" name="description_en" rows="3"><%= tier.description_en || '' %></textarea>
+    </div>
+  </div>
+
+  <div class="form-lang-row">
+    <div class="form-group">
+      <label for="features">Features (KA)</label>
+      <div class="hint">One per line</div>
+      <textarea id="features" name="features" rows="5"><%= (tier.features || []).join('\n') %></textarea>
+    </div>
+    <div class="form-group">
+      <label for="features_en">Features (EN)</label>
+      <div class="hint">One per line</div>
+      <textarea id="features_en" name="features_en" rows="5"><%= (tier.features_en || []).join('\n') %></textarea>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label class="checkbox-label">
       <input type="checkbox" name="highlighted" value="true" <%= tier.highlighted ? 'checked' : '' %>>
-      <div><strong>Highlighted</strong><div style="color: var(--a-text-muted); font-size: 12px">Marks this as the primary/recommended tier.</div></div>
+      Highlighted (primary tier)
     </label>
   </div>
 
-  <div class="admin-form-actions">
-    <button type="submit" class="admin-btn admin-btn-primary"><%= editing ? 'Update' : 'Create' %></button>
-    <a href="/admin/pricing" class="admin-btn admin-btn-ghost">Cancel</a>
+  <div class="form-lang-row">
+    <div class="form-group">
+      <label for="cta">CTA Text (KA)</label>
+      <input type="text" id="cta" name="cta" value="<%= tier.cta || '' %>">
+    </div>
+    <div class="form-group">
+      <label for="cta_en">CTA Text (EN)</label>
+      <input type="text" id="cta_en" name="cta_en" value="<%= tier.cta_en || '' %>">
+    </div>
+  </div>
+
+  <div class="form-actions">
+    <button type="submit" class="btn btn-primary"><%= editing ? 'Update Tier' : 'Create Tier' %></button>
+    <a href="/admin/pricing" class="btn btn-secondary">Cancel</a>
   </div>
 </form>

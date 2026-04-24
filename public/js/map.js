@@ -33,11 +33,8 @@
     marker: '\uD83D\uDCCD'
   };
 
-  // Basemap: CARTO Voyager — renders place names preferring Latin script.
-  // This replaces OpenTopoMap which was rendering Georgia labels in Cyrillic (Russian).
-  var DARK_TILE = 'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}.png';
-  var DARK_ATTR = '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>';
-  var TILE_SUBDOMAINS = 'abcd';
+  var DARK_TILE = 'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png';
+  var DARK_ATTR = '&copy; <a href="https://openstreetmap.org">OpenStreetMap</a> &copy; <a href="https://carto.com/">CARTO</a>';
 
   var markerIndex = 0;
 
@@ -185,7 +182,6 @@
 
     L.tileLayer(DARK_TILE, {
       attribution: DARK_ATTR,
-      subdomains: TILE_SUBDOMAINS,
       maxZoom: 19
     }).addTo(map);
 
@@ -256,7 +252,6 @@
     // Dark tiles
     L.tileLayer(DARK_TILE, {
       attribution: DARK_ATTR,
-      subdomains: TILE_SUBDOMAINS,
       maxZoom: 19
     }).addTo(map);
 

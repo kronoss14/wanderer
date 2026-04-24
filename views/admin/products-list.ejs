@@ -1,68 +1,42 @@
-<div class="admin-page-head">
-  <div class="admin-page-head-text">
-    <div class="admin-crumbs"><a href="/admin">Admin</a> <span>/</span> <span>Products</span></div>
-    <h1>Products</h1>
-    <p>Manage shop inventory, pricing, and stock.</p>
-  </div>
-  <div class="admin-page-head-actions">
-    <a href="/admin/products/new" class="admin-btn admin-btn-primary">+ New product</a>
-  </div>
+<div class="admin-header">
+  <h1>Products</h1>
+  <a href="/admin/products/new" class="btn btn-primary">+ New Product</a>
 </div>
 
-<% if (products && products.length) { %>
 <div class="admin-table-wrap">
   <table class="admin-table">
     <thead>
       <tr>
-        <th>Product</th>
+        <th>Image</th>
+        <th>Name</th>
         <th>Category</th>
         <th>Price</th>
-        <th>Stock</th>
+        <th>In Stock</th>
         <th>Featured</th>
-        <th style="text-align: right">Actions</th>
+        <th>Actions</th>
       </tr>
     </thead>
     <tbody>
       <% products.forEach(p => { %>
         <tr>
-          <td>
-            <div style="display: flex; gap: 12px; align-items: center">
-              <% if (p.image) { %><img src="<%= p.image %>" alt="" class="admin-table-thumb"><% } else { %><div class="admin-table-thumb" style="display: flex; align-items: center; justify-content: center; color: var(--a-text-dim)">—</div><% } %>
-              <div>
-                <div style="font-weight: 600"><a href="/admin/products/edit/<%= p.id %>"><%= p.name %></a></div>
-                <div style="font-size: 12px; color: var(--a-text-muted)"><%= p.name_en || '' %></div>
-              </div>
-            </div>
-          </td>
-          <td><span class="admin-badge"><%= p.category || '—' %></span></td>
-          <td style="font-weight: 600">
-            <% if (p.originalPrice && p.originalPrice > p.price) { %>
-              <s style="color: var(--a-text-dim); font-weight: 400">₾<%= p.originalPrice %></s>
-            <% } %>
-            <span style="color: var(--a-accent)">₾<%= p.price %></span>
-          </td>
-          <td><% if (p.inStock !== false) { %><span class="admin-badge admin-badge-success">In stock</span><% } else { %><span class="admin-badge admin-badge-danger">Out</span><% } %></td>
-          <td><% if (p.featured) { %><span class="admin-badge admin-badge-accent">★ Featured</span><% } else { %><span class="admin-muted">—</span><% } %></td>
-          <td>
-            <div class="admin-table-actions">
-              <a href="/admin/products/edit/<%= p.id %>" class="admin-btn admin-btn-outline admin-btn-sm">Edit</a>
-              <form method="POST" action="/admin/products/delete/<%= p.id %>" onsubmit="return confirm('Delete “<%= p.name %>”?')" style="display: inline">
-                <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-                <button type="submit" class="admin-btn admin-btn-danger admin-btn-sm">Delete</button>
-              </form>
-            </div>
+          <td><% if (p.image) { %><img src="<%= p.image %>" alt="" style="width:50px;height:50px;object-fit:cover;border-radius:4px;"><% } else { %>—<% } %></td>
+          <td><%= p.name %></td>
+          <td><%= p.category %></td>
+          <td><% if (p.originalPrice && p.originalPrice > p.price) { %><s style="color:var(--admin-text-muted);">&#8382;<%= p.originalPrice %></s> <% } %>&#8382;<%= p.price %></td>
+          <td><%= p.inStock !== false ? 'Yes' : 'No' %></td>
+          <td><%= p.featured ? 'Yes' : 'No' %></td>
+          <td class="actions">
+            <a href="/admin/products/edit/<%= p.id %>" class="btn btn-secondary btn-sm">Edit</a>
+            <form method="POST" action="/admin/products/delete/<%= p.id %>" onsubmit="return confirm('Delete this product?')">
+              <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+              <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+            </form>
           </td>
         </tr>
-      <% }); %>
+      <% }) %>
+      <% if (!products.length) { %>
+        <tr><td colspan="7" style="text-align:center;color:var(--admin-text-muted)">No products yet</td></tr>
+      <% } %>
     </tbody>
   </table>
 </div>
-<% } else { %>
-  <div class="admin-card">
-    <div class="admin-empty">
-      <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
-      <p>No products in the shop yet.</p>
-      <a href="/admin/products/new" class="admin-btn admin-btn-primary" style="margin-top: 16px">+ New product</a>
-    </div>
-  </div>
-<% } %>

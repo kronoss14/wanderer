@@ -3,116 +3,40 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#0f2218">
   <title><%= title %> — Wanderer Admin</title>
-  <link rel="icon" type="image/png" href="/images/favicon.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
   <link rel="stylesheet" href="/css/admin.css">
 </head>
 <body class="admin-body">
-  <button class="admin-nav-toggle" id="admin-nav-toggle" aria-label="Toggle navigation">
-    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
-  </button>
-
-  <aside class="admin-sidebar" id="admin-sidebar">
-    <div class="admin-brand">
-      <a href="/admin" class="admin-brand-link">
-        <div class="admin-brand-mark">W</div>
-        <div>
-          <div class="admin-brand-name">Wanderer</div>
-          <div class="admin-brand-sub">Admin panel</div>
-        </div>
-      </a>
-    </div>
-
-    <nav class="admin-nav">
-      <div class="admin-nav-group">
-        <div class="admin-nav-label">Overview</div>
-        <a href="/admin" class="admin-nav-link<%= currentPath === '/admin' ? ' is-active' : '' %>">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
-          Dashboard
-        </a>
-        <a href="/admin/analytics" class="admin-nav-link<%= currentPath.startsWith('/admin/analytics') ? ' is-active' : '' %>">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
-          Analytics
-        </a>
-      </div>
-
-      <div class="admin-nav-group">
-        <div class="admin-nav-label">Adventures</div>
-        <a href="/admin/hikes" class="admin-nav-link<%= currentPath.startsWith('/admin/hikes') ? ' is-active' : '' %>">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2v4M16 2v4M3 10h18M5 4h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2z"/></svg>
-          Hikes
-        </a>
-        <a href="/admin/map" class="admin-nav-link<%= currentPath.startsWith('/admin/map') ? ' is-active' : '' %>">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"/><line x1="8" y1="2" x2="8" y2="18"/><line x1="16" y1="6" x2="16" y2="22"/></svg>
-          Map &amp; Trails
-        </a>
-        <a href="/admin/guides" class="admin-nav-link<%= currentPath.startsWith('/admin/guides') ? ' is-active' : '' %>">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/></svg>
-          Guides
-        </a>
-        <a href="/admin/pricing" class="admin-nav-link<%= currentPath.startsWith('/admin/pricing') ? ' is-active' : '' %>">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
-          Pricing
-        </a>
-      </div>
-
-      <div class="admin-nav-group">
-        <div class="admin-nav-label">Shop</div>
-        <a href="/admin/products" class="admin-nav-link<%= currentPath.startsWith('/admin/products') ? ' is-active' : '' %>">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
-          Products
-        </a>
-        <a href="/admin/orders" class="admin-nav-link<%= currentPath.startsWith('/admin/orders') ? ' is-active' : '' %>">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
-          Orders
-        </a>
-      </div>
-
-      <div class="admin-nav-group">
-        <div class="admin-nav-label">Content</div>
-        <a href="/admin/gallery" class="admin-nav-link<%= currentPath.startsWith('/admin/gallery') ? ' is-active' : '' %>">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
-          Gallery
-        </a>
-        <a href="/admin/blog" class="admin-nav-link<%= currentPath.startsWith('/admin/blog') ? ' is-active' : '' %>">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
-          Blog
-        </a>
-      </div>
+  <aside class="admin-sidebar">
+    <div class="brand">Wanderer Admin</div>
+    <nav>
+      <a href="/admin" class="<%= currentPath === '/admin' ? 'active' : '' %>">Dashboard</a>
+      <a href="/admin/hikes" class="<%= currentPath.startsWith('/admin/hikes') ? 'active' : '' %>">Hikes</a>
+      <a href="/admin/map" class="<%= currentPath.startsWith('/admin/map') ? 'active' : '' %>">Map & Trails</a>
+      <a href="/admin/guides" class="<%= currentPath.startsWith('/admin/guides') ? 'active' : '' %>">Guides</a>
+      <a href="/admin/pricing" class="<%= currentPath.startsWith('/admin/pricing') ? 'active' : '' %>">Pricing</a>
+      <a href="/admin/gallery" class="<%= currentPath.startsWith('/admin/gallery') ? 'active' : '' %>">Gallery</a>
+      <a href="/admin/blog" class="<%= currentPath.startsWith('/admin/blog') ? 'active' : '' %>">Blog</a>
+      <a href="/admin/products" class="<%= currentPath.startsWith('/admin/products') ? 'active' : '' %>">Products</a>
+      <a href="/admin/orders" class="<%= currentPath.startsWith('/admin/orders') ? 'active' : '' %>">Orders</a>
+      <a href="/admin/analytics" class="<%= currentPath.startsWith('/admin/analytics') ? 'active' : '' %>">Analytics</a>
     </nav>
-
-    <div class="admin-sidebar-footer">
-      <a href="/" target="_blank" rel="noopener noreferrer" class="admin-footer-link">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-        View public site
-      </a>
-      <a href="/admin/logout" class="admin-footer-link">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
-        Sign out
-      </a>
+    <div class="sidebar-footer">
+      <a href="/" target="_blank">View Site</a> &middot;
+      <a href="/admin/logout">Logout</a>
     </div>
   </aside>
-
   <main class="admin-main">
     <% if (typeof flash !== 'undefined' && flash) { %>
-      <div class="admin-flash admin-flash-<%= flash.type %>">
-        <%= flash.message %>
-      </div>
+      <div class="flash flash-<%= flash.type %>"><%= flash.message %></div>
     <% } %>
     <%- body %>
   </main>
-
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <script src="/js/admin-upload.js"></script>
-  <script>
-    document.getElementById('admin-nav-toggle')?.addEventListener('click', function() {
-      document.getElementById('admin-sidebar').classList.toggle('is-open');
-    });
-  </script>
 </body>
 </html>
